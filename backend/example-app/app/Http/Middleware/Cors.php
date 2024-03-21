@@ -15,6 +15,11 @@ class Cors
      */
     public function handle(Request $request, Closure $next): Response
     {
-        return $next($request);
+        $response = $next($request);
+
+        // Aggiungi l'header "Access-Control-Allow-Headers" per consentire l'header "X-CSRF-TOKEN"
+        $response->headers->set('Access-Control-Allow-Headers', 'Content-Type, X-CSRF-TOKEN');
+
+        return $response;
     }
 }

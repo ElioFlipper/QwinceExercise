@@ -8,6 +8,7 @@
                 <button @click="openProfile(user.id)">Profile</button>
             </li>
         </ul>
+        <button @click="handleRegisterButton">Register a new user</button>
     </div>
 </template>
 
@@ -23,6 +24,7 @@ export default {
     },
     methods: {
         getUsers() {
+
             fetch("http://127.0.0.1:8000/users")
                 .then((response) => response.json())
                 .then((data) => {
@@ -36,10 +38,13 @@ export default {
 
         openProfile(id) {
             this.$router.push({ name: 'userDetail', params: { id: id } });
-        }
+        },
 
+        handleRegisterButton() {
+            this.$router.push({ name: 'register' })
+        },
     },
-};
+}
 </script>
 
 <style scoped>

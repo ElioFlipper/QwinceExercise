@@ -16,6 +16,7 @@ export default {
    <UserDetail />
   </div>
 </template> -->
+
 <template>
   <div id="app">
     <router-view />
