@@ -16,13 +16,33 @@ export default {
             fetch(`http://127.0.0.1:8000/api/users/${id}`)
                 .then(response => response.json())
                 .then(data => {
-                    this.singleUser = data,
-                        console.log(data)
+                    this.singleUser = data
                 })
         },
         handleModifyButton() {
             this.$router.push({ name: 'modify' })
+        },
+        handleRemoveButton() {
+            const id = this.$route.params.id;
+            fetch(`http://127.0.0.1:8000/api/delete/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    this.singleUser = data
+                })
+            this.$router.push({ name: 'home' })
+        },
+        handleDeactiveButton() {
+            this.singleUser.activationStatus = !this.singleUser.activationStatus
+        },
+        handleActiveButton() {
+            this.singleUser.activationStatus = !this.singleUser.activationStatus
         }
+
     }
 }
 </script>
@@ -41,9 +61,9 @@ export default {
             </li>
         </ul>
         <button @click="handleModifyButton">Modify</button>
-        <button>Remove</button>
-        <button>Active</button>
-        <button>Deactive</button>
+        <button @click="handleRemoveButton">Remove</button>
+        <button v-if="singleUser.activationStatus" @click="handleDeactiveButton">Deactive</button>
+        <button v-else @click="handleActiveButton">Active</button>
     </div>
 </template>
 

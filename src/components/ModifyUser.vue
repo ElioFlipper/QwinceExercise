@@ -35,9 +35,10 @@ export default {
                         console.log(data)
                 })
 
-                this.$router.push({ name: 'home' })
-                console.log("succede qualcosa?");
-        }
+            this.$router.push({ name: 'home' })
+        },
+
+       
     }
 }
 </script>
@@ -57,6 +58,7 @@ export default {
         <label>activationStatus: </label>
         <input type="checkbox" v-model="singleUser.activationStatus">
         <button @click="handleSaveButton">Save</button>
+
     </div>
 
 </template>

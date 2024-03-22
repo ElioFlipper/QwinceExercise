@@ -43,4 +43,11 @@ class UserController extends Controller
         $user->update($request->all());
         return response()->json(['message' => 'Utente aggiornato con successo', 'user' => $user]);
     }
+
+    public function delete(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+        return response()->json(['message' => 'Utente eliminato con successo']);
+    }
 }

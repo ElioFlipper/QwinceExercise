@@ -1,6 +1,26 @@
 <template>
     <div class="container">
-        <ul v-for="user in users" :key="user.id">
+        <div class="filterSection">
+            <span>Search by username</span>
+            <input type="text" @input="handleSearch($event, 'username')" v-model="searchUsername">
+
+            <span>Search by name or surname</span>
+            <input type="text" @input="handleSearch($event, 'nameOrSurname')" v-model="searchNameOrSurname">
+
+            <span>Search by email</span>
+            <input type="text" @input="handleSearch($event, 'email')" v-model="searchByEmail">
+
+            <span>Search by city</span>
+            <input type="text" @input="handleSearch($event, 'city')" v-model="searchByCity">
+
+            <select v-model="activationStatus">
+                <option value="">Tutti</option>
+                <option value="active">Attivi</option>
+                <option value="inactive">Disattivati</option>
+            </select>
+
+        </div>
+        <ul v-for="user in filteredUsers" :key="user.id">
             <li>
                 <p>{{ user.username }}</p>
                 <p>{{ user.email }}</p>
@@ -17,7 +37,24 @@ export default {
     data() {
         return {
             users: [],
+            searchUsername: '',
+            searchNameOrSurname: '',
+            searchByEmail: '',
+            searchByCity: '',
+            activationStatus: ''
         };
+    },
+
+    computed: {
+        filteredUsers() {
+            return this.users.filter(user =>
+                user.username.toLowerCase().includes(this.searchUsername.toLowerCase()) &&
+                (user.name.toLowerCase().includes(this.searchNameOrSurname.toLowerCase()) ||
+                    user.surname.toLowerCase().includes(this.searchNameOrSurname.toLowerCase())) &&
+                user.email.toLowerCase().includes(this.searchByEmail.toLowerCase()) &&
+                user.city.toLowerCase().includes(this.searchByCity.toLowerCase())
+            );
+        }
     },
 
     beforeRouteEnter(to, from, next) {
@@ -58,6 +95,22 @@ export default {
                 this.getUsers();
             })
         },
+
+        handleSearch(e, field) {
+            const value = e.target.value.toLowerCase();
+            if (field === 'username') {
+                this.searchUsername = value;
+            }
+            else if (field === 'name') {
+                this.searchNameOrSurname = value;
+            }
+            else if (field === 'email') {
+                this.searchByEmail = value;
+            }
+            else if (field === 'city') {
+                this.searchByCity = value;
+            }
+        }
     },
 }
 </script>
@@ -77,5 +130,24 @@ export default {
 
 .container ul:nth-of-type(odd) {
     background-color: whitesmoke;
+}
+
+.filterSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.filterSection input {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+}
+
+.filterSection span {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
 }
 </style>
