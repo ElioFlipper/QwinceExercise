@@ -1,14 +1,16 @@
 <?php
 
+
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use Illuminate\Http\Request;
 
-Log::info("Fuori dalle rotte web");
+Log::info("Fuori dalle rotte");
 
-Route::get('/users', [UserController::class, 'index']);
+Route::get('/users',  [UserController::class, 'index']);
+
 Route::get('/users/{id}', [UserController::class, 'show']);
+
 Route::post('/register', [UserController::class, 'register']);
-Route::get('/token', function () {
-    return csrf_token();
-});
+
+Route::put('/modify/{id}', [UserController::class, 'modify']);

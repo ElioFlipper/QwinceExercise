@@ -4,7 +4,6 @@ export default {
     data() {
         return {
             user: {
-                _token:'',
                 username: '',
                 name: '',
                 surname: '',
@@ -18,20 +17,8 @@ export default {
     methods: {
         saveUser(event) {
             event.preventDefault();
-            function getCookie(name) {
-                const cookieString = document.cookie;
-                const cookies = cookieString.split('; ');
-                for (let cookie of cookies) {
-                    const [cookieName, cookieValue] = cookie.split('=');
-                    if (cookieName === name) {
-                        return cookieValue;
-                    }
-                }
-                return null;
-            }
 
             const userData = {
-                _token: this.user._token,
                 username: this.user.username,
                 name: this.user.name,
                 surname: this.user.surname,
@@ -40,15 +27,13 @@ export default {
                 activationStatus: this.user.activationStatus
             };
 
-            const csrfToken = getCookie('XSRF-TOKEN');
 
-            fetch("http://127.0.0.1:8000/register", {
+            fetch("http://127.0.0.1:8000/api/register", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "X-CSRF-TOKEN": csrfToken
                 },
-
+                
                 body: JSON.stringify(userData)
             })
 
@@ -62,8 +47,6 @@ export default {
 <template>
     <div class="formContainer">
         <form @submit.prevent="saveUser">
-            <label for="">Token:</label>
-            <input type="text" name="username" v-model="user._token">
             <label for="">Username:</label>
             <input type="text" name="username" v-model="user.username">
             <label for="">Name:</label>

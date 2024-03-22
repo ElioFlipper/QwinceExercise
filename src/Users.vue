@@ -19,17 +19,30 @@ export default {
             users: [],
         };
     },
+
+    beforeRouteEnter(to, from, next) {
+        fetch("http://127.0.0.1:8000/api/users")
+            .then((response) => response.json())
+            .then((data) => {
+                next(vm => {
+                    vm.users = data;
+                });
+            })
+            .catch((error) => {
+                console.error("Error fetching users:", error);
+                next();
+            })
+    },
+
     mounted() {
         this.getUsers();
     },
     methods: {
         getUsers() {
-
-            fetch("http://127.0.0.1:8000/users")
+            fetch("http://127.0.0.1:8000/api/users")
                 .then((response) => response.json())
                 .then((data) => {
                     this.users = data;
-                    console.log(data);
                 })
                 .catch((error) => {
                     console.error("Error fetching users:", error);
@@ -41,7 +54,9 @@ export default {
         },
 
         handleRegisterButton() {
-            this.$router.push({ name: 'register' })
+            this.$router.push({ name: 'register' }).then(() => {
+                this.getUsers();
+            })
         },
     },
 }

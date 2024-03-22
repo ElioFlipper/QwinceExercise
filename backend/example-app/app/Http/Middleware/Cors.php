@@ -17,9 +17,11 @@ class Cors
     {
         $response = $next($request);
 
-        // Aggiungi l'header "Access-Control-Allow-Headers" per consentire l'header "X-CSRF-TOKEN"
-        $response->headers->set('Access-Control-Allow-Headers', 'Content-Type, X-CSRF-TOKEN');
+        $response->headers->set('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Auth-Token, Authorization, Accept, charset, boundary, Content-Length, X-CSRF-TOKEN');
+        $response->headers->set('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
+        $response->headers->set('Access-Control-Allow-Origin', '*');
 
+     
         return $response;
     }
 }

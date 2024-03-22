@@ -13,19 +13,22 @@ export default {
 
     methods: {
         getSingleUser(id) {
-            fetch(`http://127.0.0.1:8000/users/${id}`)
+            fetch(`http://127.0.0.1:8000/api/users/${id}`)
                 .then(response => response.json())
                 .then(data => {
                     this.singleUser = data,
                         console.log(data)
                 })
+        },
+        handleModifyButton() {
+            this.$router.push({ name: 'modify' })
         }
     }
 }
 </script>
 
 <template>
-    <div class="container">
+    <div class="userDetailContainer">
         <ul>
             <li>
                 <p> Username: {{ singleUser.username }}</p>
@@ -37,6 +40,10 @@ export default {
                 <p>activationStatus: {{ singleUser.activationStatus }}</p>
             </li>
         </ul>
+        <button @click="handleModifyButton">Modify</button>
+        <button>Remove</button>
+        <button>Active</button>
+        <button>Deactive</button>
     </div>
 </template>
 

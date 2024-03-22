@@ -26,7 +26,6 @@ class UserController extends Controller
     public function register(Request $request)
     {
         $user = User::create([
-            '_token' => "RbghJfKTMHbqkPuvCmqiTW4tW2x5MGiARo6L1nBK",
             'username' => $request->username,
             'name' => $request->name,
             'surname' => $request->surname,
@@ -36,5 +35,12 @@ class UserController extends Controller
             'date_of_submission' => Carbon::now()
         ]);
         return response()->json($user, 201);
+    }
+
+    public function modify(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $user->update($request->all());
+        return response()->json(['message' => 'Utente aggiornato con successo', 'user' => $user]);
     }
 }
