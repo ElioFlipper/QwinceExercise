@@ -49,22 +49,53 @@ export default {
 
 <template>
     <div class="userDetailContainer">
-        <ul>
-            <li>
-                <p> Username: {{ singleUser.username }}</p>
-                <p>Name: {{ singleUser.name }}</p>
-                <p>Surname: {{ singleUser.surname }}</p>
-                <p>Email: {{ singleUser.email }}</p>
-                <p>City: {{ singleUser.city }}</p>
-                <p>Date of submission: {{ singleUser.date_of_submission }}</p>
-                <p>activationStatus: {{ singleUser.activationStatus }}</p>
-            </li>
-        </ul>
-        <button @click="handleModifyButton">Modify</button>
-        <button @click="handleRemoveButton">Remove</button>
-        <button v-if="singleUser.activationStatus" @click="handleDeactiveButton">Deactive</button>
-        <button v-else @click="handleActiveButton">Active</button>
+        <p> Username: {{ singleUser.username }}</p>
+        <p>Name: {{ singleUser.name }}</p>
+        <p>Surname: {{ singleUser.surname }}</p>
+        <p>Email: {{ singleUser.email }}</p>
+        <p>City: {{ singleUser.city }}</p>
+        <p>Date of submission: {{ singleUser.date_of_submission }}</p>
+        <p>activationStatus: {{ singleUser.activationStatus }}</p>
+        <button class="modifyButton" @click="handleModifyButton">Modify</button>
+        <button class="modifyButton" @click="handleRemoveButton">Remove</button>
+        <button class="modifyButton" v-if="singleUser.activationStatus" @click="handleDeactiveButton">Deactive</button>
+        <button class="modifyButton" v-else @click="handleActiveButton">Active</button>
     </div>
 </template>
 
-<style></style>
+<style>
+.userDetailContainer {
+    background-color: whitesmoke;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+
+.userDetailContainer p:nth-child(even) {
+    background-color: rgba(134, 184, 134, 0.273);
+    margin: 0;
+    padding: 1rem;
+    text-align: center;
+}
+
+.userDetailContainer p:nth-of-type(odd) {
+    background-color: whitesmoke;
+    margin: 0;
+    padding: 1rem;
+    text-align: center;
+}
+
+.modifyButton {
+    border-radius: 3px;
+    padding: .5rem;
+    background-color: rgba(134, 184, 134, 0.273);
+    margin: 0 auto;
+    margin-top: 1rem;
+    border: none;
+}
+
+.modifyButton:hover {
+    transform: scale(110%);
+    transition: .5s;
+}
+</style>

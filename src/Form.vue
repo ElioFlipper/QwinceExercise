@@ -33,7 +33,7 @@ export default {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                
+
                 body: JSON.stringify(userData)
             })
 
@@ -59,14 +59,43 @@ export default {
             <input type="text" name="city" v-model="user.city">
             <label for="">Activation Status:</label>
             <input type="checkbox" name="activationStatus" v-model="user.activationStatus">
-            <button type="submit">Save</button>
+            <button class="saveButton" type="submit">Save</button>
         </form>
     </div>
 </template>
 
 <style>
-.formContainer input {
+.formContainer {
     display: flex;
     flex-direction: column;
+    /* align-items: center; */
+    /* justify-content: center; */
+    background-color: rgba(134, 184, 134, 0.273);
+    padding: 1rem;
+    gap: .5rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.formContainer input,
+select {
+    display: flex;
+    margin: 0;
+    border: none;
+    border-radius: 3px;
+    padding: .5rem;
+}
+
+.saveButton {
+    border-radius: 3px;
+    padding: .5rem;
+    background-color: rgba(134, 184, 134, 0.273);
+    margin: 0 auto;
+    margin-top: 1rem;
+    border: none;
+}
+
+.saveButton:hover {
+    transform: scale(110%);
+    transition: .5s;
 }
 </style>
