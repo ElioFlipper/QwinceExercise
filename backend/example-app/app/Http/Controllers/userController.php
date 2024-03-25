@@ -23,22 +23,35 @@ class UserController extends Controller
         if ($request->has('username')) {
             $username = $request->input('username');
             $users->where('username', 'like', '%' . $username . '%');
-
+            Log::info($username);
         }
+
         if ($request->has('name')) {
             $name = $request->input('name');
-            $users->where('name', 'like', '%' . $name . '%')
-            ->orWhere('surname', 'like', '%' . $name . '%');
+            $users->where('name', 'like', '%' . $name . '%');
+            Log::info($name);
         }
 
         if ($request->has('email')) {
             $email = $request->input('email');
             $users->where('email', 'like', '%' . $email . '%');
+            Log::info($email);
         }
+
         if ($request->has('city')) {
             $city = $request->input('city');
             $users->where('city', 'like', '%' . $city . '%');
+            Log::info($city);
         }
+
+        // if ($request->has('activationStatus')) {
+        //     $activationStatus = $request->input('activationStatus');
+        //     $activationStatus = $activationStatus === 'true'; // Converte il valore in un booleano
+        //     $users->where('activationStatus', $activationStatus);
+        //     Log::info($activationStatus);
+        // }
+
+
 
         $filteredUsers = $users->get();
 
