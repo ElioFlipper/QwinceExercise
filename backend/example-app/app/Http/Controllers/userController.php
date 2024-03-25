@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
+
 
 class UserController extends Controller
 {
@@ -12,6 +14,35 @@ class UserController extends Controller
     {
         $users = User::all();
         return response()->json($users);
+    }
+
+    public function filter(Request $request)
+    {
+        $users = User::orderBy('id', 'asc');
+
+        if ($request->has('username')) {
+            $username = $request->input('username');
+            $users->where('username', 'like', '%' . $username . '%');
+
+        }
+        if ($request->has('name')) {
+            $name = $request->input('name');
+            $users->where('name', 'like', '%' . $name . '%')
+            ->orWhere('surname', 'like', '%' . $name . '%');
+        }
+
+        if ($request->has('email')) {
+            $email = $request->input('email');
+            $users->where('email', 'like', '%' . $email . '%');
+        }
+        if ($request->has('city')) {
+            $city = $request->input('city');
+            $users->where('city', 'like', '%' . $city . '%');
+        }
+
+        $filteredUsers = $users->get();
+
+        return response()->json($filteredUsers);
     }
 
     public function show($id)
