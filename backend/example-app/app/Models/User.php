@@ -15,6 +15,11 @@ class User extends Model
         'date_of_submission',
         'activationStatus'
     ];
+
+    public function pets()
+    {
+        return $this->hasMany(Pets::class);
+    }
 }
 
 

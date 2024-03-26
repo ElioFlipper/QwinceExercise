@@ -25,7 +25,8 @@ class UserController extends Controller
         }
         
         if ($nameFilter = $request->query('name')) {
-            $users->where('name', 'like', '%' . $nameFilter . '%');
+            $users->where('name', 'like', '%' . $nameFilter . '%')
+            ->orWhere('surname', 'like', '%' . $nameFilter . '%');
         }
 
         if ($emailFilter = $request->query('email')) {
