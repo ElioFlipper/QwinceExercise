@@ -14,8 +14,8 @@
             <input type="text" placeholder="City" v-model="city">
 
             <select v-model="activationStatus">
-                <option value="true">Active</option>
-                <option value="false">Deactive</option>
+                <option :value="true">Active</option>
+                <option :value="false">Deactive</option>
             </select>
 
             <button class="searchButton" @click="handleSearchButton">Search</button>
@@ -116,16 +116,49 @@ export default {
         //     }
         // }
 
+        // handleSearchButton() {
+        //     const data = {
+        //         username: this.username,
+        //         name: this.name,
+        //         email: this.email,
+        //         city: this.city,
+        //         activationStatus: this.activationStatus
+        //     };
+
+        //     fetch("http://127.0.0.1:8000/api/filter?" + new URLSearchParams(data))
+        //         .then((response) => {
+        //             if (!response.ok) {
+        //                 throw new Error('Network response was not ok');
+        //             }
+        //             return response.json();
+        //         })
+        //         .then((data) => {
+        //             this.users = data;
+        //         })
+        //         .catch((error) => {
+        //             console.error("Error fetching users:", error);
+        //         });
+        //     console.log(this.activationStatus)
+        // }
+
         handleSearchButton() {
             const data = {
                 username: this.username,
                 name: this.name,
                 email: this.email,
                 city: this.city,
-                activationStatus: this.activationStatus
+                activationStatus: this.activationStatus,
             };
 
-            fetch("http://127.0.0.1:8000/api/filter?" + new URLSearchParams(data))
+            for (const key in data) {
+                if (data[key] === '' || data[key] === null) {
+                    delete data[key];
+                }
+            }
+
+            const queryString = new URLSearchParams(data)
+
+            fetch("http://127.0.0.1:8000/api/filter?" + queryString)
                 .then((response) => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -138,7 +171,6 @@ export default {
                 .catch((error) => {
                     console.error("Error fetching users:", error);
                 });
-            console.log("search button clicked");
         }
     },
 }

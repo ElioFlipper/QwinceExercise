@@ -28,7 +28,8 @@ class UserController extends Controller
 
         if ($request->has('name')) {
             $name = $request->input('name');
-            $users->where('name', 'like', '%' . $name . '%');
+            $users->where('name', 'like', '%' . $name . '%')
+            ->orWhere('surname', 'like', '%' . $name . '%');
             Log::info($name);
         }
 
@@ -44,12 +45,12 @@ class UserController extends Controller
             Log::info($city);
         }
 
-        // if ($request->has('activationStatus')) {
-        //     $activationStatus = $request->input('activationStatus');
-        //     $activationStatus = $activationStatus === 'true'; // Converte il valore in un booleano
-        //     $users->where('activationStatus', $activationStatus);
-        //     Log::info($activationStatus);
-        // }
+        if ($request->has('activationStatus')) {
+            $activationStatus = $request->input('activationStatus');
+            
+            $users->where('activationStatus', $activationStatus);
+            Log::info($activationStatus);
+        }
 
 
 
