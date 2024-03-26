@@ -57,7 +57,7 @@ export default {
         <input type="text" v-model="singleUser.city">
         <label>activationStatus: </label>
         <input type="checkbox" v-model="singleUser.activationStatus">
-        <button @click="handleSaveButton">Save</button>
+        <button @click="handleSaveButton" class="saveButton">Save</button>
 
     </div>
 
@@ -66,5 +66,13 @@ export default {
 .modifyUserContainer input {
     display: flex;
     flex-direction: column;
+}
+.modifyUserContainer {
+    background-color: rgba(134, 184, 134, 0.273);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
 }
 </style>

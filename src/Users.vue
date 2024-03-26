@@ -21,14 +21,27 @@
             <button class="searchButton" @click="handleSearchButton">Search</button>
 
         </div>
-        <ul v-for="user in users" :key="user.id">
-            <li>
-                <p>{{ user.username }}</p>
-                <p>{{ user.email }}</p>
-                <p>{{ user.city }}</p>
-                <button @click="openProfile(user.id)">Profile</button>
-            </li>
-        </ul>
+        <table class="userTable">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>City</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="user in users" :key="user.id">
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.city }}</td>
+                    <td>
+                        <button @click="openProfile(user.id)">Profile</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
         <button class="registerButton" @click="handleRegisterButton">Register a new user</button>
     </div>
 </template>
@@ -237,4 +250,23 @@ select {
     transform: scale(110%);
     transition: .5s;
 }
+
+.userTable:nth-child(odd) {
+    background-color: rgba(134, 184, 134, 0.273);
+}
+
+.userTable th,
+.userTable td {
+    padding: 8px;
+    text-align: center;    
+}
+
+.userTable th {
+    background-color: #f2f2f2;
+}
+
+.userTable tbody tr:nth-child(odd) {
+    background-color: rgba(134, 184, 134, 0.273);
+}
+
 </style>
