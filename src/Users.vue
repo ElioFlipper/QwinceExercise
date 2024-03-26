@@ -43,7 +43,7 @@ export default {
             surname: '',
             email: '',
             city: '',
-            activationStatus: null
+            activationStatus: ''
         };
     },
 
@@ -116,30 +116,6 @@ export default {
         //     }
         // }
 
-        // handleSearchButton() {
-        //     const data = {
-        //         username: this.username,
-        //         name: this.name,
-        //         email: this.email,
-        //         city: this.city,
-        //         activationStatus: this.activationStatus
-        //     };
-
-        //     fetch("http://127.0.0.1:8000/api/filter?" + new URLSearchParams(data))
-        //         .then((response) => {
-        //             if (!response.ok) {
-        //                 throw new Error('Network response was not ok');
-        //             }
-        //             return response.json();
-        //         })
-        //         .then((data) => {
-        //             this.users = data;
-        //         })
-        //         .catch((error) => {
-        //             console.error("Error fetching users:", error);
-        //         });
-        //     console.log(this.activationStatus)
-        // }
 
         handleSearchButton() {
             const data = {
@@ -150,11 +126,11 @@ export default {
                 activationStatus: this.activationStatus,
             };
 
-            for (const key in data) {
-                if (data[key] === '' || data[key] === null) {
-                    delete data[key];
-                }
-            }
+            // for (const key in data) {
+            //     if (data[key] === '' || data[key] === null) {
+            //         delete data[key];
+            //     }
+            // }
 
             const queryString = new URLSearchParams(data)
 

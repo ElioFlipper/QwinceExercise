@@ -20,39 +20,25 @@ class UserController extends Controller
     {
         $users = User::orderBy('id', 'asc');
 
-        if ($request->has('username')) {
-            $username = $request->input('username');
-            $users->where('username', 'like', '%' . $username . '%');
-            Log::info($username);
+        if ($usernameFilter = $request->query('username')) {
+            $users->where('username', 'like', '%' . $usernameFilter . '%');
+        }
+        
+        if ($nameFilter = $request->query('name')) {
+            $users->where('name', 'like', '%' . $nameFilter . '%');
         }
 
-        if ($request->has('name')) {
-            $name = $request->input('name');
-            $users->where('name', 'like', '%' . $name . '%')
-            ->orWhere('surname', 'like', '%' . $name . '%');
-            Log::info($name);
+        if ($emailFilter = $request->query('email')) {
+            $users->where('email', 'like', '%' . $emailFilter . '%');
         }
 
-        if ($request->has('email')) {
-            $email = $request->input('email');
-            $users->where('email', 'like', '%' . $email . '%');
-            Log::info($email);
+        if ($cityFilter = $request->query('city')) {
+            $users->where('city', 'like', '%' . $cityFilter . '%');
         }
 
-        if ($request->has('city')) {
-            $city = $request->input('city');
-            $users->where('city', 'like', '%' . $city . '%');
-            Log::info($city);
+        if ($activationStatusFilter = $request->query('activationStatus')) {
+            $users->where('activationStatus', 'like', '%' . $activationStatusFilter . '%');
         }
-
-        if ($request->has('activationStatus')) {
-            $activationStatus = $request->input('activationStatus');
-            
-            $users->where('activationStatus', $activationStatus);
-            Log::info($activationStatus);
-        }
-
-
 
         $filteredUsers = $users->get();
 
