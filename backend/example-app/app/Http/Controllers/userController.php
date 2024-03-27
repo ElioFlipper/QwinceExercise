@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\userRegister;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 
 class UserController extends Controller
@@ -23,10 +25,10 @@ class UserController extends Controller
         if ($usernameFilter = $request->query('username')) {
             $users->where('username', 'like', '%' . $usernameFilter . '%');
         }
-        
+
         if ($nameFilter = $request->query('name')) {
             $users->where('name', 'like', '%' . $nameFilter . '%')
-            ->orWhere('surname', 'like', '%' . $nameFilter . '%');
+                ->orWhere('surname', 'like', '%' . $nameFilter . '%');
         }
 
         if ($emailFilter = $request->query('email')) {
@@ -40,7 +42,7 @@ class UserController extends Controller
         if ($activationStatusFilter = $request->query('activationStatus')) {
             $users->where('activationStatus', $activationStatusFilter);
         }
-        
+
 
         $filteredUsers = $users->get();
 
@@ -82,5 +84,13 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
         return response()->json(['message' => 'Utente eliminato con successo']);
+    }
+
+    public function mailSender(Request $request)
+    {
+        $email = $request->query('email');
+        $user = User::where('email', $email)->first();
+        $notification = new userRegister($user);
+        Mail::to($email)->send($notification);
     }
 }

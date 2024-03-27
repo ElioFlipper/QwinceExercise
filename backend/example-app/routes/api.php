@@ -1,6 +1,5 @@
 <?php
 
-
 use App\Http\Controllers\emailController;
 use App\Http\Controllers\PetController;
 use Illuminate\Http\Request;
@@ -8,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Mail\MyTestEmail;
 
-Route::get('/users',  [UserController::class, 'index']);
+Route::get('/users', [UserController::class, 'index']);
 
 Route::get('/users/{id}', [UserController::class, 'show']);
 
@@ -24,10 +23,10 @@ Route::post('/{id}/petRegister', [PetController::class, 'petRegister']);
 
 Route::get('/{id}/pets', [PetController::class, 'petShow']);
 
-Route::get('/testroute', function() {
+// Route::get('/testroute', function() {
 
-    // The email sending is done using the to method on the Mail facade
-    Mail::to('elio.sanfratello@gmail.com')->send(new MyTestEmail());
-});
+//     // The email sending is done using the to method on the Mail facade
+//     Mail::to('elio.sanfratello@gmail.com')->send(new MyTestEmail());
+// });
 
-Route::get('/sendEmail', [emailController::class, 'mailSender'] );
+Route::get('/sendEmail', [UserController::class, 'mailSender']);

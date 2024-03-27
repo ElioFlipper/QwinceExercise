@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -14,5 +14,33 @@
     <h3>Email:</h3><p>{{request('email')}}</p>
     <h3>City:</h3><p>{{request('city')}}</p>
     <h3>Activation Status:</h3><p>{{request('activationStatus')}}</p>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Benvenuto!</title>
+</head>
+<body>
+<h1>Ciao, {{ $name }}!</h1>
+<p>Ti diamo il benvenuto sul nostro sito!</p>
+<p>Dettagli dell'account:</p>
+<ul>
+    <li>Username: {{ $username }}</li>
+    <li>Nome: {{ $name }}</li>
+    <li>Email: {{ $email }}</li>
+    <li>Città: {{ $city }}</li>
+    <li>Stato attivazione: 
+        @if ($activationStatus === 1)
+            Attivo
+        @else
+            Disattivo
+        @endif
+    </li>
+</ul>
+<p>Grazie per esserti registrato!</p>
+
 </body>
 </html>

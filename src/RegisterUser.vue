@@ -29,7 +29,7 @@ export default {
             const queryString = new URLSearchParams(userData)
 
 
-            fetch("http://127.0.0.1:8000/api/testroute?" + queryString)
+            fetch("http://127.0.0.1:8000/api/sendEmail?" + queryString)
                 .then((response) => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -65,13 +65,12 @@ export default {
 
                 body: JSON.stringify(userData)
             })
+                .then(data =>
+                    this.sendEmail())
 
             this.$router.push({ name: 'home' })
-            this.sendEmail()
+
         },
-
-
-
     }
 }
 </script>
