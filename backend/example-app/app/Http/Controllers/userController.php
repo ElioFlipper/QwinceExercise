@@ -38,8 +38,9 @@ class UserController extends Controller
         }
 
         if ($activationStatusFilter = $request->query('activationStatus')) {
-            $users->where('activationStatus', 'like', '%' . $activationStatusFilter . '%');
+            $users->where('activationStatus', $activationStatusFilter);
         }
+        
 
         $filteredUsers = $users->get();
 
