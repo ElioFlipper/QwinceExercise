@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Http\Controllers\emailController;
 use App\Http\Controllers\PetController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -28,3 +29,5 @@ Route::get('/testroute', function() {
     // The email sending is done using the to method on the Mail facade
     Mail::to('elio.sanfratello@gmail.com')->send(new MyTestEmail());
 });
+
+Route::get('/sendEmail', [emailController::class, 'mailSender'] );
