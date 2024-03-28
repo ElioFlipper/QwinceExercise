@@ -15,34 +15,34 @@ export default {
     },
 
     methods: {
-        sendEmail() {
+        // sendEmail() {
 
-            const userData = {
-                username: this.user.username,
-                name: this.user.name,
-                surname: this.user.surname,
-                email: this.user.email,
-                city: this.user.city,
-                activationStatus: this.user.activationStatus
-            };
+        //     const userData = {
+        //         username: this.user.username,
+        //         name: this.user.name,
+        //         surname: this.user.surname,
+        //         email: this.user.email,
+        //         city: this.user.city,
+        //         activationStatus: this.user.activationStatus
+        //     };
 
-            const queryString = new URLSearchParams(userData)
+        //     const queryString = new URLSearchParams(userData)
 
 
-            fetch("http://127.0.0.1:8000/api/sendEmail?" + queryString)
-                .then((response) => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then((data) => {
-                    this.users = data;
-                })
-                .catch((error) => {
-                    console.error("Error fetching users:", error);
-                });
-        },
+        //     fetch("http://127.0.0.1:8000/api/sendEmail?" + queryString)
+        //         .then((response) => {
+        //             if (!response.ok) {
+        //                 throw new Error('Network response was not ok');
+        //             }
+        //             return response.json();
+        //         })
+        //         .then((data) => {
+        //             this.users = data;
+        //         })
+        //         .catch((error) => {
+        //             console.error("Error fetching users:", error);
+        //         });
+        // },
 
         saveUser(event) {
             event.preventDefault();
@@ -65,8 +65,8 @@ export default {
 
                 body: JSON.stringify(userData)
             })
-                .then(data =>
-                    this.sendEmail())
+                // .then(data =>
+                //     this.sendEmail())
 
             this.$router.push({ name: 'home' })
 

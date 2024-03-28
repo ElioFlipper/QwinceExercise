@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Mail\userRegister;
 use App\Models\User;
+use App\Notifications\userRegistrationNotify;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 
 
 class UserController extends Controller
@@ -69,6 +71,19 @@ class UserController extends Controller
             'activationStatus' => $request->activationStatus,
             'date_of_submission' => Carbon::now()
         ]);
+
+
+        $email = $request->get('email');
+        $user = User::where('email', $email)->first();
+
+        if ($user) {
+            $notification = new userRegistrationNotify($user);
+            Notification::send($user, $notification);
+        } else {
+            return response()->json(['error' => 'email non trovata'], 404);
+        }
+
+
         return response()->json($user, 201);
     }
 
@@ -86,11 +101,11 @@ class UserController extends Controller
         return response()->json(['message' => 'Utente eliminato con successo']);
     }
 
-    public function mailSender(Request $request)
-    {
-        $email = $request->query('email');
-        $user = User::where('email', $email)->first();
-        $notification = new userRegister($user);
-        Mail::to($email)->send($notification);
-    }
+    // public function mailSender(Request $request)
+    // {
+    //     $email = $request->query('email');
+    //     $user = User::where('email', $email)->first();
+    //     $notification = new userRegister($user);
+    //     Mail::to($email)->send($notification);
+    // }
 }
