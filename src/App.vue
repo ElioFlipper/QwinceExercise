@@ -1,23 +1,14 @@
-<!-- <script>
-import Users from "./Users.vue"
-import UserDetail from "./UserDetail.vue";
+<script>
+import Navbar from "./Navbar.vue"
 export default {
   components: {
-    Users,
-    UserDetail
+    Navbar
   }
 }
-
 </script>
 
 <template>
-  <div id="app">
-   <Users />
-   <UserDetail />
-  </div>
-</template> -->
-
-<template>
+  <Navbar />
   <div id="app">
     <router-view />
   </div>

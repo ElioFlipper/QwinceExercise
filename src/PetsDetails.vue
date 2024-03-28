@@ -13,7 +13,7 @@ export default {
 
     methods: {
         getSinglePet(id) {
-            fetch(`http://127.0.0.1:8000/api/${id}/pets`)
+            fetch(`http://127.0.0.1:8000/api/users/${id}/pets`)
                 .then(response => response.json())
                 .then(data => {
                     this.pets = data

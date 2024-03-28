@@ -11,6 +11,10 @@ Route::get('/users', [UserController::class, 'index']);
 
 Route::get('/users/{id}', [UserController::class, 'show']);
 
+Route::get('/pets', [PetController::class, 'getPets']);
+
+Route::get('/users/{id}/pets', [PetController::class, 'getUsersPet']);
+
 Route::post('/register', [UserController::class, 'register']);
 
 Route::put('/modify/{id}', [UserController::class, 'modify']);
@@ -19,9 +23,8 @@ Route::delete('/delete/{id}', [UserController::class, 'delete']);
 
 Route::get('/filter', [UserController::class, 'filter']);
 
-Route::post('/{id}/petRegister', [PetController::class, 'petRegister']);
+Route::post('/users/{id}/pet', [PetController::class, 'storePet']);
 
-Route::get('/{id}/pets', [PetController::class, 'petShow']);
 
 // Route::get('/testroute', function() {
 

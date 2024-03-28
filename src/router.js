@@ -5,12 +5,16 @@ import ModifyUser from './ModifyUser.vue'
 import PetsRegister from './PetsRegister.vue'
 import PetsDetails from './PetsDetails.vue'
 import RegisterUser from './RegisterUser.vue'
+import Pets from './Pets.vue'
+import Subscriptions from './Subscriptions.vue'
 
 const routes = [
-  { path: '/', name: 'home', component: Users },
+  { path: '/users', name: 'users', component: Users },
   { path: '/user/:id', name: 'userDetail', component: UserDetail },
   { path: '/register ', name: 'register', component: RegisterUser },
   { path: '/modify/:id ', name: 'modify', component: ModifyUser },
+  { path: '/pets', name: 'pets', component: Pets },
+  { path: '/subscription', name: 'subscription', component: Subscriptions },
   { path: '/:id/petsRegister ', name: 'petsRegister', component: PetsRegister },
   { path: '/:id/petsDetails', name: 'petsDetails', component: PetsDetails }
 ]

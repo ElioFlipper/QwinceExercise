@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Log;
 class PetController extends Controller
 {
 
-    public function petRegister(Request $request, $id)
+    public function storePet(Request $request, $id)
     {
         $pet = Pets::create([
             'name' => $request->name,
@@ -22,7 +22,14 @@ class PetController extends Controller
     }
 
 
-    public function petShow($id)
+    public function getPets()
+    {
+        $pets = Pets::all();
+        return response()->json($pets);
+    }
+
+
+    public function getUsersPet($id)
     {
         $pets = Pets::where('user_id', $id)->get();
         if ($pets->isEmpty()) {
