@@ -7,6 +7,8 @@ import PetsDetails from './PetsDetails.vue'
 import RegisterUser from './RegisterUser.vue'
 import Pets from './Pets.vue'
 import Subscriptions from './Subscriptions.vue'
+import ModifySubscriptions from './ModifySubscriptions.vue'
+import AddSubscription from './components/AddSubscription.vue'
 
 const routes = [
   { path: '/users', name: 'users', component: Users },
@@ -15,6 +17,8 @@ const routes = [
   { path: '/modify/:id ', name: 'modify', component: ModifyUser },
   { path: '/pets', name: 'pets', component: Pets },
   { path: '/subscription', name: 'subscription', component: Subscriptions },
+  { path: '/subscription/new', name: 'AddSubscription', component: AddSubscription },
+  { path: '/subscription/:id', name: 'ModifySubscriptions', component: ModifySubscriptions },
   { path: '/:id/petsRegister ', name: 'petsRegister', component: PetsRegister },
   { path: '/:id/petsDetails', name: 'petsDetails', component: PetsDetails }
 ]

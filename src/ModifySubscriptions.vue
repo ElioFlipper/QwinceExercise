@@ -2,32 +2,32 @@
 export default {
     data() {
         return {
-            singleUser: {}
+            singleSubscription: {}
         }
     },
 
     mounted() {
         const id = this.$route.params.id;
-        this.getSingleUser(id)
+        this.getSingleSubscription(id)
     },
 
     methods: {
-        getSingleUser(id) {
-            fetch(`http://127.0.0.1:8000/api/users/${id}`)
+        getSingleSubscription(id) {
+            fetch(`http://127.0.0.1:8000/api/subscriptions/${id}`)
                 .then(response => response.json())
                 .then(data => {
-                    this.singleUser = data
+                    this.singleSubscription = data
                 })
         },
 
         handleSaveButton() {
             const id = this.$route.params.id;
-            fetch(`http://127.0.0.1:8000/api/modify/${id}`, {
+            fetch(`http://127.0.0.1:8000/api/modifySubscription/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(this.singleUser)
+                body: JSON.stringify(this.singleSubscription)
             })
                 .then(response => response.json())
                 .then(data => {
@@ -35,7 +35,7 @@ export default {
                         console.log(data)
                 })
 
-            this.$router.push({ name: 'modify' })
+            this.$router.push({ name: 'subscription' })
         },
 
        
@@ -45,18 +45,17 @@ export default {
 
 <template>
     <div class="modifyUserContainer">
-        <label>Username: </label>
-        <input type="text" v-model="singleUser.username">
         <label>Name: </label>
-        <input type="text" v-model="singleUser.name">
-        <label>Surname: </label>
-        <input type="text" v-model="singleUser.surname">
-        <label>Email: </label>
-        <input type="text" v-model="singleUser.email">
-        <label>City: </label>
-        <input type="text" v-model="singleUser.city">
-        <label>activationStatus: </label>
-        <input type="checkbox" v-model="singleUser.activationStatus">
+        <input type="text" v-model="singleSubscription.name">
+        <label>Slug: </label>
+        <input type="text" v-model="singleSubscription.slug">
+        <label>Duration: </label>
+        <input type="number" v-model="singleSubscription.duration">
+        <label>StartingDate: </label>
+        <input type="date" v-model="singleSubscription.startingDate">
+        <label>EndingDate: </label>
+        <input type="date" v-model="singleSubscription.endingDate">
+
         <button @click="handleSaveButton" class="saveButton">Save</button>
 
     </div>

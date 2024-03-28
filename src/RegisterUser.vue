@@ -68,7 +68,7 @@ export default {
                 // .then(data =>
                 //     this.sendEmail())
 
-            this.$router.push({ name: 'home' })
+            this.$router.push({ name: 'users' })
 
         },
     }

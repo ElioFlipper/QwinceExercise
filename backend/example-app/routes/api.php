@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\emailController;
 use App\Http\Controllers\PetController;
+use App\Http\Controllers\subscriptionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -33,3 +34,15 @@ Route::post('/users/{id}/pet', [PetController::class, 'storePet']);
 // });
 
 Route::get('/sendEmail', [UserController::class, 'mailSender']);
+
+
+
+Route::get('/subscriptions', [subscriptionController::class, 'getSubscription']);
+
+Route::get('/subscriptions/{id}', [subscriptionController::class, 'getSingleSubscription']);
+
+Route::post('/createSubscription', [subscriptionController::class, 'createSubscription']);
+
+Route::delete('/deleteSubscription/{id}', [subscriptionController::class, 'deleteSubscription']);
+
+Route::put('/modifySubscription/{id}', [subscriptionController::class,'modifySubscription']);
