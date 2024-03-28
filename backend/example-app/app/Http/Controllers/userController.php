@@ -72,17 +72,7 @@ class UserController extends Controller
             'date_of_submission' => Carbon::now()
         ]);
 
-
-        $email = $request->get('email');
-        $user = User::where('email', $email)->first();
-
-        if ($user) {
-            $notification = new userRegistrationNotify($user);
-            Notification::send($user, $notification);
-        } else {
-            return response()->json(['error' => 'email non trovata'], 404);
-        }
-
+        Notification::sendNow($user, new userRegistrationNotify($user));
 
         return response()->json($user, 201);
     }

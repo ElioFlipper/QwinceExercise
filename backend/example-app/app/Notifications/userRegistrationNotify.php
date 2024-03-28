@@ -39,7 +39,7 @@ class userRegistrationNotify extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)->view(
-            ['test-email'],
+            'test-email',
             [
                 'username' => $this->user->username,
                 'name' => $this->user->name,
@@ -51,7 +51,7 @@ class userRegistrationNotify extends Notification implements ShouldQueue
         );
     }
 
-    
+
 
     /**
      * Get the array representation of the notification.
