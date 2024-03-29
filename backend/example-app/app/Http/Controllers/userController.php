@@ -136,4 +136,21 @@ class UserController extends Controller
         return response()->json($subscriptions);
     }
 
+    public function getUsersBySubscription($subscriptionId)
+    {
+        $subscription = Subscription::find($subscriptionId);
+
+        if (!$subscription) {
+            return response()->json(['message' => 'Sottoscrizione non trovata'], 404);
+        }
+
+        $users = $subscription->users;
+
+        if ($users->isEmpty()) {
+            return response()->json(['message' => 'Nessun utente trovato per questa sottoscrizione'], 404);
+        }
+
+        return response()->json($users);
+    }
+
 }

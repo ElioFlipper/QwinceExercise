@@ -2,13 +2,15 @@
 export default {
     data() {
         return {
-            singleUser: {}
+            singleUser: {},
+            subscription: []
         }
     },
 
     mounted() {
         const id = this.$route.params.id;
         this.getSingleUser(id);
+        this.getUsersSubscription(id);
     },
 
     methods: {
@@ -53,20 +55,100 @@ export default {
         handlePetDetailButton() {
             this.$router.push({ name: 'petsDetails', params: { id: this.singleUser.id } })
         },
+        handleAddSubscriptionButton() {
+            this.$router.push({ name: 'addSubToUser', params: { id: this.singleUser.id } })
+        },
+        getUsersSubscription() {
+            const id = this.$route.params.id;
+            fetch(`http://localhost:8000/api/users/${id}/subscriptions`)
+                .then(response => response.json())
+                .then(data => {
+                    this.subscription = data
+                })
+        },
+        handleRemoveSubscription(sub) {
+            const user_id = this.$route.params.id;
+            const subscription_id = sub.id;
+            console.log(user_id, subscription_id);
 
+                fetch(`http://localhost:8000/api/users/${user_id}/subscriptions/${subscription_id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        this.subscription = data
+                    })
+        }
     }
 }
 </script>
 
 <template>
     <div class="userDetailContainer">
-        <p> Username: {{ singleUser.username }}</p>
-        <p>Name: {{ singleUser.name }}</p>
-        <p>Surname: {{ singleUser.surname }}</p>
-        <p>Email: {{ singleUser.email }}</p>
-        <p>City: {{ singleUser.city }}</p>
-        <p>Date of submission: {{ singleUser.date_of_submission }}</p>
-        <p>activationStatus: {{ singleUser.activationStatus }}</p>
+        <table class="userDetailTable">
+            <tr>
+                <th>Username:</th>
+                <td>{{ singleUser.username }}</td>
+            </tr>
+            <tr>
+                <th>Name:</th>
+                <td>{{ singleUser.name }}</td>
+            </tr>
+            <tr>
+                <th>Surname:</th>
+                <td>{{ singleUser.surname }}</td>
+            </tr>
+            <tr>
+                <th>Email:</th>
+                <td>{{ singleUser.email }}</td>
+            </tr>
+            <tr>
+                <th>City:</th>
+                <td>{{ singleUser.city }}</td>
+            </tr>
+            <tr>
+                <th>Date of submission:</th>
+                <td>{{ singleUser.date_of_submission }}</td>
+            </tr>
+            <tr>
+                <th>Activation Status:</th>
+                <td>{{ singleUser.activationStatus }}</td>
+            </tr>
+        </table>
+        <div v-for="sub in subscription" class="subContainer">
+            <table class="userDetailTable">
+                <tr>
+                    <th>Nome dell'abbonamento:</th>
+                    <td>{{ sub.name }}</td>
+                </tr>
+                <tr>
+                    <th>Slug dell'abbonamento:</th>
+                    <td>{{ sub.slug }}</td>
+                </tr>
+                <tr>
+                    <th>Durata dell'abbonamento (mesi):</th>
+                    <td>{{ sub.duration }}</td>
+                </tr>
+                <tr>
+                    <th>Data di inizio:</th>
+                    <td>{{ sub.startingDate }}</td>
+                </tr>
+                <tr>
+                    <th>Data fine:</th>
+                    <td>{{ sub.endingDate }}</td>
+                </tr>
+                <tr>
+                    <th>Action:</th>
+                    <td>
+                        <button class="removeButton" @click="handleRemoveSubscription(sub)">Remove</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
         <div class="buttonsContainer">
             <button class="modifyButton" @click="handleModifyButton">Modify</button>
             <button class="modifyButton" @click="handleRemoveButton">Remove</button>
@@ -75,9 +157,11 @@ export default {
             <button class="modifyButton" v-else @click="handleActiveButton">Active</button>
             <button class="modifyButton" @click="handlePetRegisterButton">Add a pet</button>
             <button class="modifyButton" @click="handlePetDetailButton">Show pets</button>
+            <button class="modifyButton" @click="handleAddSubscriptionButton">Add a subscription</button>
         </div>
     </div>
 </template>
+
 
 <style>
 .userDetailContainer {
@@ -121,5 +205,32 @@ export default {
 .buttonsContainer {
     display: flex;
     width: 40%;
+}
+
+.userDetailTable {
+    width: 100%;
+}
+
+.userDetailTable:nth-child(odd) {
+    background-color: rgba(134, 184, 134, 0.273);
+}
+
+.userDetailTable th,
+.userDetailTable td {
+    padding: 8px;
+    text-align: center;
+}
+
+.userDetailTable th {
+    background-color: #f2f2f2;
+}
+
+.userDetailTable tbody tr:nth-child(odd) {
+    background-color: rgba(134, 184, 134, 0.273);
+}
+
+.subContainer {
+    margin-top: 2rem;
+    margin-bottom: 2rem
 }
 </style>

@@ -39,6 +39,10 @@ export default {
         handleAddButton() {
             this.$router.push({ name: "AddSubscription" })
             console.log("cliccato su add a new");
+        },
+
+        handleDetailsButton(id) {
+            this.$router.push({ name: "subscriptionDetail", params: { id: id } })
         }
     },
 
@@ -74,6 +78,7 @@ export default {
                 <th>Ending Date</th>
                 <th>Modify</th>
                 <th>Remove</th>
+                <th>Details</th>
             </tr>
         </thead>
         <tbody>
@@ -85,6 +90,7 @@ export default {
                 <td>{{ subscription.endingDate }}</td>
                 <td><button @click="handleModifyButton(subscription.id)">Modify</button></td>
                 <td><button @click="handleRemoveButton(subscription.id)">Remove</button></td>
+                <td><button @click="handleDetailsButton(subscription.id)">Details</button></td>
             </tr>
         </tbody>
     </table>
