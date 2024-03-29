@@ -81,7 +81,9 @@ export default {
                     .then(data => {
                         this.subscription = data
                     })
+                    .then(data =>window.location.reload())
         }
+        
     }
 }
 </script>

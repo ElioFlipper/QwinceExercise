@@ -10,6 +10,14 @@ export default {
             }
         }
     },
+    
+    computed: {
+        availableSubscriptions() {
+            return this.allSubs.filter(sub => !this.singleSub.find(s => s.id === sub.id));
+        }
+    },
+
+
     methods: {
         getSubscription() {
             fetch("http://127.0.0.1:8000/api/subscriptions")
@@ -65,7 +73,7 @@ export default {
     <div class="addSubToUserContainer">
         <select name="" id="" v-model="subscriptionSelect.id">
             <option value="" disabled selected>Scegli un abbonamento</option>
-            <option v-for="(sub, index) in allSubs" :key="index" :value="sub.id">{{ sub.name }}
+            <option v-for="(sub, index) in availableSubscriptions" :key="index" :value="sub.id">{{ sub.name }}
             </option>
         </select>
         <button @click="handleAddSubscriptionButton">Add subscription</button>
