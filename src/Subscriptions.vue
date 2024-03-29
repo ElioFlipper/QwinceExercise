@@ -32,6 +32,8 @@ export default {
                 .then(data => {
                     this.subscriptions = data
                 })
+                .catch(error => console.error("Error deleting subscription:", error))
+                .then(data => { window.location.reload() })
         },
 
         handleAddButton() {

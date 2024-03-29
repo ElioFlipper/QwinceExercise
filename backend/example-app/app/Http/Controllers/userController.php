@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\userRegister;
+use App\Models\Subscription;
 use App\Models\User;
 use App\Notifications\userRegistrationNotify;
 use Illuminate\Http\Request;
@@ -98,4 +99,41 @@ class UserController extends Controller
     //     $notification = new userRegister($user);
     //     Mail::to($email)->send($notification);
     // }
+
+    public function addSubscriptionToUser($userId, $subscriptionId)
+    {
+        $user = User::find($userId);
+        if (!$user) {
+            return response()->json(['message' => 'Utente non trovato'], 404);
+        }
+        $user->subscriptions()->attach($subscriptionId);
+        return response()->json(['message' => 'Relazione aggiunta con successo']);
+    }
+
+    public function removeSubscriptionFromUser($userId, $subscriptionId)
+    {
+        $user = User::find($userId);
+        if (!$user) {
+            return response()->json(['message' => 'Utente non trovato'], 404);
+        }
+        $user->subscriptions()->detach($subscriptionId);
+        return response()->json(['message' => 'Relazione rimossa con successo']);
+    }
+
+    public function getUsersSubscriptions($id)
+    {
+        $user = User::find($id);
+        if (!$user) {
+            return response()->json(['message' => 'Utente non trovato'], 404);
+        }
+
+        $subscriptions = $user->subscriptions;
+
+        if ($subscriptions->isEmpty()) {
+            return response()->json(['message' => 'Nessuna relazione trovata per questo utente'], 404);
+        }
+
+        return response()->json($subscriptions);
+    }
+
 }

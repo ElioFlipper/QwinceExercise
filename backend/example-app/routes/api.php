@@ -45,4 +45,12 @@ Route::post('/createSubscription', [subscriptionController::class, 'createSubscr
 
 Route::delete('/deleteSubscription/{id}', [subscriptionController::class, 'deleteSubscription']);
 
-Route::put('/modifySubscription/{id}', [subscriptionController::class,'modifySubscription']);
+Route::put('/modifySubscription/{id}', [subscriptionController::class, 'modifySubscription']);
+
+
+Route::get('/users/{id}/subscriptions', [UserController::class, 'getUsersSubscriptions']);
+
+Route::post('/users/{userId}/subscriptions/{subscriptionId}', [UserController::class, 'addSubscriptionToUser']);
+
+Route::delete('/users/{userId}/subscriptions/{subscriptionId}', [UserController::class, 'removeSubscriptionFromUser']);
+
