@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\emailController;
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\subscriptionController;
@@ -56,5 +57,6 @@ Route::post('/users/{userId}/subscriptions/{subscriptionId}', [UserController::c
 
 Route::delete('/users/{userId}/subscriptions/{subscriptionId}', [UserController::class, 'removeSubscriptionFromUser']);
 
-
-
+Route::post('register', [AuthController::class, 'register'])->middleware('auth:sanctum');
+Route::post('login', [AuthController::class, 'login'])->middleware('auth:sanctum');
+Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
