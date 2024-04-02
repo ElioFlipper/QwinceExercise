@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, HasApiTokens, HasFactory;
     protected $fillable = [
         'username',
         'name',
@@ -16,7 +18,9 @@ class User extends Authenticatable
         'email',
         'city',
         'date_of_submission',
-        'activationStatus'
+        'activationStatus',
+        'password',
+        'is_admin'
     ];
 
     public function pets()

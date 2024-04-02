@@ -9,7 +9,9 @@ export default {
                 surname: '',
                 email: '',
                 city: '',
-                activationStatus: false
+                activationStatus: '',
+                password:'',
+                is_admin: ''
             }
         }
     },
@@ -53,7 +55,9 @@ export default {
                 surname: this.user.surname,
                 email: this.user.email,
                 city: this.user.city,
-                activationStatus: this.user.activationStatus
+                activationStatus: this.user.activationStatus,
+                is_admin: this.user.is_admin,
+                password: this.user.password
             };
 
 
@@ -61,6 +65,7 @@ export default {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    'Accept': 'application/json',
                 },
 
                 body: JSON.stringify(userData)
@@ -71,6 +76,10 @@ export default {
             this.$router.push({ name: 'users' })
 
         },
+
+        handleLogin() {
+            this.$router.push({ name: 'login' })
+        }
     }
 }
 </script>
@@ -78,20 +87,26 @@ export default {
 <template>
     <div class="formContainer">
         <form @submit.prevent="saveUser">
+            <h1>Register</h1>
             <label for="">Username:</label>
             <input type="text" name="username" v-model="user.username">
             <label for="">Name:</label>
             <input type="text" name="name" v-model="user.name">
             <label for="">Surname:</label>
             <input type="text" name="surname" v-model="user.surname">
+            <label for="">Password:</label>
+            <input type="password" name="password" v-model="user.password">
             <label for="">Email:</label>
             <input type="text" name="email" v-model="user.email">
             <label for="">City:</label>
             <input type="text" name="city" v-model="user.city">
             <label for="">Activation Status:</label>
             <input type="checkbox" name="activationStatus" v-model="user.activationStatus">
+            <label for="">Admin:</label>
+            <input type="checkbox" name="is_admin" v-model="user.is_admin">
             <button class="saveButton" type="submit">Save</button>
         </form>
+        <h3>Are you already registered? <span class="login" @click="handleLogin">Login!</span></h3>
     </div>
 </template>
 
@@ -123,6 +138,11 @@ select {
     margin: 0 auto;
     margin-top: 1rem;
     border: none;
+}
+
+.login{
+    cursor:pointer;
+    color: red;
 }
 
 .saveButton:hover {

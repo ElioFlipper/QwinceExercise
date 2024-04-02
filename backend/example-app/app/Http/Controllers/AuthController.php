@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -26,10 +27,11 @@ class AuthController extends Controller
             'username' => 'required|string',
             'surname' => 'required|string',
             'city' => 'required|string',
-            'date_of_submission' => 'required|string',
-            'activationStatus' => 'required|string',
+            'date_of_submission' => 'date',
+            'activationStatus' => 'required|boolean',
             'email' => 'required|string|email|unique:users',
-            'password' => 'required|min:8'
+            'password' => 'required|min:8',
+            'is_admin' => 'required|boolean',
         ]);
 
         $user = User::create([
@@ -37,11 +39,13 @@ class AuthController extends Controller
             'username' => $registerUserData['username'],
             'city' => $registerUserData['city'],
             'surname' => $registerUserData['surname'],
-            'date_of_submission' => $registerUserData['date_of_submission'],
+            'date_of_submission' => Carbon::now(),
             'activationStatus' => $registerUserData['activationStatus'],
+            'is_admin' => $registerUserData['is_admin'],
             'email' => $registerUserData['email'],
             'password' => Hash::make($registerUserData['password']),
         ]);
+
 
         return response()->json([
             'message' => 'User Created ',
@@ -66,11 +70,16 @@ class AuthController extends Controller
         ]);
     }
 
-    public function logout(){
-        auth()->user()->tokens()->delete();
-    
+    public function logout(Request $request)
+    {
+        $user = $request->user(); // Ottieni l'utente autenticato
+
+        if ($user) {
+            $user->tokens()->delete(); // Elimina tutti i token dell'utente
+        }
+
         return response()->json([
-          "message"=>"logged out"
+            "message" => "Logged out successfully"
         ]);
     }
 }

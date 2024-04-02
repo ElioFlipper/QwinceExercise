@@ -17,7 +17,7 @@ Route::get('/pets', [PetController::class, 'getPets']);
 
 Route::get('/users/{id}/pets', [PetController::class, 'getUsersPet']);
 
-Route::post('/register', [UserController::class, 'register']);
+// Route::post('/register', [UserController::class, 'register']);
 
 Route::put('/modify/{id}', [UserController::class, 'modify']);
 
@@ -57,6 +57,10 @@ Route::post('/users/{userId}/subscriptions/{subscriptionId}', [UserController::c
 
 Route::delete('/users/{userId}/subscriptions/{subscriptionId}', [UserController::class, 'removeSubscriptionFromUser']);
 
-Route::post('register', [AuthController::class, 'register'])->middleware('auth:sanctum');
-Route::post('login', [AuthController::class, 'login'])->middleware('auth:sanctum');
-Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+
+
+Route::post('/register', [AuthController::class, 'register']);
+
+Route::post('/login', [AuthController::class, 'login']);
+
+Route::post('/logout', [AuthController::class, 'logout']);
