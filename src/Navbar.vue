@@ -9,6 +9,9 @@ export default {
         },
         handleSubscriptionClick() {
             this.$router.push({ name: 'subscription' })
+        },
+        handleLogin() {
+            this.$router.push({ name: 'login' })
         }
     }
 }
@@ -19,6 +22,7 @@ export default {
         <p @click="handleUsersClick">Users</p>
         <p @click="handlePetClick">Pet</p>
         <p @click="handleSubscriptionClick">Subscriptions</p>
+        <p @click="handleLogin">Login</p>
     </div>
 </template>
 

@@ -17,22 +17,36 @@ const routes = [
   { path: '/users', name: 'users', component: Users },
   { path: '/user/:id', name: 'userDetail', component: UserDetail },
   { path: '/', name: 'register', component: RegisterUser },
-  { path: '/modify/:id ', name: 'modify', component: ModifyUser },
+  { path: '/modify/:id', name: 'modify', component: ModifyUser },
   { path: '/pets', name: 'pets', component: Pets },
   { path: '/subscription', name: 'subscription', component: Subscriptions },
   { path: '/subscription/:id', name: 'subscriptionDetail', component: SubscriptionsDetail },
   { path: '/subscription/new', name: 'AddSubscription', component: AddSubscription },
   { path: '/user/:id/subscription/new', name: 'addSubToUser', component: AddSubToUser },
   { path: '/subscription/:id', name: 'ModifySubscriptions', component: ModifySubscriptions },
-  { path: '/:id/petsRegister ', name: 'petsRegister', component: PetsRegister },
+  { path: '/:id/petsRegister', name: 'petsRegister', component: PetsRegister },
   { path: '/:id/petsDetails', name: 'petsDetails', component: PetsDetails },
   { path: '/login', name: 'login', component: Login },
 ]
-
 
 const router = createRouter({
   history: createWebHistory(),
   routes
 })
+
+router.beforeEach((to, from, next) => {
+  const publicRoutes = ['login', 'register'];
+
+  if (publicRoutes.includes(to.name)) {
+    next();
+  } else {
+    const token = localStorage.getItem('token');
+    if (token) {
+      next();
+    } else {
+      next({ name: 'login' });
+    }
+  }
+});
 
 export default router
