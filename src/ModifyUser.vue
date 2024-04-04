@@ -13,7 +13,13 @@ export default {
 
     methods: {
         getSingleUser(id) {
-            fetch(`http://127.0.0.1:8000/api/users/${id}`)
+            const accessToken = localStorage.getItem("token");
+            fetch(`http://127.0.0.1:8000/api/users/${id}`, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + accessToken
+                }
+            })
                 .then(response => response.json())
                 .then(data => {
                     this.singleUser = data
@@ -22,10 +28,13 @@ export default {
 
         handleSaveButton() {
             const id = this.$route.params.id;
+            const accessToken = localStorage.getItem("token");
             fetch(`http://127.0.0.1:8000/api/modify/${id}`, {
                 method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + accessToken
                 },
                 body: JSON.stringify(this.singleUser)
             })
@@ -38,7 +47,7 @@ export default {
             this.$router.push({ name: 'modify' })
         },
 
-       
+
     }
 }
 </script>
@@ -67,6 +76,7 @@ export default {
     display: flex;
     flex-direction: column;
 }
+
 .modifyUserContainer {
     background-color: rgba(134, 184, 134, 0.273);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;

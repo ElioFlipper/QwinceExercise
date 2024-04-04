@@ -10,7 +10,7 @@ export default {
                 email: '',
                 city: '',
                 activationStatus: '',
-                password:'',
+                password: '',
                 is_admin: ''
             }
         }
@@ -48,6 +48,7 @@ export default {
 
         saveUser(event) {
             event.preventDefault();
+            const accessToken = localStorage.getItem("token");
 
             const userData = {
                 username: this.user.username,
@@ -66,12 +67,13 @@ export default {
                 headers: {
                     "Content-Type": "application/json",
                     'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + accessToken
                 },
 
                 body: JSON.stringify(userData)
             })
-                // .then(data =>
-                //     this.sendEmail())
+            // .then(data =>
+            //     this.sendEmail())
 
             this.$router.push({ name: 'users' })
 
@@ -140,8 +142,8 @@ select {
     border: none;
 }
 
-.login{
-    cursor:pointer;
+.login {
+    cursor: pointer;
     color: red;
 }
 

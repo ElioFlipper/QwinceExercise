@@ -13,7 +13,13 @@ export default {
 
     methods: {
         getSinglePet(id) {
-            fetch(`http://127.0.0.1:8000/api/users/${id}/pets`)
+            const accessToken = localStorage.getItem("token");
+            fetch(`http://127.0.0.1:8000/api/users/${id}/pets`, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + accessToken
+                }
+            })
                 .then(response => response.json())
                 .then(data => {
                     this.pets = data
@@ -41,6 +47,7 @@ export default {
     align-items: center;
     width: 100vw;
 }
+
 .userPetContainer span {
     font-weight: bold;
 }
@@ -55,5 +62,4 @@ export default {
     list-style-type: none;
     width: 100%;
 }
-
 </style>

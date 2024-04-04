@@ -15,7 +15,13 @@ export default {
 
     methods: {
         getSingleUser(id) {
-            fetch(`http://127.0.0.1:8000/api/users/${id}`)
+            const accessToken = localStorage.getItem("token");
+            fetch(`http://127.0.0.1:8000/api/users/${id}`, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + accessToken
+                }
+            })
                 .then(response => response.json())
                 .then(data => {
                     this.singleUser = data
@@ -28,17 +34,20 @@ export default {
 
         handleRemoveButton() {
             const id = this.$route.params.id;
+            const accessToken = localStorage.getItem("token");
             fetch(`http://127.0.0.1:8000/api/delete/${id}`, {
                 method: 'DELETE',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + accessToken
                 }
             })
                 .then(response => response.json())
                 .then(data => {
                     this.singleUser = data
                 })
-            this.$router.push({ name: 'home' })
+            this.$router.push({ name: 'users' })
         },
 
         handleDeactiveButton() {
@@ -60,7 +69,13 @@ export default {
         },
         getUsersSubscription() {
             const id = this.$route.params.id;
-            fetch(`http://localhost:8000/api/users/${id}/subscriptions`)
+            const accessToken = localStorage.getItem("token");
+            fetch(`http://localhost:8000/api/users/${id}/subscriptions`, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + accessToken
+                }
+            })
                 .then(response => response.json())
                 .then(data => {
                     this.subscription = data
@@ -69,21 +84,24 @@ export default {
         handleRemoveSubscription(sub) {
             const user_id = this.$route.params.id;
             const subscription_id = sub.id;
+            const accessToken = localStorage.getItem("token");
             console.log(user_id, subscription_id);
 
-                fetch(`http://localhost:8000/api/users/${user_id}/subscriptions/${subscription_id}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
+            fetch(`http://localhost:8000/api/users/${user_id}/subscriptions/${subscription_id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + accessToken
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    this.subscription = data
                 })
-                    .then(response => response.json())
-                    .then(data => {
-                        this.subscription = data
-                    })
-                    .then(data =>window.location.reload())
+                .then(data => window.location.reload())
         }
-        
+
     }
 }
 </script>

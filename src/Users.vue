@@ -93,15 +93,28 @@ export default {
 
     methods: {
         getUsers() {
-            fetch("http://127.0.0.1:8000/api/users")
-                .then((response) => response.json())
-                .then((data) => {
-                    this.users = data;
+            const accessToken = localStorage.getItem("token");
+
+                fetch("http://127.0.0.1:8000/api/users", {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Authorization': 'Bearer ' + accessToken
+                    }
                 })
-                .catch((error) => {
-                    console.error("Error fetching users:", error);
-                });
-        },
+                    .then((response) => {
+                        if (!response.ok) {
+                            throw new Error('Failed to fetch users');
+                        }
+                        return response.json();
+                    })
+                    .then((data) => {
+                        this.users = data;
+                    })
+                    .catch((error) => {
+                        console.error("Error fetching users:", error);
+                    });
+        }
+        ,
 
         openProfile(id) {
             this.$router.push({ name: 'userDetail', params: { id: id } });
@@ -258,7 +271,7 @@ select {
 .userTable th,
 .userTable td {
     padding: 8px;
-    text-align: center;    
+    text-align: center;
 }
 
 .userTable th {
@@ -268,5 +281,4 @@ select {
 .userTable tbody tr:nth-child(odd) {
     background-color: rgba(134, 184, 134, 0.273);
 }
-
 </style>

@@ -9,23 +9,54 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Mail\MyTestEmail;
 
-Route::get('/users', [UserController::class, 'index']);
 
-Route::get('/users/{id}', [UserController::class, 'show']);
+Route::post('/register', [AuthController::class, 'register']);
 
-Route::get('/pets', [PetController::class, 'getPets']);
+Route::post('/login', [AuthController::class, 'login']);
 
-Route::get('/users/{id}/pets', [PetController::class, 'getUsersPet']);
+Route::post('/logout', [AuthController::class, 'logout']);
 
-// Route::post('/register', [UserController::class, 'register']);
+Route::get('/sendEmail', [UserController::class, 'mailSender']);
 
-Route::put('/modify/{id}', [UserController::class, 'modify']);
 
-Route::delete('/delete/{id}', [UserController::class, 'delete']);
 
-Route::get('/filter', [UserController::class, 'filter']);
+Route::middleware('auth:api')->group(function () {
 
-Route::post('/users/{id}/pet', [PetController::class, 'storePet']);
+    Route::put('/modify/{id}', [UserController::class, 'modify']);
+
+    Route::delete('/delete/{id}', [UserController::class, 'delete']);
+
+    Route::get('/subscriptions', [subscriptionController::class, 'getSubscription']);
+
+    Route::get('/subscriptions/{id}', [subscriptionController::class, 'getSingleSubscription']);
+
+    Route::post('/createSubscription', [subscriptionController::class, 'createSubscription']);
+
+    Route::delete('/deleteSubscription/{id}', [subscriptionController::class, 'deleteSubscription']);
+
+    Route::put('/modifySubscription/{id}', [subscriptionController::class, 'modifySubscription']);
+
+    Route::get('/users/{id}/subscriptions', [UserController::class, 'getUsersSubscriptions']);
+
+    Route::get('/subscriptions/{subscriptionId}/users', [UserController::class, 'getUsersBySubscription']);
+
+    Route::post('/users/{userId}/subscriptions/{subscriptionId}', [UserController::class, 'addSubscriptionToUser']);
+
+    Route::delete('/users/{userId}/subscriptions/{subscriptionId}', [UserController::class, 'removeSubscriptionFromUser']);
+
+    Route::get('/users/{id}', [UserController::class, 'show']);
+
+    Route::get('/pets', [PetController::class, 'getPets']);
+
+    Route::get('/users/{id}/pets', [PetController::class, 'getUsersPet']);
+
+    Route::get('/filter', [UserController::class, 'filter']);
+
+    Route::post('/users/{id}/pet', [PetController::class, 'storePet']);
+
+    Route::get('/users', [UserController::class, 'index']);
+    
+});
 
 
 // Route::get('/testroute', function() {
@@ -33,34 +64,3 @@ Route::post('/users/{id}/pet', [PetController::class, 'storePet']);
 //     // The email sending is done using the to method on the Mail facade
 //     Mail::to('elio.sanfratello@gmail.com')->send(new MyTestEmail());
 // });
-
-Route::get('/sendEmail', [UserController::class, 'mailSender']);
-
-
-
-Route::get('/subscriptions', [subscriptionController::class, 'getSubscription']);
-
-Route::get('/subscriptions/{id}', [subscriptionController::class, 'getSingleSubscription']);
-
-Route::post('/createSubscription', [subscriptionController::class, 'createSubscription']);
-
-Route::delete('/deleteSubscription/{id}', [subscriptionController::class, 'deleteSubscription']);
-
-Route::put('/modifySubscription/{id}', [subscriptionController::class, 'modifySubscription']);
-
-
-Route::get('/users/{id}/subscriptions', [UserController::class, 'getUsersSubscriptions']);
-
-Route::get('/subscriptions/{subscriptionId}/users', [UserController::class, 'getUsersBySubscription']);
-
-Route::post('/users/{userId}/subscriptions/{subscriptionId}', [UserController::class, 'addSubscriptionToUser']);
-
-Route::delete('/users/{userId}/subscriptions/{subscriptionId}', [UserController::class, 'removeSubscriptionFromUser']);
-
-
-
-Route::post('/register', [AuthController::class, 'register']);
-
-Route::post('/login', [AuthController::class, 'login']);
-
-Route::post('/logout', [AuthController::class, 'logout']);

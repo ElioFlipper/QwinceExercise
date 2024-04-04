@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Notification;
 
 class UserController extends Controller
 {
+
     public function index()
     {
         $users = User::all();

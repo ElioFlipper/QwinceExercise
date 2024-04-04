@@ -13,7 +13,13 @@ export default {
 
     methods: {
         getSingleSubscription(id) {
-            fetch(`http://127.0.0.1:8000/api/subscriptions/${id}`)
+            const accessToken = localStorage.getItem("token");
+            fetch(`http://127.0.0.1:8000/api/subscriptions/${id}`, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + accessToken
+                }
+            })
                 .then(response => response.json())
                 .then(data => {
                     this.singleSubscription = data
@@ -22,10 +28,13 @@ export default {
 
         handleSaveButton() {
             const id = this.$route.params.id;
+            const accessToken = localStorage.getItem("token");
             fetch(`http://127.0.0.1:8000/api/modifySubscription/${id}`, {
                 method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + accessToken
                 },
                 body: JSON.stringify(this.singleSubscription)
             })
@@ -38,7 +47,7 @@ export default {
             this.$router.push({ name: 'subscription' })
         },
 
-       
+
     }
 }
 </script>
@@ -66,6 +75,7 @@ export default {
     display: flex;
     flex-direction: column;
 }
+
 .modifyUserContainer {
     background-color: rgba(134, 184, 134, 0.273);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;

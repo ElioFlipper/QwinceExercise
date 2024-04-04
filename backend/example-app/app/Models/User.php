@@ -6,11 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Laravel\Sanctum\HasApiTokens;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use Notifiable, HasApiTokens, HasFactory;
+    use Notifiable, HasFactory, HasApiTokens;
+
     protected $fillable = [
         'username',
         'name',
@@ -37,10 +38,6 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Subscription::class)->withTimestamps();
     }
-
-
-
-
 }
 
 

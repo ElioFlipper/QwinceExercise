@@ -47,9 +47,9 @@ class AuthController extends Controller
         ]);
 
 
-        return response()->json([
-            'message' => 'User Created ',
-        ]);
+        $token = $user->createToken('token')->accessToken;
+
+        return response()->json(['token' => $token], 200);
     }
 
     public function login(Request $request)
@@ -58,24 +58,22 @@ class AuthController extends Controller
             'email' => 'required|string|email',
             'password' => 'required|min:8'
         ]);
-        $user = User::where('email', $loginUserData['email'])->first();
-        if (!$user || !Hash::check($loginUserData['password'], $user->password)) {
-            return response()->json([
-                'message' => 'Invalid Credentials'
-            ], 401);
+
+        if (auth()->attempt($loginUserData)) {
+            $token = auth()->user()->createToken('token')->accessToken;
+            return response()->json(['token' => $token], 200);
+
+        } else {
+            return response()->json(['error' => 'UnAuthorised'], 401);
         }
-        $token = $user->createToken($user->name . '-AuthToken')->plainTextToken;
-        return response()->json([
-            'access_token' => $token,
-        ]);
     }
 
     public function logout(Request $request)
     {
-        $user = $request->user(); // Ottieni l'utente autenticato
+        $user = $request->user();
 
         if ($user) {
-            $user->tokens()->delete(); // Elimina tutti i token dell'utente
+            $user->tokens()->delete();
         }
 
         return response()->json([

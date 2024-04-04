@@ -8,7 +8,13 @@ export default {
 
     methods: {
         getSubscription() {
-            fetch("http://127.0.0.1:8000/api/subscriptions")
+            const accessToken = localStorage.getItem("token");
+            fetch("http://127.0.0.1:8000/api/subscriptions", {
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + accessToken
+                }
+            })
                 .then((response) => response.json())
                 .then((data) => {
                     this.subscriptions = data;
@@ -22,10 +28,13 @@ export default {
         },
 
         handleRemoveButton(id) {
+            const accessToken = localStorage.getItem("token");
             fetch(`http://127.0.0.1:8000/api/deleteSubscription/${id}`, {
                 method: 'DELETE',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + accessToken
                 }
             })
                 .then(response => response.json())

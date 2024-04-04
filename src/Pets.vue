@@ -9,14 +9,26 @@ export default {
 
     methods: {
         getPets() {
-            fetch("http://127.0.0.1:8000/api/pets")
+            const accessToken = localStorage.getItem("token")
+            fetch("http://127.0.0.1:8000/api/pets", {
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + accessToken
+                }
+            })
                 .then(response => response.json())
                 .then((data) => this.pets = data)
                 .catch((error) => console.log(error))
         },
 
         getUsers() {
-            fetch("http://127.0.0.1:8000/api/users")
+            const accessToken = localStorage.getItem("token")
+            fetch("http://127.0.0.1:8000/api/users", {
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + accessToken
+                }
+            })
                 .then((response) => response.json())
                 .then((data) => {
                     this.users = data;
@@ -100,7 +112,7 @@ export default {
 
 .ownerButton {
     border-radius: 3px;
-    background-color:whitesmoke;
+    background-color: whitesmoke;
     margin: 0 auto;
     padding: .5rem;
     border: none;

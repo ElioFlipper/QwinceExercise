@@ -20,12 +20,14 @@ export default {
             };
 
             const id = this.$route.params.id;
-
+            const accessToken = localStorage.getItem("token");
 
             fetch(`http://127.0.0.1:8000/api/users/${id}/pet`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + accessToken
                 },
 
                 body: JSON.stringify(petData)

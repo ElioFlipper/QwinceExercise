@@ -10,7 +10,7 @@ export default {
             }
         }
     },
-    
+
     computed: {
         availableSubscriptions() {
             return this.allSubs.filter(sub => !this.singleSub.find(s => s.id === sub.id));
@@ -20,7 +20,13 @@ export default {
 
     methods: {
         getSubscription() {
-            fetch("http://127.0.0.1:8000/api/subscriptions")
+            const accessToken = localStorage.getItem("token");
+            fetch("http://127.0.0.1:8000/api/subscriptions", {
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + accessToken
+                }
+            })
                 .then((response) => response.json())
                 .then((data) => {
                     this.allSubs = data;
@@ -31,7 +37,13 @@ export default {
 
         getUsersSubscription() {
             const id = this.$route.params.id;
-            fetch(`http://localhost:8000/api/users/${id}/subscriptions`)
+            const accessToken = localStorage.getItem("token");
+            fetch(`http://localhost:8000/api/users/${id}/subscriptions`, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer' + accessToken
+                }
+            })
                 .then(response => response.json())
                 .then(data => {
                     this.singleSub = data
@@ -46,10 +58,15 @@ export default {
             const userId = this.$route.params.id;
             const subscriptionId = this.subscriptionSelect.id
             console.log(subscriptionId);
+            const accessToken = localStorage.getItem("token");
 
             fetch(`http://localhost:8000/api/users/${userId}/subscriptions/${subscriptionId}`, {
                 'method': 'POST',
-                headers: { 'content-type': 'application/json' },
+                headers: {
+                    'content-type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + accessToken
+                },
                 body: JSON.stringify(subData)
             })
                 .then(response => {

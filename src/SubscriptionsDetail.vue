@@ -10,7 +10,13 @@ export default {
     methods: {
         getSubscriptionById() {
             const id = this.$route.params.id;
-            fetch(`http://127.0.0.1:8000/api/subscriptions/${id}`)
+            const accessToken = localStorage.getItem("token");
+            fetch(`http://127.0.0.1:8000/api/subscriptions/${id}`, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + accessToken
+                }
+            })
                 .then((response) => response.json())
                 .then((data) => {
                     this.subscriptions = data;
@@ -21,7 +27,13 @@ export default {
 
         getUsersBySubscription() {
             const id = this.$route.params.id;
-            fetch(`http://127.0.0.1:8000/api/subscriptions/${id}/users`)
+            const accessToken = localStorage.getItem("token");
+            fetch(`http://127.0.0.1:8000/api/subscriptions/${id}/users`, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + accessToken
+                }
+            })
                 .then((response) => response.json())
                 .then((data) => {
                     this.users = data;

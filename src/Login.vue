@@ -21,6 +21,7 @@ export default {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
+
                 },
                 body: JSON.stringify(userData)
             })
@@ -33,7 +34,7 @@ export default {
                 .then(data => {
                     // Gestisci la risposta dal server
                     console.log(data);
-                    localStorage.setItem('token', data.access_token);
+                    localStorage.setItem('token', data.token);
                     this.$router.push({ name: 'users' })
                 })
                 .catch(error => {
