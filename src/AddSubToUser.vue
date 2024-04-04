@@ -75,6 +75,7 @@ export default {
                 .then(response => {
                     if (response.ok) {
                         this.getUsersSubscription();
+                        window.location.reload()
                     }
                 })
         }

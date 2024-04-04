@@ -32,13 +32,17 @@ export default {
                     return response.json();
                 })
                 .then(data => {
-                    // Gestisci la risposta dal server
-                    console.log(data);
                     localStorage.setItem('token', data.token);
-                    this.$router.push({ name: 'users' })
+                    if (data.is_admin) {
+                        this.$router.push({ name: 'users' }); // Reindirizza all'area amministratore
+                    } else {
+                        const id = data.id;
+                        console.log(id);
+                        this.$router.push({ name: 'userDetail', id: id }); // Reindirizza al profilo utente
+                    }
                 })
                 .catch(error => {
-                    // Gestisci gli errori di rete o di risposta dal server
+
                     console.error('There was a problem with your fetch operation:', error);
                 });
         },
@@ -95,8 +99,8 @@ select {
     border: none;
 }
 
-.login{
-    cursor:pointer;
+.login {
+    cursor: pointer;
     color: red;
 }
 
