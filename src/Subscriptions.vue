@@ -60,7 +60,13 @@ export default {
     },
 
     beforeRouteEnter(to, from, next) {
-        fetch("http://127.0.0.1:8000/api/subscriptions")
+        const accessToken = localStorage.getItem("token");
+        fetch("http://127.0.0.1:8000/api/subscriptions", {
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + accessToken
+            }
+        })
             .then((response) => response.json())
             .then((data) => {
                 next(vm => {

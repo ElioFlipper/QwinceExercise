@@ -21,6 +21,7 @@ export default {
     methods: {
         getSubscription() {
             const accessToken = localStorage.getItem("token");
+
             fetch("http://127.0.0.1:8000/api/subscriptions", {
                 headers: {
                     'Accept': 'application/json',
@@ -38,16 +39,18 @@ export default {
         getUsersSubscription() {
             const id = this.$route.params.id;
             const accessToken = localStorage.getItem("token");
-            fetch(`http://localhost:8000/api/users/${id}/subscriptions`, {
+            fetch(`http://127.0.0.1:8000/api/users/${id}/subscriptions`, {
                 headers: {
                     'Accept': 'application/json',
-                    'Authorization': 'Bearer' + accessToken
+                    'Authorization': 'Bearer ' + accessToken
                 }
             })
                 .then(response => response.json())
-                .then(data => {
+                .then((data) => {
                     this.singleSub = data
                 })
+                .catch((error) =>
+                    console.error("Error fetching subscriptions:", error))
         },
 
         handleAddSubscriptionButton() {
