@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Log;
 use Validator;
 
 class AuthController extends Controller
@@ -62,7 +63,12 @@ class AuthController extends Controller
 
         if (auth()->attempt($loginUserData)) {
             $token = auth()->user()->createToken('token')->accessToken;
-            return response()->json(['token' => $token], 200);
+            $user = Auth::id();
+            Log::info($user);
+            return response()->json([
+                'token' => $token,
+                'user_id' => $user
+            ], 200);
 
         } else {
             return response()->json(['error' => 'UnAuthorised'], 401);

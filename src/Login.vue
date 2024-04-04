@@ -34,11 +34,10 @@ export default {
                 .then(data => {
                     localStorage.setItem('token', data.token);
                     if (data.is_admin) {
-                        this.$router.push({ name: 'users' }); // Reindirizza all'area amministratore
+                        this.$router.push({ name: 'users' });
                     } else {
-                        const id = data.id;
-                        console.log(id);
-                        this.$router.push({ name: 'userDetail', id: id }); // Reindirizza al profilo utente
+                        console.log(data.user_id);
+                        this.$router.push({ name: 'userDetail', id: data.user_id });
                     }
                 })
                 .catch(error => {
