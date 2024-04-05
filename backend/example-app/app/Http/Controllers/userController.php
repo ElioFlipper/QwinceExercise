@@ -6,6 +6,7 @@ use App\Mail\userRegister;
 use App\Models\Subscription;
 use App\Models\User;
 use App\Notifications\userRegistrationNotify;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
@@ -153,5 +154,18 @@ class UserController extends Controller
 
         return response()->json($users);
     }
+
+    public function post(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|max:10048',
+        ]);
+        
+        $path = $request->file('file')->store('public/files');
+        
+        Log::info("la madonna");
+        return response()->json(['message' => 'File uploaded successfully', 'path' => $path]);
+    }
+
 
 }

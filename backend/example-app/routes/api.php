@@ -15,7 +15,10 @@ Route::post('/register', [AuthController::class, 'register']);
 
 Route::post('/login', [AuthController::class, 'login']);
 
+Route::post('/post', [UserController::class, 'post']);
+
 Route::get('/sendEmail', [UserController::class, 'mailSender']);
+
 
 
 
@@ -40,6 +43,8 @@ Route::middleware('auth:api')->group(function () {
     Route::put('/modify/{id}', [UserController::class, 'modify']);
     Route::post('/users/{userId}/subscriptions/{subscriptionId}', [UserController::class, 'addSubscriptionToUser']);
     Route::get('/users/{id}/subscriptions', [UserController::class, 'getUsersSubscriptions']);
+
+    
     
 });
 

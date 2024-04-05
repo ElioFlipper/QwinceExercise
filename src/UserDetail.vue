@@ -3,7 +3,8 @@ export default {
     data() {
         return {
             singleUser: {},
-            subscription: []
+            subscription: [],
+            file: null
         }
     },
 
@@ -100,13 +101,45 @@ export default {
                     this.subscription = data
                 })
                 .then(data => window.location.reload())
-        }
+        },
 
-    }
+        handleFileUpload(event) {
+            this.file = event.target.files[0];
+        },
+
+        uploadFile() {
+            if (!this.file) {
+                alert('Please select a file to upload.');
+                return;
+            }
+            const formData = new FormData();
+            formData.append('file', this.file);
+
+            fetch('http://127.0.0.1:8000/api/post', {
+                headers: {'Content-Type': 'multipart/form-data'},
+                method: 'POST',
+                body: formData
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('File uploaded successfully:', data);
+                })
+                .catch(error => {
+                    console.error('There was a problem with the file upload:', error);
+                });
+        }
+    },
 }
 </script>
 
 <template>
+    <img src="" alt="Upload your image" width="200px" height="200px"
+        style="background-color: grey; border-radius: 5px; color:white">
     <div class="userDetailContainer">
         <table class="userDetailTable">
             <tr>
@@ -178,6 +211,8 @@ export default {
             <button class="modifyButton" @click="handlePetRegisterButton">Add a pet</button>
             <button class="modifyButton" @click="handlePetDetailButton">Show pets</button>
             <button class="modifyButton" @click="handleAddSubscriptionButton">Add a subscription</button>
+            <input type="file" @change="handleFileUpload" />
+            <button @click="uploadFile">Upload</button>
         </div>
     </div>
 </template>
