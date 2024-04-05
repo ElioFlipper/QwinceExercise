@@ -162,8 +162,6 @@ class UserController extends Controller
         ]);
         
         $path = $request->file('file')->store('public/files');
-        
-        Log::info("la madonna");
         return response()->json(['message' => 'File uploaded successfully', 'path' => $path]);
     }
 

@@ -1,4 +1,5 @@
 <script>
+    import axios from 'axios';
 export default {
     data() {
         return {
@@ -102,38 +103,33 @@ export default {
                 })
                 .then(data => window.location.reload())
         },
-
-        handleFileUpload(event) {
-            this.file = event.target.files[0];
+        uploadFile() {
+            this.file = this.$refs.file.files[0]
         },
 
-        uploadFile() {
-            if (!this.file) {
-                alert('Please select a file to upload.');
-                return;
-            }
-            const formData = new FormData();
-            formData.append('file', this.file);
-
-            fetch('http://127.0.0.1:8000/api/post', {
-                headers: {'Content-Type': 'multipart/form-data'},
-                method: 'POST',
-                body: formData
+        handleUploadButton() {
+            // const id = this.$route.params.id;
+            const fileInput = this.$refs.fileInput
+            const file = fileInput.files[0]
+            const formData = new FormData()
+            formData.append('file', file,)
+            const accessToken = localStorage.getItem("token");
+            axios.post('http://localhost:8000/api/post', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': 'Bearer ' + accessToken
+                }
             })
                 .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('File uploaded successfully:', data);
+                    console.log(response.data);
+                    // Gestisci la risposta dal backend
                 })
                 .catch(error => {
-                    console.error('There was a problem with the file upload:', error);
+                    console.error(error);
+                    // Gestisci gli errori
                 });
         }
-    },
+    }
 }
 </script>
 
@@ -211,8 +207,8 @@ export default {
             <button class="modifyButton" @click="handlePetRegisterButton">Add a pet</button>
             <button class="modifyButton" @click="handlePetDetailButton">Show pets</button>
             <button class="modifyButton" @click="handleAddSubscriptionButton">Add a subscription</button>
-            <input type="file" @change="handleFileUpload" />
-            <button @click="uploadFile">Upload</button>
+            <button @click="handleUploadButton">Upload</button>
+            <input type="file" name="file" ref="fileInput" @change="uploadFile($event)">
         </div>
     </div>
 </template>
