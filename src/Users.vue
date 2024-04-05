@@ -165,8 +165,14 @@ export default {
             // }
 
             const queryString = new URLSearchParams(data)
+            const accessToken = localStorage.getItem("token");
 
-            fetch("http://127.0.0.1:8000/api/filter?" + queryString)
+            fetch("http://127.0.0.1:8000/api/filter?" + queryString, {
+                headers: {
+                        'Accept': 'application/json',
+                        'Authorization': 'Bearer ' + accessToken
+                    }
+            })
                 .then((response) => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
