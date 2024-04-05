@@ -43,11 +43,8 @@ export default {
                     this.singleUser = data,
                         console.log(data)
                 })
-
-            this.$router.push({ name: 'modify' })
+            this.$router.push({ name: 'userDetail', params: { id: id } })
         },
-
-
     }
 }
 </script>
@@ -69,8 +66,8 @@ export default {
         <button @click="handleSaveButton" class="saveButton">Save</button>
 
     </div>
-
 </template>
+
 <style>
 .modifyUserContainer input {
     display: flex;

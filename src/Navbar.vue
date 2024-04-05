@@ -12,6 +12,10 @@ export default {
         },
         handleLogin() {
             this.$router.push({ name: 'login' })
+        },
+        handleLogout() {
+            localStorage.removeItem("token");
+            window.location.reload();
         }
     }
 }
@@ -23,6 +27,7 @@ export default {
         <p @click="handlePetClick">Pet</p>
         <p @click="handleSubscriptionClick">Subscriptions</p>
         <p @click="handleLogin">Login</p>
+        <p @click="handleLogout">Logout</p>
     </div>
 </template>
 

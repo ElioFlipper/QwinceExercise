@@ -37,7 +37,7 @@ export default {
                         this.$router.push({ name: 'users' });
                     } else {
                         console.log(data.user_id);
-                        this.$router.push({ name: 'userDetail', id: data.user_id });
+                        this.$router.push({ name: 'userDetail', params:{ id: data.user_id} });
                     }
                 })
                 .catch(error => {
