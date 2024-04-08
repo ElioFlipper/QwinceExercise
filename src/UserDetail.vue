@@ -1,11 +1,12 @@
 <script>
-    import axios from 'axios';
+import axios from 'axios';
 export default {
     data() {
         return {
             singleUser: {},
             subscription: [],
-            file: null
+            file: null,
+            avatarURL: ''
         }
     },
 
@@ -13,6 +14,7 @@ export default {
         const id = this.$route.params.id;
         this.getSingleUser(id);
         this.getUsersSubscription(id);
+        this.getAvatar()
     },
 
     methods: {
@@ -108,12 +110,13 @@ export default {
         },
 
         handleUploadButton() {
-            // const id = this.$route.params.id;
-            const fileInput = this.$refs.fileInput
-            const file = fileInput.files[0]
-            const formData = new FormData()
-            formData.append('file', file,)
+            const fileInput = this.$refs.fileInput;
+            const file = fileInput.files[0];
+            const formData = new FormData();
+            formData.append('file', file);
+
             const accessToken = localStorage.getItem("token");
+
             axios.post('http://localhost:8000/api/post', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
@@ -121,21 +124,54 @@ export default {
                 }
             })
                 .then(response => {
-                    console.log(response.data);
-                    // Gestisci la risposta dal backend
+                    const avatarPath = response.data.path;
+                    const userId = this.$route.params.id;
+                    formData.append('avatar', avatarPath);
+
+                    axios.post(`http://localhost:8000/api/users/${userId}/avatar`, formData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                            'Authorization': 'Bearer ' + accessToken
+                        }
+                    })
+                        .then(updateResponse => {
+                            console.log(updateResponse.data);
+                        })
+                        .catch(updateError => {
+                            console.error(updateError);
+                        });
+                })
+                .then(this.getAvatar)
+                .catch(error => {
+                    console.error(error);
+                });
+        },
+
+        getAvatar() {
+            const userId = this.$route.params.id;
+            const accessToken = localStorage.getItem("token");
+            axios.get(`http://localhost:8000/api/users/${userId}/avatar`, {
+                headers: {
+                    'Authorization': 'Bearer ' + accessToken
+                },
+                responseType: 'blob'
+            })
+                .then(response => {
+                    const contentType = response.headers['content-type'];
+                    const imageUrl = URL.createObjectURL(new Blob([response.data], { type: contentType }));
+                    this.avatarURL = imageUrl;
                 })
                 .catch(error => {
                     console.error(error);
-                    // Gestisci gli errori
                 });
         }
+
     }
 }
 </script>
 
 <template>
-    <img src="" alt="Upload your image" width="200px" height="200px"
-        style="background-color: grey; border-radius: 5px; color:white">
+    <img :src="avatarURL" width="200" height="200">
     <div class="userDetailContainer">
         <table class="userDetailTable">
             <tr>

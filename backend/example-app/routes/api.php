@@ -43,7 +43,8 @@ Route::middleware('auth:api')->group(function () {
     Route::put('/modify/{id}', [UserController::class, 'modify']);
     Route::post('/users/{userId}/subscriptions/{subscriptionId}', [UserController::class, 'addSubscriptionToUser']);
     Route::get('/users/{id}/subscriptions', [UserController::class, 'getUsersSubscriptions']);
-
+    Route::post('/users/{userId}/avatar', [UserController::class, 'postUserAvatar']);
+    Route::get('/users/{userId}/avatar', [UserController::class, 'getUserAvatar']);
     
     
 });

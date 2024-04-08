@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Storage;
 
 
 class UserController extends Controller
@@ -158,12 +159,44 @@ class UserController extends Controller
     public function post(Request $request)
     {
         $request->validate([
-            'file' => 'required|max:10048',
+            'file' => 'required|image|max:10048',
         ]);
-        
+
         $path = $request->file('file')->store('public/files');
         return response()->json(['message' => 'File uploaded successfully', 'path' => $path]);
     }
+
+    public function postUserAvatar(Request $request, $userId)
+    {
+        $request->validate([
+            'avatar' => 'required|string' // Assumendo che il percorso dell'avatar sia una stringa
+        ]);
+
+        $user = User::findOrFail($userId);
+        $user->avatar = $request->avatar;
+        $user->save();
+
+        return response()->json(['message' => 'Avatar aggiornato con successo']);
+    }
+
+    public function getUserAvatar(Request $request, $userId)
+    {
+        $user = User::findOrFail($userId);
+        $avatarPath = $user->avatar;
+
+        if (Storage::exists($avatarPath)) {
+
+            $imageContents = Storage::get($avatarPath);
+
+            $contentType = Storage::mimeType($avatarPath);
+
+            return response($imageContents)->header('Content-Type', $contentType);
+        } else {
+            // Se l'immagine non esiste, restituisci una risposta vuota o un messaggio di errore
+            return response()->json(['error' => 'Immagine non trovata'], 404);
+        }
+    }
+
 
 
 }

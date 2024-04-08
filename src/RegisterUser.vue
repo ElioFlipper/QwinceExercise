@@ -9,9 +9,9 @@ export default {
                 surname: '',
                 email: '',
                 city: '',
-                activationStatus: '',
+                activationStatus: false,
                 password: '',
-                is_admin: ''
+                is_admin: false
             }
         }
     },
