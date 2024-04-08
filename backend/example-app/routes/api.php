@@ -24,7 +24,7 @@ Route::get('/sendEmail', [UserController::class, 'mailSender']);
 
 Route::middleware(['auth:api', isAdmin::class])->group(function () {
     Route::delete('/delete/{id}', [UserController::class, 'delete']);
-    Route::get('/subscriptions', [subscriptionController::class, 'getSubscription']);
+
     Route::get('/subscriptions/{id}', [subscriptionController::class, 'getSingleSubscription']);
     Route::post('/createSubscription', [subscriptionController::class, 'createSubscription']);
     Route::delete('/deleteSubscription/{id}', [subscriptionController::class, 'deleteSubscription']);
@@ -45,6 +45,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/users/{id}/subscriptions', [UserController::class, 'getUsersSubscriptions']);
     Route::post('/users/{userId}/avatar', [UserController::class, 'postUserAvatar']);
     Route::get('/users/{userId}/avatar', [UserController::class, 'getUserAvatar']);
+    Route::get('/subscriptions', [subscriptionController::class, 'getSubscription']);
     
     
 });
