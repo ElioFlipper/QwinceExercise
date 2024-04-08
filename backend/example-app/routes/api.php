@@ -48,6 +48,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/subscriptions', [subscriptionController::class, 'getSubscription']);
     
     
+    
 });
 
 
