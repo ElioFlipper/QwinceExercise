@@ -1,6 +1,7 @@
 <script>
+import axios from 'axios'
+import config from './config';
 export default {
-
     data() {
         return {
             pet: {
@@ -22,19 +23,21 @@ export default {
             const id = this.$route.params.id;
             const accessToken = localStorage.getItem("token");
 
-            fetch(`http://127.0.0.1:8000/api/users/${id}/pet`, {
-                method: "POST",
+            axios.post(`${config.backendUrl}/users/${id}/pet`, petData, {
                 headers: {
                     "Content-Type": "application/json",
                     'Accept': 'application/json',
                     'Authorization': 'Bearer ' + accessToken
-                },
-
-                body: JSON.stringify(petData)
+                }
             })
-
-            this.$router.push({ name: 'userDetail' })
+                .then(response => {
+                    this.$router.push({ name: 'userDetail' });
+                })
+                .catch(error => {
+                    console.error('There was a problem with your fetch operation:', error);
+                });
         }
+
 
     }
 }

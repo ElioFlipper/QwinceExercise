@@ -1,4 +1,6 @@
 <script>
+import axios from 'axios';
+import config from './config';
 export default {
     data() {
         return {
@@ -22,35 +24,34 @@ export default {
         getSubscription() {
             const accessToken = localStorage.getItem("token");
 
-            fetch("http://127.0.0.1:8000/api/subscriptions", {
+            axios.get(`${config.backendUrl}/subscriptions`, {
                 headers: {
                     'Accept': 'application/json',
                     'Authorization': 'Bearer ' + accessToken
                 }
             })
-                .then((response) => response.json())
-                .then((data) => {
-                    this.allSubs = data;
+                .then(response => {
+                    this.allSubs = response.data;
                 })
-                .catch((error) =>
-                    console.error("Error fetching subscriptions:", error))
+                .catch(error => {
+                    console.error("Error fetching subscriptions:", error);
+                });
         },
 
         getUsersSubscription() {
             const id = this.$route.params.id;
-            const accessToken = localStorage.getItem("token");
-            fetch(`http://127.0.0.1:8000/api/users/${id}/subscriptions`, {
+            axios.get(`${config.backendUrl}/users/${id}/subscriptions`, {
                 headers: {
                     'Accept': 'application/json',
-                    'Authorization': 'Bearer ' + accessToken
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
                 }
             })
-                .then(response => response.json())
-                .then((data) => {
-                    this.singleSub = data
+                .then(response => {
+                    this.singleSub = response.data;
                 })
-                .catch((error) =>
-                    console.error("Error fetching subscriptions:", error))
+                .catch(error => {
+                    console.error(error);
+                });
         },
 
         handleAddSubscriptionButton() {
@@ -59,25 +60,26 @@ export default {
             };
 
             const userId = this.$route.params.id;
-            const subscriptionId = this.subscriptionSelect.id
+            const subscriptionId = this.subscriptionSelect.id;
             console.log(subscriptionId);
             const accessToken = localStorage.getItem("token");
 
-            fetch(`http://localhost:8000/api/users/${userId}/subscriptions/${subscriptionId}`, {
-                'method': 'POST',
+            axios.post(`${config.backendUrl}/users/${userId}/subscriptions/${subscriptionId}`, subData, {
                 headers: {
-                    'content-type': 'application/json',
+                    'Content-Type': 'application/json',
                     'Accept': 'application/json',
                     'Authorization': 'Bearer ' + accessToken
-                },
-                body: JSON.stringify(subData)
+                }
             })
                 .then(response => {
-                    if (response.ok) {
+                    if (response.status === 200) {
                         this.getUsersSubscription();
-                        window.location.reload()
+                        window.location.reload();
                     }
                 })
+                .catch(error => {
+                    console.error(error);
+                });
         }
     },
 

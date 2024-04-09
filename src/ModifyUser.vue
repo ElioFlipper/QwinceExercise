@@ -1,4 +1,6 @@
 <script>
+import axios from 'axios'
+import config from './config';
 export default {
     data() {
         return {
@@ -14,37 +16,39 @@ export default {
     methods: {
         getSingleUser(id) {
             const accessToken = localStorage.getItem("token");
-            fetch(`http://127.0.0.1:8000/api/users/${id}`, {
+            axios.get(`${config.backendUrl}/users/${id}`, {
                 headers: {
                     'Accept': 'application/json',
                     'Authorization': 'Bearer ' + accessToken
                 }
             })
-                .then(response => response.json())
-                .then(data => {
-                    this.singleUser = data
+                .then(response => {
+                    this.singleUser = response.data;
                 })
+                .catch(error => {
+                    console.error('There was a problem with your fetch operation:', error);
+                });
         },
 
         handleSaveButton() {
             const id = this.$route.params.id;
             const accessToken = localStorage.getItem("token");
-            fetch(`http://127.0.0.1:8000/api/modify/${id}`, {
-                method: 'PUT',
+            axios.put(`${config.backendUrl}/modify/${id}`, this.singleUser, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
                     'Authorization': 'Bearer ' + accessToken
-                },
-                body: JSON.stringify(this.singleUser)
+                }
             })
-                .then(response => response.json())
-                .then(data => {
-                    this.singleUser = data,
-                        console.log(data)
+                .then(response => {
+                    this.singleUser = response.data;
+                    console.log(response.data);
+                    this.$router.push({ name: 'userDetail', params: { id: id } });
                 })
-            this.$router.push({ name: 'userDetail', params: { id: id } })
-        },
+                .catch(error => {
+                    console.error('There was a problem with your fetch operation:', error);
+                });
+        }
     }
 }
 </script>

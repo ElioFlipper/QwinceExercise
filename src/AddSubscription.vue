@@ -1,4 +1,6 @@
 <script>
+import axios from 'axios';
+import config from './config';
 export default {
     data() {
         return {
@@ -26,14 +28,18 @@ export default {
                 endingDate: this.subscription.endingDate,
             };
 
-            fetch("http://127.0.0.1:8000/api/createSubscription", {
-                method: 'POST',
+            axios.post(`${config.backendUrl}/createSubscription`, subscriptionData, {
                 headers: {
                     'Accept': 'application/json',
                     'Authorization': 'Bearer ' + accessToken
-                },
-                body: JSON.stringify(subscriptionData)
+                }
             })
+                .then(response => {
+                    console.log(response.data); // Gestisci la risposta qui
+                })
+                .catch(error => {
+                    console.error(error); // Gestisci gli errori qui
+                });
 
             this.$router.push({ name: 'subscription' })
         }

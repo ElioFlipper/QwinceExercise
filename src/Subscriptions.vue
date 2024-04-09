@@ -1,4 +1,6 @@
 <script>
+import axios from 'axios'
+import config from './config';
 export default {
     data() {
         return {
@@ -9,19 +11,21 @@ export default {
     methods: {
         getSubscription() {
             const accessToken = localStorage.getItem("token");
-            fetch("http://127.0.0.1:8000/api/subscriptions", {
+
+            axios.get(`${config.backendUrl}/subscriptions`, {
                 headers: {
                     'Accept': 'application/json',
                     'Authorization': 'Bearer ' + accessToken
                 }
             })
-                .then((response) => response.json())
-                .then((data) => {
-                    this.subscriptions = data;
+                .then(response => {
+                    this.subscriptions = response.data;
                 })
-                .catch((error) =>
-                    console.error("Error fetching subscriptions:", error))
+                .catch(error => {
+                    console.error("Error fetching subscriptions:", error);
+                });
         },
+
 
         handleModifyButton(id) {
             this.$router.push({ name: "ModifySubscriptions", params: { id: id } })
@@ -29,21 +33,21 @@ export default {
 
         handleRemoveButton(id) {
             const accessToken = localStorage.getItem("token");
-            fetch(`http://127.0.0.1:8000/api/deleteSubscription/${id}`, {
-                method: 'DELETE',
+
+            axios.delete(`${config.backendUrl}/deleteSubscription/${id}`, {
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
                     'Authorization': 'Bearer ' + accessToken
                 }
             })
-                .then(response => response.json())
-                .then(data => {
-                    this.subscriptions = data
+                .then(response => {
+                    this.subscriptions = response.data;
+                    window.location.reload();
                 })
-                .catch(error => console.error("Error deleting subscription:", error))
-                .then(data => { window.location.reload() })
+                .catch(error => {
+                    console.error("Error deleting subscription:", error);
+                });
         },
+
 
         handleAddButton() {
             this.$router.push({ name: "AddSubscription" })
@@ -61,23 +65,23 @@ export default {
 
     beforeRouteEnter(to, from, next) {
         const accessToken = localStorage.getItem("token");
-        fetch("http://127.0.0.1:8000/api/subscriptions", {
+
+        axios.get(`${config.backendUrl}/subscriptions`, {
             headers: {
                 'Accept': 'application/json',
                 'Authorization': 'Bearer ' + accessToken
             }
         })
-            .then((response) => response.json())
-            .then((data) => {
+            .then(response => {
                 next(vm => {
-                    vm.users = data;
+                    vm.subscriptions = response.data;
                 });
             })
-            .catch((error) => {
-                console.error("Error fetching users:", error);
+            .catch(error => {
+                console.error("Error fetching subscriptions:", error);
                 next();
-            })
-    },
+            });
+    }
 }
 
 </script>

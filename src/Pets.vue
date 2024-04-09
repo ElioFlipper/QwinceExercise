@@ -1,4 +1,6 @@
 <script>
+import axios from 'axios'
+import config from './config';
 export default {
     data() {
         return {
@@ -9,32 +11,34 @@ export default {
 
     methods: {
         getPets() {
-            const accessToken = localStorage.getItem("token")
-            fetch("http://127.0.0.1:8000/api/pets", {
+            const accessToken = localStorage.getItem("token");
+            axios.get(`${config.backendUrl}/pets`, {
                 headers: {
                     'Accept': 'application/json',
                     'Authorization': 'Bearer ' + accessToken
                 }
             })
-                .then(response => response.json())
-                .then((data) => this.pets = data)
-                .catch((error) => console.log(error))
+                .then(response => {
+                    this.pets = response.data;
+                })
+                .catch(error => {
+                    console.error('There was a problem with your fetch operation:', error);
+                });
         },
 
         getUsers() {
-            const accessToken = localStorage.getItem("token")
-            fetch("http://127.0.0.1:8000/api/users", {
+            const accessToken = localStorage.getItem("token");
+            axios.get(`${config.backendUrl}/users`, {
                 headers: {
                     'Accept': 'application/json',
                     'Authorization': 'Bearer ' + accessToken
                 }
             })
-                .then((response) => response.json())
-                .then((data) => {
-                    this.users = data;
+                .then(response => {
+                    this.users = response.data;
                 })
-                .catch((error) => {
-                    console.error("Error fetching users:", error);
+                .catch(error => {
+                    console.error('There was a problem with your fetch operation:', error);
                 });
         },
 

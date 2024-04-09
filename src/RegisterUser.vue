@@ -1,4 +1,6 @@
 <script>
+import axios from 'axios'
+import config from './config';
 export default {
 
     data() {
@@ -61,23 +63,21 @@ export default {
                 password: this.user.password
             };
 
-
-            fetch("http://127.0.0.1:8000/api/register", {
-                method: "POST",
+            axios.post(`${config.backend}/register`, userData, {
                 headers: {
                     "Content-Type": "application/json",
                     'Accept': 'application/json',
                     'Authorization': 'Bearer ' + accessToken
-                },
-
-                body: JSON.stringify(userData)
+                }
             })
-            // .then(data =>
-            //     this.sendEmail())
-
-            this.$router.push({ name: 'users' })
-
+                .then(response => {
+                    this.$router.push({ name: 'users' });
+                })
+                .catch(error => {
+                    console.error('There was a problem with your fetch operation:', error);
+                });
         },
+
 
         handleLogin() {
             this.$router.push({ name: 'login' })

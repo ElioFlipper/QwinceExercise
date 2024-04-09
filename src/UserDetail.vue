@@ -1,5 +1,6 @@
 <script>
 import axios from 'axios';
+import config from './config';
 export default {
     data() {
         return {
@@ -19,17 +20,18 @@ export default {
 
     methods: {
         getSingleUser(id) {
-            const accessToken = localStorage.getItem("token");
-            fetch(`http://127.0.0.1:8000/api/users/${id}`, {
+            axios.get(`${config.backendUrl}/users/${id}`, {
                 headers: {
                     'Accept': 'application/json',
-                    'Authorization': 'Bearer ' + accessToken
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
                 }
             })
-                .then(response => response.json())
-                .then(data => {
-                    this.singleUser = data
+                .then(response => {
+                    this.singleUser = response.data;
                 })
+                .catch(error => {
+                    console.error(error);
+                });
         },
 
         handleModifyButton() {
@@ -38,20 +40,20 @@ export default {
 
         handleRemoveButton() {
             const id = this.$route.params.id;
-            const accessToken = localStorage.getItem("token");
-            fetch(`http://127.0.0.1:8000/api/delete/${id}`, {
-                method: 'DELETE',
+            axios.delete(`${config.backendUrl}/delete/${id}`, {
                 headers: {
-                    'Content-Type': 'application/json',
+                    "Content-Type": "application/json",
                     'Accept': 'application/json',
-                    'Authorization': 'Bearer ' + accessToken
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
                 }
             })
-                .then(response => response.json())
-                .then(data => {
-                    this.singleUser = data
+                .then(response => {
+                    this.singleUser = response.data;
+                    this.$router.push({ name: 'users' });
                 })
-            this.$router.push({ name: 'users' })
+                .catch(error => {
+                    console.error(error);
+                });
         },
 
         handleDeactiveButton() {
@@ -73,37 +75,37 @@ export default {
         },
         getUsersSubscription() {
             const id = this.$route.params.id;
-            const accessToken = localStorage.getItem("token");
-            fetch(`http://localhost:8000/api/users/${id}/subscriptions`, {
+            axios.get(`${config.backendUrl}/users/${id}/subscriptions`, {
                 headers: {
                     'Accept': 'application/json',
-                    'Authorization': 'Bearer ' + accessToken
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
                 }
             })
-                .then(response => response.json())
-                .then(data => {
-                    this.subscription = data
+                .then(response => {
+                    this.subscription = response.data;
                 })
+                .catch(error => {
+                    console.error(error);
+                });
         },
         handleRemoveSubscription(sub) {
             const user_id = this.$route.params.id;
             const subscription_id = sub.id;
-            const accessToken = localStorage.getItem("token");
             console.log(user_id, subscription_id);
 
-            fetch(`http://localhost:8000/api/users/${user_id}/subscriptions/${subscription_id}`, {
-                method: 'DELETE',
+            axios.delete(`${config.backendUrl}/users/${user_id}/subscriptions/${subscription_id}`, {
                 headers: {
-                    'Content-Type': 'application/json',
                     'Accept': 'application/json',
-                    'Authorization': 'Bearer ' + accessToken
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
                 }
             })
-                .then(response => response.json())
-                .then(data => {
-                    this.subscription = data
+                .then(response => {
+                    this.subscription = response.data;
+                    window.location.reload();
                 })
-                .then(data => window.location.reload())
+                .catch(error => {
+                    console.error(error);
+                });
         },
         uploadFile() {
             this.file = this.$refs.file.files[0]
@@ -117,7 +119,7 @@ export default {
 
             const accessToken = localStorage.getItem("token");
 
-            axios.post('http://localhost:8000/api/post', formData, {
+            axios.post(`${config.backendUrl}/post`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'Authorization': 'Bearer ' + accessToken
@@ -128,7 +130,7 @@ export default {
                     const userId = this.$route.params.id;
                     formData.append('avatar', avatarPath);
 
-                    axios.post(`http://localhost:8000/api/users/${userId}/avatar`, formData, {
+                    axios.post(`${config.backendUrl}/users/${userId}/avatar`, formData, {
                         headers: {
                             'Content-Type': 'multipart/form-data',
                             'Authorization': 'Bearer ' + accessToken
@@ -150,7 +152,7 @@ export default {
         getAvatar() {
             const userId = this.$route.params.id;
             const accessToken = localStorage.getItem("token");
-            axios.get(`http://localhost:8000/api/users/${userId}/avatar`, {
+            axios.get(`${config.backendUrl}/users/${userId}/avatar`, {
                 headers: {
                     'Authorization': 'Bearer ' + accessToken
                 },
@@ -243,8 +245,8 @@ export default {
             <button class="modifyButton" @click="handlePetRegisterButton">Add a pet</button>
             <button class="modifyButton" @click="handlePetDetailButton">Show pets</button>
             <button class="modifyButton" @click="handleAddSubscriptionButton">Add a subscription</button>
-            <button @click="handleUploadButton">Upload</button>
-            <input type="file" name="file" ref="fileInput" @change="uploadFile($event)">
+            <button class="modifyButton" @click="handleUploadButton">Upload</button>
+            <input class="modifyButton" type="file" name="file" ref="fileInput" @change="uploadFile($event)">
         </div>
     </div>
 </template>
@@ -291,7 +293,10 @@ export default {
 
 .buttonsContainer {
     display: flex;
-    width: 40%;
+    width: 90%;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .userDetailTable {

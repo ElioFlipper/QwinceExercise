@@ -1,4 +1,6 @@
 <script>
+import axios from 'axios'
+import config from './config';
 export default {
     data() {
         return {
@@ -16,20 +18,17 @@ export default {
                 password: this.user.password
             };
 
-            fetch("http://127.0.0.1:8000/api/login", {
-                method: 'POST',
+            axios.post(`${config.backendUrl}/login`, userData, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-
-                },
-                body: JSON.stringify(userData)
+                    'Accept': 'application/json'
+                }
             })
                 .then(response => {
-                    if (!response.ok) {
+                    if (response.status !== 200) {
                         throw new Error('Network response was not ok');
                     }
-                    return response.json();
+                    return response.data;
                 })
                 .then(data => {
                     localStorage.setItem('token', data.token);
@@ -37,11 +36,10 @@ export default {
                         this.$router.push({ name: 'users' });
                     } else {
                         console.log(data.user_id);
-                        this.$router.push({ name: 'userDetail', params:{ id: data.user_id} });
+                        this.$router.push({ name: 'userDetail', params: { id: data.user_id } });
                     }
                 })
                 .catch(error => {
-
                     console.error('There was a problem with your fetch operation:', error);
                 });
         },

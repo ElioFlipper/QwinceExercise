@@ -1,4 +1,6 @@
 <script>
+import axios from 'axios'
+import config from './config';
 export default {
     data() {
         return {
@@ -14,38 +16,39 @@ export default {
     methods: {
         getSingleSubscription(id) {
             const accessToken = localStorage.getItem("token");
-            fetch(`http://127.0.0.1:8000/api/subscriptions/${id}`, {
+            axios.get(`${config.backendUrl}/subscriptions/${id}`, {
                 headers: {
                     'Accept': 'application/json',
                     'Authorization': 'Bearer ' + accessToken
                 }
             })
-                .then(response => response.json())
-                .then(data => {
-                    this.singleSubscription = data
+                .then(response => {
+                    this.singleSubscription = response.data;
                 })
+                .catch(error => {
+                    console.error('There was a problem with your fetch operation:', error);
+                });
         },
 
         handleSaveButton() {
             const id = this.$route.params.id;
             const accessToken = localStorage.getItem("token");
-            fetch(`http://127.0.0.1:8000/api/modifySubscription/${id}`, {
-                method: 'PUT',
+            axios.put(`${config.backendUrl}/modifySubscription/${id}`, this.singleSubscription, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
                     'Authorization': 'Bearer ' + accessToken
-                },
-                body: JSON.stringify(this.singleSubscription)
+                }
             })
-                .then(response => response.json())
-                .then(data => {
-                    this.singleUser = data,
-                        console.log(data)
+                .then(response => {
+                    this.singleUser = response.data;
+                    console.log(response.data);
+                    this.$router.push({ name: 'subscription' });
                 })
-
-            this.$router.push({ name: 'subscription' })
-        },
+                .catch(error => {
+                    console.error('There was a problem with your fetch operation:', error);
+                });
+        }
 
 
     }

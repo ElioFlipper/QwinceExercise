@@ -1,3 +1,136 @@
+<script>
+import axios from 'axios';
+import config from './config';
+export default {
+    data() {
+        return {
+            users: [],
+            username: '',
+            name: '',
+            surname: '',
+            email: '',
+            city: '',
+            activationStatus: ''
+        };
+    },
+
+    // computed: {
+    //     filteredUsers() {
+    //         return this.users.filter(user =>
+    //             user.username.toLowerCase().includes(this.searchUsername.toLowerCase()) &&
+    //             (user.name.toLowerCase().includes(this.searchNameOrSurname.toLowerCase()) ||
+    //                 user.surname.toLowerCase().includes(this.searchNameOrSurname.toLowerCase())) &&
+    //             user.email.toLowerCase().includes(this.searchByEmail.toLowerCase()) &&
+    //             user.city.toLowerCase().includes(this.searchByCity.toLowerCase()) &&
+    //             this.activationStatus === null || this.activationStatus === user.activationStatus 
+    //         );
+    //     }
+    // },
+
+    beforeRouteEnter(to, from, next) {
+        const accessToken = localStorage.getItem("token");
+        fetch(`${config.backendUrl}/users`, {
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + accessToken
+            }
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                next(vm => {
+                    vm.users = data;
+                });
+            })
+            .catch((error) => {
+                console.error("Error fetching users:", error);
+                next();
+            })
+    },
+
+    mounted() {
+        this.getUsers();
+    },
+
+    methods: {
+        getUsers() {
+            const accessToken = localStorage.getItem("token");
+
+            axios.get("http://127.0.0.1:8000/api/users", {
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + accessToken
+                }
+            })
+                .then(response => {
+                    this.users = response.data;
+                })
+                .catch(error => {
+                    console.error("Error fetching users:", error);
+                });
+        },
+
+        openProfile(id) {
+            this.$router.push({ name: 'userDetail', params: { id: id } });
+        },
+
+        handleRegisterButton() {
+            this.$router.push({ name: 'register' }).then(() => {
+                this.getUsers();
+            })
+        },
+
+        // handleSearchInput(e, field) {
+        //     const value = e.target.value.toLowerCase();
+        //     if (field === 'username') {
+        //         this.searchUsername = value;
+        //     }
+        //     else if (field === 'name') {
+        //         this.searchNameOrSurname = value;
+        //     }
+        //     else if (field === 'email') {
+        //         this.searchByEmail = value;
+        //     }
+        //     else if (field === 'city') {
+        //         this.searchByCity = value;
+        //     }
+        // }
+
+
+        handleSearchButton() {
+            const data = {
+                username: this.username,
+                name: this.name,
+                email: this.email,
+                city: this.city,
+                activationStatus: this.activationStatus,
+            };
+
+            // for (const key in data) {
+            //     if (data[key] === '' || data[key] === null) {
+            //         delete data[key];
+            //     }
+            // }
+
+            const queryString = new URLSearchParams(data);
+            const accessToken = localStorage.getItem("token");
+
+            axios.get("http://127.0.0.1:8000/api/filter?" + queryString, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + accessToken
+                }
+            })
+                .then(response => {
+                    this.users = response.data;
+                })
+                .catch(error => {
+                    console.error("Error fetching users:", error);
+                });
+        }
+
+    },
+}
+</script>
 <template>
     <div class="container">
         <div class="filterSection">
@@ -45,150 +178,6 @@
         <button class="registerButton" @click="handleRegisterButton">Register a new user</button>
     </div>
 </template>
-
-<script>
-export default {
-    data() {
-        return {
-            users: [],
-            username: '',
-            name: '',
-            surname: '',
-            email: '',
-            city: '',
-            activationStatus: ''
-        };
-    },
-
-    // computed: {
-    //     filteredUsers() {
-    //         return this.users.filter(user =>
-    //             user.username.toLowerCase().includes(this.searchUsername.toLowerCase()) &&
-    //             (user.name.toLowerCase().includes(this.searchNameOrSurname.toLowerCase()) ||
-    //                 user.surname.toLowerCase().includes(this.searchNameOrSurname.toLowerCase())) &&
-    //             user.email.toLowerCase().includes(this.searchByEmail.toLowerCase()) &&
-    //             user.city.toLowerCase().includes(this.searchByCity.toLowerCase()) &&
-    //             this.activationStatus === null || this.activationStatus === user.activationStatus 
-    //         );
-    //     }
-    // },
-
-    beforeRouteEnter(to, from, next) {
-        const accessToken = localStorage.getItem("token");
-        fetch("http://127.0.0.1:8000/api/users", {
-            headers: {
-                        'Accept': 'application/json',
-                        'Authorization': 'Bearer ' + accessToken
-                    }
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                next(vm => {
-                    vm.users = data;
-                });
-            })
-            .catch((error) => {
-                console.error("Error fetching users:", error);
-                next();
-            })
-    },
-
-    mounted() {
-        this.getUsers();
-    },
-
-    methods: {
-        getUsers() {
-            const accessToken = localStorage.getItem("token");
-
-                fetch("http://127.0.0.1:8000/api/users", {
-                    headers: {
-                        'Accept': 'application/json',
-                        'Authorization': 'Bearer ' + accessToken
-                    }
-                })
-                    .then((response) => {
-                        if (!response.ok) {
-                            throw new Error('Failed to fetch users');
-                        }
-                        return response.json();
-                    })
-                    .then((data) => {
-                        this.users = data;
-                    })
-                    .catch((error) => {
-                        console.error("Error fetching users:", error);
-                    });
-        }
-        ,
-
-        openProfile(id) {
-            this.$router.push({ name: 'userDetail', params: { id: id } });
-        },
-
-        handleRegisterButton() {
-            this.$router.push({ name: 'register' }).then(() => {
-                this.getUsers();
-            })
-        },
-
-        // handleSearchInput(e, field) {
-        //     const value = e.target.value.toLowerCase();
-        //     if (field === 'username') {
-        //         this.searchUsername = value;
-        //     }
-        //     else if (field === 'name') {
-        //         this.searchNameOrSurname = value;
-        //     }
-        //     else if (field === 'email') {
-        //         this.searchByEmail = value;
-        //     }
-        //     else if (field === 'city') {
-        //         this.searchByCity = value;
-        //     }
-        // }
-
-
-        handleSearchButton() {
-            const data = {
-                username: this.username,
-                name: this.name,
-                email: this.email,
-                city: this.city,
-                activationStatus: this.activationStatus,
-            };
-
-            // for (const key in data) {
-            //     if (data[key] === '' || data[key] === null) {
-            //         delete data[key];
-            //     }
-            // }
-
-            const queryString = new URLSearchParams(data)
-            const accessToken = localStorage.getItem("token");
-
-            fetch("http://127.0.0.1:8000/api/filter?" + queryString, {
-                headers: {
-                        'Accept': 'application/json',
-                        'Authorization': 'Bearer ' + accessToken
-                    }
-            })
-                .then((response) => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then((data) => {
-                    this.users = data;
-                })
-                .catch((error) => {
-                    console.error("Error fetching users:", error);
-                });
-        }
-    },
-}
-</script>
 
 <style scoped>
 * {
