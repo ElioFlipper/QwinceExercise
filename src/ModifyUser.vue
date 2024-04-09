@@ -1,6 +1,6 @@
 <script>
-import axios from 'axios'
 import config from './config';
+import { client } from './setup';
 export default {
     data() {
         return {
@@ -15,13 +15,7 @@ export default {
 
     methods: {
         getSingleUser(id) {
-            const accessToken = localStorage.getItem("token");
-            axios.get(`${config.backendUrl}/users/${id}`, {
-                headers: {
-                    'Accept': 'application/json',
-                    'Authorization': 'Bearer ' + accessToken
-                }
-            })
+            client.get(`${config.backendUrl}/users/${id}`)
                 .then(response => {
                     this.singleUser = response.data;
                 })
@@ -32,14 +26,7 @@ export default {
 
         handleSaveButton() {
             const id = this.$route.params.id;
-            const accessToken = localStorage.getItem("token");
-            axios.put(`${config.backendUrl}/modify/${id}`, this.singleUser, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    'Authorization': 'Bearer ' + accessToken
-                }
-            })
+            client.put(`${config.backendUrl}/modify/${id}`, this.singleUser)
                 .then(response => {
                     this.singleUser = response.data;
                     console.log(response.data);

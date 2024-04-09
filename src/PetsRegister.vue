@@ -1,5 +1,5 @@
 <script>
-import axios from 'axios'
+import { client } from './setup';
 import config from './config';
 export default {
     data() {
@@ -21,15 +21,8 @@ export default {
             };
 
             const id = this.$route.params.id;
-            const accessToken = localStorage.getItem("token");
 
-            axios.post(`${config.backendUrl}/users/${id}/pet`, petData, {
-                headers: {
-                    "Content-Type": "application/json",
-                    'Accept': 'application/json',
-                    'Authorization': 'Bearer ' + accessToken
-                }
-            })
+            client.post(`${config.backendUrl}/users/${id}/pet`, petData)
                 .then(response => {
                     this.$router.push({ name: 'userDetail' });
                 })
@@ -37,8 +30,6 @@ export default {
                     console.error('There was a problem with your fetch operation:', error);
                 });
         }
-
-
     }
 }
 </script>

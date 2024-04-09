@@ -1,4 +1,6 @@
 <script>
+import { client } from './setup';
+import config from './config';
 export default {
     data() {
         return {
@@ -10,36 +12,24 @@ export default {
     methods: {
         getSubscriptionById() {
             const id = this.$route.params.id;
-            const accessToken = localStorage.getItem("token");
-            fetch(`http://127.0.0.1:8000/api/subscriptions/${id}`, {
-                headers: {
-                    'Accept': 'application/json',
-                    'Authorization': 'Bearer ' + accessToken
-                }
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    this.subscriptions = data;
+            client.get(`${config.backendUrl}/subscriptions/${id}`)
+                .then((response) => {
+                    this.subscriptions = response.data;
                 })
-                .catch((error) =>
-                    console.error("Error fetching subscriptions:", error))
+                .catch((error) => {
+                    console.error("Error fetching subscriptions:", error);
+                });
         },
 
         getUsersBySubscription() {
             const id = this.$route.params.id;
-            const accessToken = localStorage.getItem("token");
-            fetch(`http://127.0.0.1:8000/api/subscriptions/${id}/users`, {
-                headers: {
-                    'Accept': 'application/json',
-                    'Authorization': 'Bearer ' + accessToken
-                }
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    this.users = data;
+            client.get(`${config.backendUrl}/subscriptions/${id}/users`)
+                .then((response) => {
+                    this.users = response.data;
                 })
-                .catch((error) =>
-                    console.error("Error fetching users:", error))
+                .catch((error) => {
+                    console.error("Error fetching users:", error);
+                });
         }
     },
 

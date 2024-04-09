@@ -18,8 +18,6 @@ export default {
         saveSubscription(event) {
             event.preventDefault()
 
-            const accessToken = localStorage.getItem("token");
-
             const subscriptionData = {
                 name: this.subscription.name,
                 slug: this.subscription.slug,
@@ -28,17 +26,12 @@ export default {
                 endingDate: this.subscription.endingDate,
             };
 
-            axios.post(`${config.backendUrl}/createSubscription`, subscriptionData, {
-                headers: {
-                    'Accept': 'application/json',
-                    'Authorization': 'Bearer ' + accessToken
-                }
-            })
+            client.post(`${config.backendUrl}/createSubscription`, subscriptionData)
                 .then(response => {
-                    console.log(response.data); // Gestisci la risposta qui
+                    console.log(response.data);
                 })
                 .catch(error => {
-                    console.error(error); // Gestisci gli errori qui
+                    console.error(error);
                 });
 
             this.$router.push({ name: 'subscription' })

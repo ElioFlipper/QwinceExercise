@@ -1,5 +1,5 @@
 <script>
-import axios from 'axios'
+import { client } from './setup';
 import config from './config';
 export default {
     data() {
@@ -10,14 +10,8 @@ export default {
 
     methods: {
         getSubscription() {
-            const accessToken = localStorage.getItem("token");
 
-            axios.get(`${config.backendUrl}/subscriptions`, {
-                headers: {
-                    'Accept': 'application/json',
-                    'Authorization': 'Bearer ' + accessToken
-                }
-            })
+            client.get(`${config.backendUrl}/subscriptions`)
                 .then(response => {
                     this.subscriptions = response.data;
                 })
@@ -32,13 +26,8 @@ export default {
         },
 
         handleRemoveButton(id) {
-            const accessToken = localStorage.getItem("token");
 
-            axios.delete(`${config.backendUrl}/deleteSubscription/${id}`, {
-                headers: {
-                    'Authorization': 'Bearer ' + accessToken
-                }
-            })
+            client.delete(`${config.backendUrl}/deleteSubscription/${id}`)
                 .then(response => {
                     this.subscriptions = response.data;
                     window.location.reload();
@@ -64,14 +53,8 @@ export default {
     },
 
     beforeRouteEnter(to, from, next) {
-        const accessToken = localStorage.getItem("token");
 
-        axios.get(`${config.backendUrl}/subscriptions`, {
-            headers: {
-                'Accept': 'application/json',
-                'Authorization': 'Bearer ' + accessToken
-            }
-        })
+        client.get(`${config.backendUrl}/subscriptions`)
             .then(response => {
                 next(vm => {
                     vm.subscriptions = response.data;

@@ -1,6 +1,7 @@
 <script>
 import axios from 'axios';
 import config from './config';
+import { client } from './setup';
 export default {
     data() {
         return {
@@ -28,24 +29,18 @@ export default {
     // },
 
     beforeRouteEnter(to, from, next) {
-        const accessToken = localStorage.getItem("token");
-        fetch(`${config.backendUrl}/users`, {
-            headers: {
-                'Accept': 'application/json',
-                'Authorization': 'Bearer ' + accessToken
-            }
-        })
-            .then((response) => response.json())
-            .then((data) => {
+                client.get(`${config.backendUrl}/users`)
+            .then((response) => {
                 next(vm => {
-                    vm.users = data;
+                    vm.users = response.data;
                 });
             })
             .catch((error) => {
                 console.error("Error fetching users:", error);
                 next();
-            })
+            });
     },
+
 
     mounted() {
         this.getUsers();
@@ -53,14 +48,8 @@ export default {
 
     methods: {
         getUsers() {
-            const accessToken = localStorage.getItem("token");
-
-            axios.get("http://127.0.0.1:8000/api/users", {
-                headers: {
-                    'Accept': 'application/json',
-                    'Authorization': 'Bearer ' + accessToken
-                }
-            })
+            
+            client.get("http://127.0.0.1:8000/api/users")
                 .then(response => {
                     this.users = response.data;
                 })
@@ -112,14 +101,8 @@ export default {
             // }
 
             const queryString = new URLSearchParams(data);
-            const accessToken = localStorage.getItem("token");
-
-            axios.get("http://127.0.0.1:8000/api/filter?" + queryString, {
-                headers: {
-                    'Accept': 'application/json',
-                    'Authorization': 'Bearer ' + accessToken
-                }
-            })
+            
+            client.get("http://127.0.0.1:8000/api/filter?" + queryString)
                 .then(response => {
                     this.users = response.data;
                 })

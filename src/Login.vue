@@ -1,6 +1,6 @@
 <script>
-import axios from 'axios'
 import config from './config';
+import { client } from './setup';
 export default {
     data() {
         return {
@@ -18,12 +18,7 @@ export default {
                 password: this.user.password
             };
 
-            axios.post(`${config.backendUrl}/login`, userData, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                }
-            })
+            client.post(`${config.backendUrl}/login`, userData)
                 .then(response => {
                     if (response.status !== 200) {
                         throw new Error('Network response was not ok');

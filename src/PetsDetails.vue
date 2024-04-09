@@ -1,5 +1,5 @@
 <script>
-import axios from 'axios'
+import { client } from './setup';
 import config from './config';
 export default {
     data() {
@@ -15,13 +15,7 @@ export default {
 
     methods: {
         getSinglePet(id) {
-            const accessToken = localStorage.getItem("token");
-            axios.get(`${config.backendUrl}/users/${id}/pets`, {
-                headers: {
-                    'Accept': 'application/json',
-                    'Authorization': 'Bearer ' + accessToken
-                }
-            })
+            client.get(`${config.backendUrl}/users/${id}/pets`)
                 .then(response => {
                     this.pets = response.data;
                 })

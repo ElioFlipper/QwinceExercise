@@ -1,5 +1,5 @@
 <script>
-import axios from 'axios'
+import { client } from './setup';
 import config from './config';
 export default {
 
@@ -50,7 +50,6 @@ export default {
 
         saveUser(event) {
             event.preventDefault();
-            const accessToken = localStorage.getItem("token");
 
             const userData = {
                 username: this.user.username,
@@ -63,13 +62,7 @@ export default {
                 password: this.user.password
             };
 
-            axios.post(`${config.backend}/register`, userData, {
-                headers: {
-                    "Content-Type": "application/json",
-                    'Accept': 'application/json',
-                    'Authorization': 'Bearer ' + accessToken
-                }
-            })
+            client.post(`${config.backend}/register`, userData)
                 .then(response => {
                     this.$router.push({ name: 'users' });
                 })
@@ -77,8 +70,7 @@ export default {
                     console.error('There was a problem with your fetch operation:', error);
                 });
         },
-
-
+        
         handleLogin() {
             this.$router.push({ name: 'login' })
         }

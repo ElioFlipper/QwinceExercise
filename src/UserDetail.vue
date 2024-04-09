@@ -1,6 +1,7 @@
 <script>
-import axios from 'axios';
+import { client } from './setup'
 import config from './config';
+import axios from 'axios'
 export default {
     data() {
         return {
@@ -20,12 +21,7 @@ export default {
 
     methods: {
         getSingleUser(id) {
-            axios.get(`${config.backendUrl}/users/${id}`, {
-                headers: {
-                    'Accept': 'application/json',
-                    'Authorization': 'Bearer ' + localStorage.getItem('token')
-                }
-            })
+            client.get(`${config.backendUrl}/users/${id}`,)
                 .then(response => {
                     this.singleUser = response.data;
                 })
@@ -40,13 +36,7 @@ export default {
 
         handleRemoveButton() {
             const id = this.$route.params.id;
-            axios.delete(`${config.backendUrl}/delete/${id}`, {
-                headers: {
-                    "Content-Type": "application/json",
-                    'Accept': 'application/json',
-                    'Authorization': 'Bearer ' + localStorage.getItem('token')
-                }
-            })
+            client.delete(`${config.backendUrl}/delete/${id}`)
                 .then(response => {
                     this.singleUser = response.data;
                     this.$router.push({ name: 'users' });
@@ -75,12 +65,7 @@ export default {
         },
         getUsersSubscription() {
             const id = this.$route.params.id;
-            axios.get(`${config.backendUrl}/users/${id}/subscriptions`, {
-                headers: {
-                    'Accept': 'application/json',
-                    'Authorization': 'Bearer ' + localStorage.getItem('token')
-                }
-            })
+            client.get(`${config.backendUrl}/users/${id}/subscriptions`)
                 .then(response => {
                     this.subscription = response.data;
                 })
@@ -93,12 +78,7 @@ export default {
             const subscription_id = sub.id;
             console.log(user_id, subscription_id);
 
-            axios.delete(`${config.backendUrl}/users/${user_id}/subscriptions/${subscription_id}`, {
-                headers: {
-                    'Accept': 'application/json',
-                    'Authorization': 'Bearer ' + localStorage.getItem('token')
-                }
-            })
+            client.delete(`${config.backendUrl}/users/${user_id}/subscriptions/${subscription_id}`)
                 .then(response => {
                     this.subscription = response.data;
                     window.location.reload();
@@ -117,25 +97,13 @@ export default {
             const formData = new FormData();
             formData.append('file', file);
 
-            const accessToken = localStorage.getItem("token");
-
-            axios.post(`${config.backendUrl}/post`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'Authorization': 'Bearer ' + accessToken
-                }
-            })
+            client.post(`${config.backendUrl}/post`, formData)
                 .then(response => {
                     const avatarPath = response.data.path;
                     const userId = this.$route.params.id;
                     formData.append('avatar', avatarPath);
 
-                    axios.post(`${config.backendUrl}/users/${userId}/avatar`, formData, {
-                        headers: {
-                            'Content-Type': 'multipart/form-data',
-                            'Authorization': 'Bearer ' + accessToken
-                        }
-                    })
+                    client.post(`${config.backendUrl}/users/${userId}/avatar`, formData)
                         .then(updateResponse => {
                             console.log(updateResponse.data);
                         })
@@ -152,10 +120,7 @@ export default {
         getAvatar() {
             const userId = this.$route.params.id;
             const accessToken = localStorage.getItem("token");
-            axios.get(`${config.backendUrl}/users/${userId}/avatar`, {
-                headers: {
-                    'Authorization': 'Bearer ' + accessToken
-                },
+            client.get(`${config.backendUrl}/users/${userId}/avatar`, {
                 responseType: 'blob'
             })
                 .then(response => {

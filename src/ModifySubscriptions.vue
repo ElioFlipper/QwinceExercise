@@ -1,6 +1,6 @@
 <script>
-import axios from 'axios'
 import config from './config';
+import { client } from './setup';
 export default {
     data() {
         return {
@@ -15,13 +15,7 @@ export default {
 
     methods: {
         getSingleSubscription(id) {
-            const accessToken = localStorage.getItem("token");
-            axios.get(`${config.backendUrl}/subscriptions/${id}`, {
-                headers: {
-                    'Accept': 'application/json',
-                    'Authorization': 'Bearer ' + accessToken
-                }
-            })
+            client.get(`${config.backendUrl}/subscriptions/${id}`)
                 .then(response => {
                     this.singleSubscription = response.data;
                 })
@@ -32,14 +26,7 @@ export default {
 
         handleSaveButton() {
             const id = this.$route.params.id;
-            const accessToken = localStorage.getItem("token");
-            axios.put(`${config.backendUrl}/modifySubscription/${id}`, this.singleSubscription, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    'Authorization': 'Bearer ' + accessToken
-                }
-            })
+            client.put(`${config.backendUrl}/modifySubscription/${id}`, this.singleSubscription)
                 .then(response => {
                     this.singleUser = response.data;
                     console.log(response.data);
