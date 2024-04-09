@@ -1,5 +1,5 @@
 <script>
-import axios from 'axios';
+import { client } from './setup';
 import config from './config';
 export default {
     data() {

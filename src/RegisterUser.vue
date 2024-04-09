@@ -62,7 +62,7 @@ export default {
                 password: this.user.password
             };
 
-            client.post(`${config.backend}/register`, userData)
+            client.post(`${config.backendUrl}/register`, userData)
                 .then(response => {
                     this.$router.push({ name: 'users' });
                 })
@@ -70,7 +70,7 @@ export default {
                     console.error('There was a problem with your fetch operation:', error);
                 });
         },
-        
+
         handleLogin() {
             this.$router.push({ name: 'login' })
         }

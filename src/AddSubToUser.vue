@@ -1,5 +1,5 @@
 <script>
-import axios from 'axios';
+import { client } from './setup';
 import config from './config';
 export default {
     data() {
@@ -22,14 +22,8 @@ export default {
 
     methods: {
         getSubscription() {
-            const accessToken = localStorage.getItem("token");
 
-            axios.get(`${config.backendUrl}/subscriptions`, {
-                headers: {
-                    'Accept': 'application/json',
-                    'Authorization': 'Bearer ' + accessToken
-                }
-            })
+            client.get(`${config.backendUrl}/subscriptions`)
                 .then(response => {
                     this.allSubs = response.data;
                 })
@@ -40,12 +34,7 @@ export default {
 
         getUsersSubscription() {
             const id = this.$route.params.id;
-            axios.get(`${config.backendUrl}/users/${id}/subscriptions`, {
-                headers: {
-                    'Accept': 'application/json',
-                    'Authorization': 'Bearer ' + localStorage.getItem('token')
-                }
-            })
+            client.get(`${config.backendUrl}/users/${id}/subscriptions`)
                 .then(response => {
                     this.singleSub = response.data;
                 })
@@ -64,13 +53,7 @@ export default {
             console.log(subscriptionId);
             const accessToken = localStorage.getItem("token");
 
-            axios.post(`${config.backendUrl}/users/${userId}/subscriptions/${subscriptionId}`, subData, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    'Authorization': 'Bearer ' + accessToken
-                }
-            })
+            client.post(`${config.backendUrl}/users/${userId}/subscriptions/${subscriptionId}`, subData)
                 .then(response => {
                     if (response.status === 200) {
                         this.getUsersSubscription();
