@@ -12,11 +12,12 @@ import AddSubscription from './AddSubscription.vue'
 import AddSubToUser from './AddSubToUser.vue'
 import SubscriptionsDetail from './SubscriptionsDetail.vue'
 import Login from './Login.vue'
+import RegisterByStep from './RegisterByStep.vue'
 
 const routes = [
   { path: '/users', name: 'users', component: Users },
   { path: '/user/:id', name: 'userDetail', component: UserDetail },
-  { path: '/', name: 'register', component: RegisterUser },
+  { path: '/', name: 'register', component: RegisterByStep },
   { path: '/modify/:id', name: 'modify', component: ModifyUser },
   { path: '/pets', name: 'pets', component: Pets },
   { path: '/subscription', name: 'subscription', component: Subscriptions },
