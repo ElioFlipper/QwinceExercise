@@ -17,7 +17,8 @@ import RegisterByStep from './RegisterByStep.vue'
 const routes = [
   { path: '/users', name: 'users', component: Users },
   { path: '/user/:id', name: 'userDetail', component: UserDetail },
-  { path: '/', name: 'register', component: RegisterByStep },
+  { path: '/', name: 'registerByStep', component: RegisterByStep },
+  { path: '/register', name: 'register', component: RegisterUser },
   { path: '/modify/:id', name: 'modify', component: ModifyUser },
   { path: '/pets', name: 'pets', component: Pets },
   { path: '/subscription', name: 'subscription', component: Subscriptions },
@@ -36,7 +37,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const publicRoutes = ['login', 'register'];
+  const publicRoutes = ['login', 'register', 'registerByStep'];
 
   if (publicRoutes.includes(to.name)) {
     next();

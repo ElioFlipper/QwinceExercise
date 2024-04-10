@@ -62,7 +62,7 @@ export default {
                 password: this.user.password
             };
 
-            client.post(`${config.backendUrl}/register`, userData)
+            client.post(`http://127.0.0.1:8000/api/register`, userData)
                 .then(response => {
                     this.$router.push({ name: 'users' });
                 })

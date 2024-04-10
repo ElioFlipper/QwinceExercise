@@ -97,25 +97,16 @@ export default {
             const formData = new FormData();
             formData.append('file', file);
 
-            client.post(`${config.backendUrl}/post`, formData)
-                .then(response => {
-                    const avatarPath = response.data.path;
-                    const userId = this.$route.params.id;
-                    formData.append('avatar', avatarPath);
-
-                    client.post(`${config.backendUrl}/users/${userId}/avatar`, formData)
-                        .then(updateResponse => {
-                            console.log(updateResponse.data);
-                        })
-                        .catch(updateError => {
-                            console.error(updateError);
-                        });
+            client.post(`${config.backendUrl}/users/${userId}/avatar`, formData)
+                .then(updateResponse => {
+                    this.$router.push({ name: 'login' });
+                    this.getAvatar();
                 })
-                .then(this.getAvatar)
-                .catch(error => {
-                    console.error(error);
+                .catch(updateError => {
+                    console.error(updateError);
                 });
         },
+
 
         getAvatar() {
             const userId = this.$route.params.id;

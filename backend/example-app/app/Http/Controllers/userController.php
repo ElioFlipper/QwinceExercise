@@ -156,27 +156,19 @@ class UserController extends Controller
         return response()->json($users);
     }
 
-    public function post(Request $request)
-    {
-        $request->validate([
-            'file' => 'required|image|max:10048',
-        ]);
-
-        $path = $request->file('file')->store('public/files');
-        return response()->json(['message' => 'File uploaded successfully', 'path' => $path]);
-    }
-
     public function postUserAvatar(Request $request, $userId)
     {
         $request->validate([
-            'avatar' => 'required|string' // Assumendo che il percorso dell'avatar sia una stringa
+            'file' => 'required|image|max:10048'
         ]);
 
+        $path = $request->file('file')->store('public/files');
+
         $user = User::findOrFail($userId);
-        $user->avatar = $request->avatar;
+        $user->avatar = $path;
         $user->save();
 
-        return response()->json(['message' => 'Avatar aggiornato con successo']);
+        return response()->json(['message' => 'File uploaded successfully', 'path' => $path]);
     }
 
     public function getUserAvatar(Request $request, $userId)

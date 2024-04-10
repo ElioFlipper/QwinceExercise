@@ -1,4 +1,7 @@
 <script>
+import { client } from './setup';
+import config from './config';
+import axios from 'axios'
 export default {
     data() {
         return {
@@ -12,7 +15,6 @@ export default {
                 activationStatus: false,
                 password: '',
                 is_admin: false,
-                avatar: '',
             }
         };
     },
@@ -23,8 +25,8 @@ export default {
         prevStep() {
             this.currentStep--;
         },
-        handleFileChange(event) {
-            this.userData.avatar = event.target.files[0];
+        uploadFile() {
+            this.file = this.$refs.file.files[0]
         },
         submitForm() {
             const userData = {
@@ -36,17 +38,38 @@ export default {
                 activationStatus: this.user.activationStatus,
                 is_admin: this.user.is_admin,
                 password: this.user.password,
-                avatar: this.user.avatar
             };
+
             client.post(`${config.backendUrl}/register`, userData)
                 .then(response => {
-                    this.$router.push({ name: 'users' });
+                    const userId = response.data.userId;
+                    const token = response.data.token
+                    const fileInput = this.$refs.fileInput;
+                    const file = fileInput.files[0];
+                    const formData = new FormData();
+                    formData.append('file', file);
+                    axios.post(`http://127.0.0.1:8000/api/users/${userId}/avatar`, formData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                            'Authorization': `Bearer ${token}`
+                        }
+                    })
+                        .then(updateResponse => {
+                            this.$router.push({ name: 'login' });
+                        })
+                        .catch(updateError => {
+                            console.error(updateError);
+                        });
                 })
                 .catch(error => {
                     console.error('There was a problem with your fetch operation:', error);
                 });
 
-            console.log('Dati inviati al server:', this.userData);
+            console.log('Dati inviati al server:', userData);
+        },
+
+        handleLogin() {
+            this.$router.push({ name: 'login' })
         }
     }
 };
@@ -61,6 +84,7 @@ export default {
                 <input type="text" v-model="user.surname" placeholder="Surname">
                 <button type="submit">Avanti</button>
             </form>
+            <h2 @click="handleLogin">Are you already signed? <span class="login">Login!</span></h2>
         </div>
 
         <div v-if="currentStep === 2">
@@ -69,7 +93,7 @@ export default {
                 <input type="email" v-model="user.email" placeholder="Email">
                 <input type="password" v-model="user.password" placeholder="Password">
                 <input type="text" v-model="user.city" placeholder="City">
-                <button @click.prevent="prevStep">Indietro</button> 
+                <button @click.prevent="prevStep">Indietro</button>
                 <button type="submit">Avanti</button>
             </form>
         </div>
@@ -77,10 +101,16 @@ export default {
         <div v-if="currentStep === 3">
             <h2>Step 3: Carica un'immagine</h2>
             <form @submit.prevent="submitForm">
-                <input type="file" @change="handleFileChange">
+                <input type="file" name="file" ref="fileInput" @change="uploadFile($event)">
                 <button type="submit">Registrati</button>
-                <button @click.prevent="prevStep">Indietro</button> 
-            </form>
+                <button @click.prevent="prevStep">Indietro</button>
+            </form>\
         </div>
     </div>
 </template>
+
+<style>
+.login {
+    color: red
+}
+</style>
