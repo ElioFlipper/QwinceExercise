@@ -96,10 +96,10 @@ export default {
             const file = fileInput.files[0];
             const formData = new FormData();
             formData.append('file', file);
+            const userId = this.$route.params.id;
 
             client.post(`${config.backendUrl}/users/${userId}/avatar`, formData)
                 .then(updateResponse => {
-                    this.$router.push({ name: 'login' });
                     this.getAvatar();
                 })
                 .catch(updateError => {
@@ -110,7 +110,6 @@ export default {
 
         getAvatar() {
             const userId = this.$route.params.id;
-            const accessToken = localStorage.getItem("token");
             client.get(`${config.backendUrl}/users/${userId}/avatar`, {
                 responseType: 'blob'
             })
