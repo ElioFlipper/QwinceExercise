@@ -3,6 +3,7 @@ import Navbar from "./Navbar.vue"
 export default {
   components: {
     Navbar
+    
   }
 }
 </script>
@@ -13,3 +14,6 @@ export default {
     <router-view />
   </div>
 </template>
+<style lang="scss">
+@import '@/App.scss'
+</style>

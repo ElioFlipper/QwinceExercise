@@ -41,21 +41,37 @@ export default {
 </script>
 
 <template>
-    <div class="modifyUserContainer">
-        <label>Username: </label>
-        <input type="text" v-model="singleUser.username">
-        <label>Name: </label>
-        <input type="text" v-model="singleUser.name">
-        <label>Surname: </label>
-        <input type="text" v-model="singleUser.surname">
-        <label>Email: </label>
-        <input type="text" v-model="singleUser.email">
-        <label>City: </label>
-        <input type="text" v-model="singleUser.city">
-        <label>activationStatus: </label>
-        <input type="checkbox" v-model="singleUser.activationStatus">
-        <button @click="handleSaveButton" class="saveButton">Save</button>
-
+    <div class="custom-container">
+        <form @submit.prevent="handleSaveButton">
+            <div class="mb-3 col-md-6">
+                <label for="username">Username:</label>
+                <input id="username" type="text" class="form-control" v-model="singleUser.username"
+                    placeholder="Username">
+            </div>
+            <div class="mb-3 col-md-6">
+                <label for="name">Name:</label>
+                <input id="name" type="text" class="form-control" v-model="singleUser.name" placeholder="Name">
+            </div>
+            <div class="mb-3 col-md-6">
+                <label for="surname">Surname:</label>
+                <input id="surname" type="text" class="form-control" v-model="singleUser.surname" placeholder="Surname">
+            </div>
+            <div class="mb-3 col-md-6">
+                <label for="email">Email:</label>
+                <input id="email" type="text" class="form-control" v-model="singleUser.email" placeholder="Email">
+            </div>
+            <div class="mb-3 col-md-6">
+                <label for="city">City:</label>
+                <input id="city" type="text" class="form-control" v-model="singleUser.city" placeholder="City">
+            </div>
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" v-model="singleUser.activationStatus">
+                <label class="form-check-label" for="flexSwitchCheckDefault">Activation status</label>
+            </div>
+            <div class="mb-3 col-md-6">
+                <button class="btn btn-primary" type="submit">Save</button>
+            </div>
+        </form>
     </div>
 </template>
 

@@ -30,9 +30,17 @@ export default {
 </script>
 
 <template>
-    <div class="userPetContainer" v-for="pet in pets" key="pet.id">
-        <p>Pet name: <span>{{ pet.name }}</span></p>
-        <p>Pet species: <span>{{ pet.species }}</span></p>
+    <div class="custom-container">
+        <div class="row">
+            <div class="col-md-4" v-for="pet in pets" :key="pet.id">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <p class="card-text"><strong>Pet Name:</strong> {{ pet.name }}</p>
+                        <p class="card-text"><strong>Pet Species:</strong> {{ pet.species }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 

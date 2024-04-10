@@ -35,19 +35,25 @@ export default {
 </script>
 
 <template>
-    <div class="formContainer">
+    <div class="custom-container">
         <form @submit.prevent="savePet">
-            <label for="">Pet Name:</label>
-            <input type="text" name="name" v-model="pet.name">
-            <label for="">Pet Species:</label>
-            <select v-model="pet.species">
-                <option value="cane">Cane</option>
-                <option value="gatto">Gatto</option>
-                <option value="canarino">Canarino</option>
-                <option value="iguana">Iguana</option>
-                <option value="serpente">Serpente</option>
-            </select>
-            <button class="savePetButton">Save</button>
+            <div class="mb-3 col-md-6">
+                <label for="petName">Pet Name:</label>
+                <input id="petName" type="text" class="form-control" v-model="pet.name" placeholder="Pet Name">
+            </div>
+            <div class="mb-3 col-md-6">
+                <label for="petSpecies">Pet Species:</label>
+                <select id="petSpecies" class="form-select" v-model="pet.species">
+                    <option value="cane">Cane</option>
+                    <option value="gatto">Gatto</option>
+                    <option value="canarino">Canarino</option>
+                    <option value="iguana">Iguana</option>
+                    <option value="serpente">Serpente</option>
+                </select>
+            </div>
+            <div class="mb-3 col-md-6">
+                <button class="btn btn-primary" type="submit">Save</button>
+            </div>
         </form>
     </div>
 </template>

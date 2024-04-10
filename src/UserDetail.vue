@@ -24,6 +24,7 @@ export default {
             client.get(`${config.backendUrl}/users/${id}`,)
                 .then(response => {
                     this.singleUser = response.data;
+                    console.log(response.data)
                 })
                 .catch(error => {
                     console.error(error);
@@ -128,156 +129,62 @@ export default {
 </script>
 
 <template>
-    <img :src="avatarURL" width="200" height="200">
-    <div class="userDetailContainer">
-        <table class="userDetailTable">
-            <tr>
-                <th>Username:</th>
-                <td>{{ singleUser.username }}</td>
-            </tr>
-            <tr>
-                <th>Name:</th>
-                <td>{{ singleUser.name }}</td>
-            </tr>
-            <tr>
-                <th>Surname:</th>
-                <td>{{ singleUser.surname }}</td>
-            </tr>
-            <tr>
-                <th>Email:</th>
-                <td>{{ singleUser.email }}</td>
-            </tr>
-            <tr>
-                <th>City:</th>
-                <td>{{ singleUser.city }}</td>
-            </tr>
-            <tr>
-                <th>Date of submission:</th>
-                <td>{{ singleUser.date_of_submission }}</td>
-            </tr>
-            <tr>
-                <th>Activation Status:</th>
-                <td>{{ singleUser.activationStatus }}</td>
-            </tr>
-        </table>
-        <div v-for="sub in subscription" class="subContainer">
-            <table class="userDetailTable">
-                <tr>
-                    <th>Nome dell'abbonamento:</th>
-                    <td>{{ sub.name }}</td>
-                </tr>
-                <tr>
-                    <th>Slug dell'abbonamento:</th>
-                    <td>{{ sub.slug }}</td>
-                </tr>
-                <tr>
-                    <th>Durata dell'abbonamento (mesi):</th>
-                    <td>{{ sub.duration }}</td>
-                </tr>
-                <tr>
-                    <th>Data di inizio:</th>
-                    <td>{{ sub.startingDate }}</td>
-                </tr>
-                <tr>
-                    <th>Data fine:</th>
-                    <td>{{ sub.endingDate }}</td>
-                </tr>
-                <tr>
-                    <th>Action:</th>
-                    <td>
-                        <button class="removeButton" @click="handleRemoveSubscription(sub)">Remove</button>
-                    </td>
-                </tr>
-            </table>
+    <div class="custom-container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <img :src="avatarURL" width="200">
+                        <p class="card-text"><strong>Username:</strong> {{ singleUser.username }}</p>
+                        <p class="card-text"><strong>Name:</strong> {{ singleUser.name }}</p>
+                        <p class="card-text"><strong>Surname:</strong> {{ singleUser.surname }}</p>
+                        <p class="card-text"><strong>Email:</strong> {{ singleUser.email }}</p>
+                        <p class="card-text"><strong>City:</strong> {{ singleUser.city }}</p>
+                        <p class="card-text"><strong>Date of Submission:</strong> {{ singleUser.date_of_submission }}
+                        </p>
+                        <p class="card-text"><strong>Activation Status:</strong> {{ singleUser.activationStatus }}</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="buttonsContainer">
-            <button class="modifyButton" @click="handleModifyButton">Modify</button>
-            <button class="modifyButton" @click="handleRemoveButton">Remove</button>
-            <button class="modifyButton" v-if="singleUser.activationStatus"
+        <div class="mb-3 col-md-8 mt-4">
+            <button class="btn btn-primary mx-1 " @click="handleModifyButton">Modify</button>
+            <button class="btn btn-primary mx-1" @click="handleRemoveButton">Remove</button>
+            <button class="btn btn-primary mx-1" v-if="singleUser.activationStatus"
                 @click="handleDeactiveButton">Deactive</button>
-            <button class="modifyButton" v-else @click="handleActiveButton">Active</button>
-            <button class="modifyButton" @click="handlePetRegisterButton">Add a pet</button>
-            <button class="modifyButton" @click="handlePetDetailButton">Show pets</button>
-            <button class="modifyButton" @click="handleAddSubscriptionButton">Add a subscription</button>
-            <button class="modifyButton" @click="handleUploadButton">Upload</button>
-            <input class="modifyButton" type="file" name="file" ref="fileInput" @change="uploadFile($event)">
+            <button class="btn btn-primary mx-1" v-else @click="handleActiveButton">Active</button>
+            <button class="btn btn-primary mx-1" @click="handlePetRegisterButton">Add a pet</button>
+            <button class="btn btn-primary mx-1" @click="handlePetDetailButton">Show pets</button>
+            <button class="btn btn-primary mx-1" @click="handleAddSubscriptionButton">Add a subscription</button>
+            <button class="btn btn-primary mx-1" @click="handleUploadButton">Upload</button>
         </div>
+
+        <div class="mb-3 col-md-6">
+            <input class="form-control" type="file" name="file" ref="fileInput" @change="uploadFile($event)">
+        </div>
+
+
+        <div v-for="sub in subscription" :key="sub.id" class="mb-3">
+            <div class="card mt-5">
+                <div class="card-body">
+                    <h5 class="card-title">Nome dell'abbonamento: {{ sub.name }}</h5>
+                    <p class="card-text">Slug dell'abbonamento: {{ sub.slug }}</p>
+                    <p class="card-text">Durata dell'abbonamento (mesi): {{ sub.duration }}</p>
+                    <p class="card-text">Data di inizio: {{ sub.startingDate }}</p>
+                    <p class="card-text">Data fine: {{ sub.endingDate }}</p>
+                    <button @click="handleRemoveSubscription(sub)" class="btn btn-danger">Remove</button>
+                </div>
+            </div>
+        </div>
+
+
     </div>
+
+
+
+
 </template>
 
 
-<style>
-.userDetailContainer {
-    background-color: whitesmoke;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100vw;
-}
-
-.userDetailContainer p:nth-child(even) {
-    background-color: rgba(134, 184, 134, 0.273);
-    margin: 0;
-    padding: 1rem;
-    text-align: center;
-    width: 100%;
-}
-
-.userDetailContainer p:nth-of-type(odd) {
-    background-color: whitesmoke;
-    margin: 0;
-    padding: 1rem;
-    text-align: center;
-    width: 100%;
-}
-
-.modifyButton {
-    border-radius: 3px;
-    background-color: rgba(134, 184, 134, 0.273);
-    margin: 0 auto;
-    padding: .5rem;
-    border: none;
-}
-
-.modifyButton:hover {
-    transform: scale(110%);
-    transition: .5s;
-}
-
-.buttonsContainer {
-    display: flex;
-    width: 90%;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.userDetailTable {
-    width: 100%;
-}
-
-.userDetailTable:nth-child(odd) {
-    background-color: rgba(134, 184, 134, 0.273);
-}
-
-.userDetailTable th,
-.userDetailTable td {
-    padding: 8px;
-    text-align: center;
-}
-
-.userDetailTable th {
-    background-color: #f2f2f2;
-}
-
-.userDetailTable tbody tr:nth-child(odd) {
-    background-color: rgba(134, 184, 134, 0.273);
-}
-
-.subContainer {
-    margin-top: 2rem;
-    margin-bottom: 2rem
-}
-</style>
+<style></style>

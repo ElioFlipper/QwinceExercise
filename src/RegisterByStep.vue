@@ -75,36 +75,53 @@ export default {
 };
 </script>
 <template>
-    <div>
+    <div class="custom-container">
         <div v-if="currentStep === 1">
-            <h2>Step 1: Inserisci nome e cognome</h2>
             <form @submit.prevent="nextStep">
-                <input type="text" v-model="user.username" placeholder="Username">
-                <input type="text" v-model="user.name" placeholder="Name">
-                <input type="text" v-model="user.surname" placeholder="Surname">
-                <button type="submit">Avanti</button>
+                <div class="mb-3 col-md-6">
+                    <input type="text" class="form-control" v-model="user.username" placeholder="Username">
+                </div>
+                <div class="mb-3 col-md-6">
+                    <input type="text" class="form-control" v-model="user.name" placeholder="Name">
+                </div>
+                <div class="mb-3 col-md-6">
+                    <input type="text" class="form-control" v-model="user.surname" placeholder="Surname">
+                </div>
+                <button class="btn btn-primary" type="submit">Avanti</button>
             </form>
-            <h2 @click="handleLogin">Are you already signed? <span class="login">Login!</span></h2>
+            <h4 @click="handleLogin">Are you already signed? <span class="login">Login!</span></h4>
+
         </div>
 
         <div v-if="currentStep === 2">
             <h2>Step 2: Inserisci email</h2>
             <form @submit.prevent="nextStep">
-                <input type="email" v-model="user.email" placeholder="Email">
-                <input type="password" v-model="user.password" placeholder="Password">
-                <input type="text" v-model="user.city" placeholder="City">
-                <button @click.prevent="prevStep">Indietro</button>
-                <button type="submit">Avanti</button>
+                <div class="mb-3 col-md-6">
+                    <input type="email" class="form-control" v-model="user.email" placeholder="Email">
+                </div>
+                <div class="mb-3 col-md-6">
+                    <input type="password" class="form-control" v-model="user.password" placeholder="Password">
+                </div>
+                <div class="mb-3 col-md-6">
+                    <input type="text" class="form-control" v-model="user.city" placeholder="City">
+                </div>
+                <div class="mb-3 d-flex justify-content-around col-md-6">
+                    <button class="btn btn-danger" @click.prevent="prevStep">Indietro</button>
+                    <button class="btn btn-primary" type="submit">Avanti</button>
+                </div>
             </form>
         </div>
 
         <div v-if="currentStep === 3">
-            <h2>Step 3: Carica un'immagine</h2>
+            <div class="mb-3 col-md-6">
+                <input type="file" name="file" class="form-control" ref="fileInput" @change="uploadFile($event)">
+            </div>
             <form @submit.prevent="submitForm">
-                <input type="file" name="file" ref="fileInput" @change="uploadFile($event)">
-                <button type="submit">Registrati</button>
-                <button @click.prevent="prevStep">Indietro</button>
-            </form>\
+                <div class="mb-3 d-flex justify-content-around col-md-6">
+                    <button class="btn btn-danger" @click.prevent="prevStep">Indietro</button>
+                    <button class="btn btn-success" type="submit">Registrati</button>
+                </div>
+            </form>
         </div>
     </div>
 </template>
@@ -112,5 +129,9 @@ export default {
 <style>
 .login {
     color: red
+}
+
+.custom-container h4{
+    margin-top: 1rem;
 }
 </style>

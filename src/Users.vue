@@ -29,7 +29,7 @@ export default {
     // },
 
     beforeRouteEnter(to, from, next) {
-                client.get(`${config.backendUrl}/users`)
+        client.get(`${config.backendUrl}/users`)
             .then((response) => {
                 next(vm => {
                     vm.users = response.data;
@@ -48,7 +48,7 @@ export default {
 
     methods: {
         getUsers() {
-            
+
             client.get("http://127.0.0.1:8000/api/users")
                 .then(response => {
                     this.users = response.data;
@@ -101,7 +101,7 @@ export default {
             // }
 
             const queryString = new URLSearchParams(data);
-            
+
             client.get("http://127.0.0.1:8000/api/filter?" + queryString)
                 .then(response => {
                     this.users = response.data;
@@ -115,35 +115,35 @@ export default {
 }
 </script>
 <template>
-    <div class="container">
-        <div class="filterSection">
-            <span>Search by username</span>
-            <input type="text" placeholder="Username" v-model="username">
-
-            <span>Search by name or surname</span>
-            <input type="text" placeholder="Name or Surname" v-model="name">
-
-            <span>Search by email</span>
-            <input type="text" placeholder="email" v-model="email">
-
-            <span>Search by city</span>
-            <input type="text" placeholder="City" v-model="city">
-
-            <select v-model="activationStatus">
-                <option :value="true">Active</option>
-                <option :value="false">Deactive</option>
-            </select>
-
-            <button class="searchButton" @click="handleSearchButton">Search</button>
-
+    <div class="custom-container ">
+        <div class="filterSection ">
+            <div class="mb-3 col-md-6">
+                <input type="text" placeholder="Username" class="form-control" v-model="username">
+            </div>
+            <div class="mb-3 col-md-6">
+                <input type="text" placeholder="Name or surname" class="form-control" v-model="name">
+            </div>
+            <div class="mb-3 col-md-6">
+                <input type="text" placeholder="Email" class="form-control" v-model="email">
+            </div>
+            <div class="mb-3 col-md-6">
+                <input type="text" placeholder="City" class="form-control" v-model="city">
+            </div>
+            <div class="mb-3 col-md-6">
+                <select class="form-select " aria-label="Default select example" v-model="activationStatus">
+                    <option :value="true">Active</option>
+                    <option :value="false">Deactive</option>
+                </select>
+            </div>
+            <button class="btn btn-primary" @click="handleSearchButton">Search</button>
         </div>
-        <table class="userTable">
+        <table class="table table-striped table-hover">
             <thead>
                 <tr>
-                    <th>Username</th>
-                    <th>Email</th>
-                    <th>City</th>
-                    <th>Actions</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">City</th>
+                    <th scope="col">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -152,117 +152,15 @@ export default {
                     <td>{{ user.email }}</td>
                     <td>{{ user.city }}</td>
                     <td>
-                        <button @click="openProfile(user.id)">Profile</button>
+                        <button @click="openProfile(user.id)" class="btn btn-secondary">Profile</button>
                     </td>
                 </tr>
             </tbody>
         </table>
 
-        <button class="registerButton" @click="handleRegisterButton">Register a new user</button>
+
+        <button class="btn btn-primary" @click="handleRegisterButton">Register a new user</button>
     </div>
 </template>
 
-<style scoped>
-* {
-    box-sizing: border-box;
-}
-
-.container {
-    background-color: whitesmoke;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    display: flex;
-    flex-direction: column;
-}
-
-.container li {
-    max-width: 960px;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    margin: 0 auto;
-    /* gap: 10rem; */
-}
-
-.container ul:nth-of-type(even) {
-    background-color: rgba(134, 184, 134, 0.273);
-}
-
-.container ul:nth-of-type(odd) {
-    background-color: whitesmoke;
-}
-
-.filterSection {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(134, 184, 134, 0.273);
-    padding: 1rem;
-    gap: .5rem;
-}
-
-.filterSection input,
-select {
-    display: flex;
-    margin: 0 auto;
-    border: none;
-    border-radius: 3px;
-    padding: .5rem;
-}
-
-.filterSection span {
-    display: flex;
-    flex-direction: column;
-    margin: 0 auto;
-}
-
-.container ul {
-    margin: 0 0;
-}
-
-.registerButton {
-    border-radius: 3px;
-    padding: .5rem;
-    background-color: rgba(134, 184, 134, 0.273);
-    margin: 0 auto;
-    margin-top: 1rem;
-    border: none;
-}
-
-.searchButton {
-    border-radius: 3px;
-    padding: .5rem;
-    background-color: rgba(134, 184, 134, 0.273);
-    margin: 0 auto;
-    margin-top: 1rem;
-    border: none;
-}
-
-.searchButton:hover {
-    transform: scale(110%);
-    transition: .5s;
-}
-
-.registerButton:hover {
-    transform: scale(110%);
-    transition: .5s;
-}
-
-.userTable:nth-child(odd) {
-    background-color: rgba(134, 184, 134, 0.273);
-}
-
-.userTable th,
-.userTable td {
-    padding: 8px;
-    text-align: center;
-}
-
-.userTable th {
-    background-color: #f2f2f2;
-}
-
-.userTable tbody tr:nth-child(odd) {
-    background-color: rgba(134, 184, 134, 0.273);
-}
-</style>
+<style scoped></style>

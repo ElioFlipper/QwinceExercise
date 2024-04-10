@@ -47,57 +47,24 @@ export default {
 </script>
 
 <template>
-    <div class="loginContainer">
+    <div class="custom-container">
         <h2>Login</h2>
         <form @submit.prevent="login">
-            <label>Email</label>
-            <input type="text" name="email" v-model="user.email">
-            <label>Password</label>
-            <input type="password" name="password" v-model="user.password">
-            <button type="submit" class="loginButton">Login</button>
+            <div class="mb-3 col-md-6" >
+                <input type="text" name="email" v-model="user.email" class="form-control" placeholder="name@example.com">
+            </div>
+            <div class="mb-3 col-md-6" col-md-6>
+                <input type="password" name="password" v-model="user.password" class="form-control" placeholder="Password">
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
         </form>
-        <h3>Are you not registered? <span class="signIn" @click="handlesignIn">Sign in</span></h3>
+        <h4>Are you not registered? <span class="signIn" @click="handlesignIn">Sign in</span></h4>
     </div>
-
 </template>
 
 <style>
-.loginContainer {
-    display: flex;
-    flex-direction: column;
-    /* align-items: center; */
-    /* justify-content: center; */
-    background-color: rgba(134, 184, 134, 0.273);
-    padding: 1rem;
-    gap: .5rem;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.loginContainer input,
-select {
-    display: flex;
-    margin: 0;
-    border: none;
-    border-radius: 3px;
-    padding: .5rem;
-}
-
-.loginButton {
-    border-radius: 3px;
-    padding: .5rem;
-    background-color: rgba(134, 184, 134, 0.273);
-    margin: 0 auto;
-    margin-top: 1rem;
-    border: none;
-}
-
-.login {
+.signIn {
+    color:red;
     cursor: pointer;
-    color: red;
-}
-
-.loginButton:hover {
-    transform: scale(110%);
-    transition: .5s;
 }
 </style>

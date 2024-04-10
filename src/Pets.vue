@@ -52,26 +52,29 @@ export default {
 </script>
 
 <template>
-    <div class="petsContainer">
-        <table class="petsTable">
-            <thead>
-                <tr>
-                    <th>Pet name</th>
-                    <th>Pet species</th>
-                    <th>Pet owner</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="pet in pets" :key="pet.id">
-                    <td>{{ pet.name }}</td>
-                    <td>{{ pet.species }}</td>
-                    <td>{{ getOwnersName(pet.user_id) }}</td>
-                    <td><button class="ownerButton" @click="handleOwnerButton(pet.user_id)">Owner Profile</button></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <div class="custom-container">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Pet Name</th>
+                        <th scope="col">Pet Species</th>
+                        <th scope="col">Pet Owner</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="pet in pets" :key="pet.id">
+                        <td>{{ pet.name }}</td>
+                        <td>{{ pet.species }}</td>
+                        <td>{{ getOwnersName(pet.user_id) }}</td>
+                        <td>
+                            <button class="btn btn-primary" @click="handleOwnerButton(pet.user_id)">Owner
+                                Profile</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 </template>
 
 <style>
