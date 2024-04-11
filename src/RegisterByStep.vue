@@ -15,7 +15,8 @@ export default {
                 activationStatus: false,
                 password: '',
                 is_admin: false,
-            }
+            },
+            registerFailed: false
         };
     },
     methods: {
@@ -59,10 +60,15 @@ export default {
                         })
                         .catch(updateError => {
                             console.error(updateError);
+
                         });
                 })
                 .catch(error => {
                     console.error('There was a problem with your fetch operation:', error);
+                    this.registerFailed = true;
+                    setTimeout(() => {
+                        this.registerFailed = false;
+                    }, 3000);
                 });
 
             console.log('Dati inviati al server:', userData);
@@ -77,51 +83,64 @@ export default {
 <template>
     <div class="custom-container">
         <div v-if="currentStep === 1">
-            <form @submit.prevent="nextStep">
-                <div class="mb-3 col-md-6">
-                    <input type="text" class="form-control" v-model="user.username" placeholder="Username">
-                </div>
-                <div class="mb-3 col-md-6">
-                    <input type="text" class="form-control" v-model="user.name" placeholder="Name">
-                </div>
-                <div class="mb-3 col-md-6">
-                    <input type="text" class="form-control" v-model="user.surname" placeholder="Surname">
-                </div>
-                <button class="btn btn-primary" type="submit">Avanti</button>
-            </form>
-            <h4 @click="handleLogin">Are you already signed? <span class="login">Login!</span></h4>
-
+            <h2 class="logIn">Signin</h2>
+            <div class="d-flex justify-content-center mt-3">
+                <form @submit.prevent="nextStep" class="col-md-4">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" v-model="user.username" placeholder="Username">
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" v-model="user.name" placeholder="Name">
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" v-model="user.surname" placeholder="Surname">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Avanti</button>
+                </form>
+            </div>
+            <div class="registered">
+                <h4>Are you already signed? <span class="login" @click="handleLogin">Login!</span></h4>
+            </div>
         </div>
+
 
         <div v-if="currentStep === 2">
-            <h2>Step 2: Inserisci email</h2>
-            <form @submit.prevent="nextStep">
-                <div class="mb-3 col-md-6">
-                    <input type="email" class="form-control" v-model="user.email" placeholder="Email">
-                </div>
-                <div class="mb-3 col-md-6">
-                    <input type="password" class="form-control" v-model="user.password" placeholder="Password">
-                </div>
-                <div class="mb-3 col-md-6">
-                    <input type="text" class="form-control" v-model="user.city" placeholder="City">
-                </div>
-                <div class="mb-3 d-flex justify-content-around col-md-6">
-                    <button class="btn btn-danger" @click.prevent="prevStep">Indietro</button>
-                    <button class="btn btn-primary" type="submit">Avanti</button>
-                </div>
-            </form>
+            <div class="d-flex justify-content-center mt-3">
+                <form @submit.prevent="nextStep" class="col-md-4">
+                    <div class="mb-3">
+                        <input type="email" class="form-control" v-model="user.email" placeholder="Email">
+                    </div>
+                    <div class="mb-3">
+                        <input type="password" class="form-control" v-model="user.password" placeholder="Password">
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" v-model="user.city" placeholder="City">
+                    </div>
+                    <div class="mb-3 d-flex justify-content-around">
+                        <button class="btn btn-danger" @click.prevent="prevStep">Indietro</button>
+                        <button class="btn btn-primary" type="submit">Avanti</button>
+                    </div>
+                </form>
+            </div>
         </div>
 
+
         <div v-if="currentStep === 3">
-            <div class="mb-3 col-md-6">
-                <input type="file" name="file" class="form-control" ref="fileInput" @change="uploadFile($event)">
+            <div class="d-flex justify-content-center mt-3">
+                <form @submit.prevent="submitForm" class="col-md-4">
+                    <div class="mb-3">
+                        <input type="file" name="file" class="form-control" ref="fileInput"
+                            @change="uploadFile($event)">
+                    </div>
+                    <div class="alert alert-danger" role="alert" v-if="registerFailed">
+                        Email già in uso, riprova!
+                    </div>
+                    <div class="mb-3 d-flex justify-content-around">
+                        <button class="btn btn-danger" @click.prevent="prevStep">Indietro</button>
+                        <button class="btn btn-success" type="submit">Registrati</button>
+                    </div>
+                </form>
             </div>
-            <form @submit.prevent="submitForm">
-                <div class="mb-3 d-flex justify-content-around col-md-6">
-                    <button class="btn btn-danger" @click.prevent="prevStep">Indietro</button>
-                    <button class="btn btn-success" type="submit">Registrati</button>
-                </div>
-            </form>
         </div>
     </div>
 </template>
@@ -131,7 +150,7 @@ export default {
     color: red
 }
 
-.custom-container h4{
+.custom-container h4 {
     margin-top: 1rem;
 }
 </style>

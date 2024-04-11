@@ -116,26 +116,28 @@ export default {
 </script>
 <template>
     <div class="custom-container ">
-        <div class="filterSection ">
-            <div class="mb-3 col-md-6">
-                <input type="text" placeholder="Username" class="form-control" v-model="username">
-            </div>
-            <div class="mb-3 col-md-6">
-                <input type="text" placeholder="Name or surname" class="form-control" v-model="name">
-            </div>
-            <div class="mb-3 col-md-6">
-                <input type="text" placeholder="Email" class="form-control" v-model="email">
-            </div>
-            <div class="mb-3 col-md-6">
-                <input type="text" placeholder="City" class="form-control" v-model="city">
-            </div>
-            <div class="mb-3 col-md-6">
-                <select class="form-select " aria-label="Default select example" v-model="activationStatus">
-                    <option :value="true">Active</option>
-                    <option :value="false">Deactive</option>
-                </select>
-            </div>
-            <button class="btn btn-primary" @click="handleSearchButton">Search</button>
+        <div class="d-flex justify-content-center mt-3" >
+            <form @submit.prevent="handleSearchButton" class="col-md-4">
+                <div class="mb-3">
+                    <input type="text" placeholder="Username" class="form-control" v-model="username">
+                </div>
+                <div class="mb-3">
+                    <input type="text" placeholder="Name or surname" class="form-control" v-model="name">
+                </div>
+                <div class="mb-3">
+                    <input type="text" placeholder="Email" class="form-control" v-model="email">
+                </div>
+                <div class="mb-3">
+                    <input type="text" placeholder="City" class="form-control" v-model="city">
+                </div>
+                <div class="mb-3">
+                    <select class="form-select " aria-label="Default select example" v-model="activationStatus">
+                        <option :value="true">Active</option>
+                        <option :value="false">Deactive</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" type="submit">Search</button>
+            </form>
         </div>
         <table class="table table-striped table-hover">
             <thead>
@@ -157,8 +159,6 @@ export default {
                 </tr>
             </tbody>
         </table>
-
-
         <button class="btn btn-primary" @click="handleRegisterButton">Register a new user</button>
     </div>
 </template>

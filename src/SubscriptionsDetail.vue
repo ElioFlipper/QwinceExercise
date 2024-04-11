@@ -41,42 +41,35 @@ export default {
 </script>
 
 <template>
-    <div>
-        <h1>Abbonamenti attivi</h1>
-        <table class="activeSubscriptionTable">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Slug</th>
-                    <th>Duration</th>
-                    <th>Starting Date</th>
-                    <th>Ending Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-if="subscriptions">
-                    <td>{{ subscriptions.name }}</td>
-                    <td>{{ subscriptions.slug }}</td>
-                    <td>{{ subscriptions.duration }}</td>
-                    <td>{{ subscriptions.startingDate }}</td>
-                    <td>{{ subscriptions.endingDate }}</td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="custom-container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div v-if="subscriptions">
+                            <p><strong>Name:</strong> {{ subscriptions.name }}</p>
+                            <p><strong>Slug:</strong> {{ subscriptions.slug }}</p>
+                            <p><strong>Duration:</strong> {{ subscriptions.duration }}</p>
+                            <p><strong>Starting Date:</strong> {{ subscriptions.startingDate }}</p>
+                            <p><strong>Ending Date:</strong> {{ subscriptions.endingDate }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">User Subscribed</h5>
+                        <ul class="list-group">
+                            <li class="list-group-item" v-for="user in users" :key="user.id">
+                                {{ user.username }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <h1>Utenti:</h1>
-        <table class="userSubscribedTable">
-            <thead>
-                <tr>
-                    <th>Username</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="user in users" :key="user.id">
-                    <td>{{ user.username }}</td>
-                </tr>
-            </tbody>
-        </table>
     </div>
 </template>
 

@@ -7,7 +7,8 @@ export default {
             user: {
                 email: '',
                 password: ''
-            }
+            },
+            loginFailed: false
         }
     },
 
@@ -36,6 +37,10 @@ export default {
                 })
                 .catch(error => {
                     console.error('There was a problem with your fetch operation:', error);
+                    this.loginFailed = true;
+                    setTimeout(() => {
+                        this.loginFailed = false;
+                    }, 3000);
                 });
         },
 
@@ -48,23 +53,41 @@ export default {
 
 <template>
     <div class="custom-container">
-        <h2>Login</h2>
-        <form @submit.prevent="login">
-            <div class="mb-3 col-md-6" >
-                <input type="text" name="email" v-model="user.email" class="form-control" placeholder="name@example.com">
-            </div>
-            <div class="mb-3 col-md-6" col-md-6>
-                <input type="password" name="password" v-model="user.password" class="form-control" placeholder="Password">
-            </div>
-            <button type="submit" class="btn btn-primary">Login</button>
-        </form>
-        <h4>Are you not registered? <span class="signIn" @click="handlesignIn">Sign in</span></h4>
+        <h2 class="logIn">Login</h2>
+        <div class="d-flex justify-content-center mt-3">
+            <form @submit.prevent="login" class="col-md-4">
+                <div class="mb-3">
+                    <input type="text" name="email" v-model="user.email" class="form-control"
+                        placeholder="name@example.com">
+                </div>
+                <div class="mb-3">
+                    <input type="password" name="password" v-model="user.password" class="form-control"
+                        placeholder="Password">
+                </div>
+                <div class="alert alert-danger" role="alert" v-if="loginFailed">
+                    Email o password errate, riprova!
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+        </div>
+        <div class="registered">
+            <h4>Are you not registered? <span class="signIn" @click="handlesignIn">Sign in</span></h4>
+        </div>
     </div>
+
 </template>
 
 <style>
 .signIn {
-    color:red;
+    color: red;
     cursor: pointer;
+}
+
+.logIn {
+    text-align: center;
+}
+
+.registered {
+    text-align: center;
 }
 </style>

@@ -70,17 +70,18 @@ export default {
 </script>
 
 <template>
-    <table class="subscriptionTable">
+    <div class="custom-container">
+    <table class="table table-striped table-hover">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Slug</th>
-                <th>Duration</th>
-                <th>Starting Date</th>
-                <th>Ending Date</th>
-                <th>Modify</th>
-                <th>Remove</th>
-                <th>Details</th>
+                <th scope="col">Name</th>
+                <th scope="col">Slug</th>
+                <th scope="col">Duration</th>
+                <th scope="col">Starting Date</th>
+                <th scope="col">Ending Date</th>
+                <th scope="col">Modify</th>
+                <th scope="col">Remove</th>
+                <th scope="col">Details</th>
             </tr>
         </thead>
         <tbody>
@@ -90,13 +91,21 @@ export default {
                 <td>{{ subscription.duration }}</td>
                 <td>{{ subscription.startingDate }}</td>
                 <td>{{ subscription.endingDate }}</td>
-                <td><button @click="handleModifyButton(subscription.id)">Modify</button></td>
-                <td><button @click="handleRemoveButton(subscription.id)">Remove</button></td>
-                <td><button @click="handleDetailsButton(subscription.id)">Details</button></td>
+                <td>
+                    <button @click="handleModifyButton(subscription.id)" class="btn btn-primary">Modify</button>
+                </td>
+                <td>
+                    <button @click="handleRemoveButton(subscription.id)" class="btn btn-danger">Remove</button>
+                </td>
+                <td>
+                    <button @click="handleDetailsButton(subscription.id)" class="btn btn-secondary">Details</button>
+                </td>
             </tr>
         </tbody>
     </table>
-    <button class="addSubscription" @click="handleAddButton">Add a new subscription</button>
+
+    <button class="btn btn-primary" @click="handleAddButton">Add a new subscription</button>
+</div>
 </template>
 
 <style>

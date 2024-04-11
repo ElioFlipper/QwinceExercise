@@ -76,16 +76,23 @@ export default {
 </script>
 
 <template>
-    <div class="addSubToUserContainer">
-        <select name="" id="" v-model="subscriptionSelect.id">
-            <option value="" disabled selected>Scegli un abbonamento</option>
-            <option v-for="(sub, index) in availableSubscriptions" :key="index" :value="sub.id">{{ sub.name }}
-            </option>
-        </select>
-        <button @click="handleAddSubscriptionButton">Add subscription</button>
-        <h2>Abbonamenti esistenti:</h2>
-        <div v-for="subscription in singleSub">
-            <h3>{{ subscription.name }}</h3>
+    <div class="custom-container">
+        <div class="d-flex justify-content-center mt-3">
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <select id="petSpecies" class="form-select" v-model="subscriptionSelect.id">
+                        <option value="" disabled selected>Scegli un abbonamento</option>
+                        <option v-for="(sub, index) in availableSubscriptions" :key="index" :value="sub.id">{{ sub.name
+                            }}
+                        </option>
+                    </select>
+                </div>
+                <button @click="handleAddSubscriptionButton" class="btn btn-primary">Add subscription</button>
+                <h3>Abbonamenti esistenti:</h3>
+                <div v-for="subscription in singleSub">
+                    <li>{{ subscription.name }}</li>
+                </div>
+            </div>
         </div>
     </div>
 </template>

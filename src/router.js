@@ -25,7 +25,7 @@ const routes = [
   { path: '/subscription/:id', name: 'subscriptionDetail', component: SubscriptionsDetail },
   { path: '/subscription/new', name: 'AddSubscription', component: AddSubscription },
   { path: '/user/:id/subscription/new', name: 'addSubToUser', component: AddSubToUser },
-  { path: '/subscription/:id', name: 'ModifySubscriptions', component: ModifySubscriptions },
+  { path: '/subscription/modify/:id', name: 'ModifySubscriptions', component: ModifySubscriptions },
   { path: '/:id/petsRegister', name: 'petsRegister', component: PetsRegister },
   { path: '/:id/petsDetails', name: 'petsDetails', component: PetsDetails },
   { path: '/login', name: 'login', component: Login },

@@ -35,13 +35,13 @@ export default {
 </script>
 
 <template>
-    <div class="custom-container">
-        <form @submit.prevent="savePet">
-            <div class="mb-3 col-md-6">
+    <div class="custom-container d-flex justify-content-center">
+        <form @submit.prevent="savePet" class="col-md-4">
+            <div >
                 <label for="petName">Pet Name:</label>
                 <input id="petName" type="text" class="form-control" v-model="pet.name" placeholder="Pet Name">
             </div>
-            <div class="mb-3 col-md-6">
+            <div >
                 <label for="petSpecies">Pet Species:</label>
                 <select id="petSpecies" class="form-select" v-model="pet.species">
                     <option value="cane">Cane</option>
@@ -51,8 +51,8 @@ export default {
                     <option value="serpente">Serpente</option>
                 </select>
             </div>
-            <div class="mb-3 col-md-6">
-                <button class="btn btn-primary" type="submit">Save</button>
+            <div >
+                <button class="btn btn-primary mt-2" type="submit">Save</button>
             </div>
         </form>
     </div>

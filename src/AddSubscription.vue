@@ -41,22 +41,25 @@ export default {
 </script>
 
 <template>
-    <div class="newSubscriptionContainer">
-        <form @submit.prevent="saveSubscription">
-            <label for="">Name</label>
-            <input type="text" name="name" v-model="subscription.name">
-            <label for="">Slug</label>
-            <input type="text" name="slug" v-model="subscription.slug">
-            <label for="">Duration</label>
-            <input type="number" name="duration" v-model="subscription.duration">
-            <label for="">Starting date</label>
-            <input type="date" name="startingDate" v-model="subscription.startingDate">
-            <label for="">End date</label>
-            <input type="date" name="endingDate" v-model="subscription.endingDate">
-            <button type="submit" class="saveButton">Save</button>
-        </form>
+    <div class="custom-container">
+        <div class="d-flex justify-content-center">
+            <form @submit.prevent="saveSubscription" class="col-md-4">
+                <label for="">Name</label>
+                <input type="text" name="name" v-model="subscription.name" class="form-control">
+                <label for="">Slug</label>
+                <input type="text" name="slug" v-model="subscription.slug" class="form-control">
+                <label for="">Duration</label>
+                <input type="number" name="duration" v-model="subscription.duration" class="form-control">
+                <label for="">Starting date</label>
+                <input type="date" name="startingDate" v-model="subscription.startingDate" class="form-control">
+                <label for="">End date</label>
+                <input type="date" name="endingDate" v-model="subscription.endingDate" class="form-control">
+                <button type="submit" class="btn btn-primary">Save</button>
+            </form>
+        </div>
     </div>
 </template>
+
 
 <style>
 .newSubscriptionContainer {

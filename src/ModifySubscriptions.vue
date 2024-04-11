@@ -43,20 +43,32 @@ export default {
 </script>
 
 <template>
-    <div class="modifyUserContainer">
-        <label>Name: </label>
-        <input type="text" v-model="singleSubscription.name">
-        <label>Slug: </label>
-        <input type="text" v-model="singleSubscription.slug">
-        <label>Duration: </label>
-        <input type="number" v-model="singleSubscription.duration">
-        <label>StartingDate: </label>
-        <input type="date" v-model="singleSubscription.startingDate">
-        <label>EndingDate: </label>
-        <input type="date" v-model="singleSubscription.endingDate">
-
-        <button @click="handleSaveButton" class="saveButton">Save</button>
-
+    <div class="custom-container ">
+        <div class="d-flex justify-content-center">
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label>Name: </label>
+                    <input type="text" v-model="singleSubscription.name" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label>Slug: </label>
+                    <input type="text" v-model="singleSubscription.slug" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label>Duration: </label>
+                    <input type="number" v-model="singleSubscription.duration" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label>StartingDate: </label>
+                    <input type="date" v-model="singleSubscription.startingDate" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label>EndingDate: </label>
+                    <input type="date" v-model="singleSubscription.endingDate" class="form-control">
+                </div>
+                <button @click="handleSaveButton" class="btn btn-primary">Save</button>
+            </div>
+        </div>
     </div>
 
 </template>
