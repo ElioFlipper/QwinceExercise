@@ -60,11 +60,9 @@ export default {
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">User Subscribed</h5>
-                        <ul class="list-group">
                             <li class="list-group-item" v-for="user in users" :key="user.id">
                                 {{ user.username }}
                             </li>
-                        </ul>
                     </div>
                 </div>
             </div>

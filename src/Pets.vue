@@ -68,7 +68,7 @@ export default {
                         <td>{{ pet.species }}</td>
                         <td>{{ getOwnersName(pet.user_id) }}</td>
                         <td>
-                            <button class="btn btn-primary" @click="handleOwnerButton(pet.user_id)">Owner
+                            <button class="btn btn-dark" @click="handleOwnerButton(pet.user_id)">Owner
                                 Profile</button>
                         </td>
                     </tr>

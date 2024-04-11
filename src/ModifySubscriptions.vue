@@ -48,25 +48,25 @@ export default {
             <div class="col-md-4">
                 <div class="mb-3">
                     <label>Name: </label>
-                    <input type="text" v-model="singleSubscription.name" class="form-control">
+                    <input type="text" v-model="singleSubscription.name" class="form-control custom-input">
                 </div>
                 <div class="mb-3">
                     <label>Slug: </label>
-                    <input type="text" v-model="singleSubscription.slug" class="form-control">
+                    <input type="text" v-model="singleSubscription.slug" class="form-control custom-input">
                 </div>
                 <div class="mb-3">
                     <label>Duration: </label>
-                    <input type="number" v-model="singleSubscription.duration" class="form-control">
+                    <input type="number" v-model="singleSubscription.duration" class="form-control custom-input">
                 </div>
                 <div class="mb-3">
                     <label>StartingDate: </label>
-                    <input type="date" v-model="singleSubscription.startingDate" class="form-control">
+                    <input type="date" v-model="singleSubscription.startingDate" class="form-control custom-input">
                 </div>
                 <div class="mb-3">
                     <label>EndingDate: </label>
-                    <input type="date" v-model="singleSubscription.endingDate" class="form-control">
+                    <input type="date" v-model="singleSubscription.endingDate" class="form-control custom-input">
                 </div>
-                <button @click="handleSaveButton" class="btn btn-primary">Save</button>
+                <button @click="handleSaveButton" class="btn custom-button">Save</button>
             </div>
         </div>
     </div>

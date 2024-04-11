@@ -92,19 +92,19 @@ export default {
                 <td>{{ subscription.startingDate }}</td>
                 <td>{{ subscription.endingDate }}</td>
                 <td>
-                    <button @click="handleModifyButton(subscription.id)" class="btn btn-primary">Modify</button>
+                    <button @click="handleModifyButton(subscription.id)" class="btn custom-button">Modify</button>
                 </td>
                 <td>
                     <button @click="handleRemoveButton(subscription.id)" class="btn btn-danger">Remove</button>
                 </td>
                 <td>
-                    <button @click="handleDetailsButton(subscription.id)" class="btn btn-secondary">Details</button>
+                    <button @click="handleDetailsButton(subscription.id)" class="btn btn-dark">Details</button>
                 </td>
             </tr>
         </tbody>
     </table>
 
-    <button class="btn btn-primary" @click="handleAddButton">Add a new subscription</button>
+    <button class="btn custom-button" @click="handleAddButton">Add a new subscription</button>
 </div>
 </template>
 

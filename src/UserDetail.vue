@@ -153,28 +153,28 @@ export default {
         </div>
         <div class="mb-3 col-md-6">
             <div class="d-flex justify-content-between">
-                <button class="btn btn-primary mt-3" @click="handleModifyButton">Modify</button>
-                <button class="btn btn-primary mt-3" @click="handleRemoveButton">Remove</button>
-                <button class="btn btn-primary mt-3" v-if="singleUser.activationStatus"
+                <button class="btn custom-button mt-3" @click="handleModifyButton">Modify</button>
+                <button class="btn custom-button mt-3" @click="handleRemoveButton">Remove</button>
+                <button class="btn custom-button mt-3" v-if="singleUser.activationStatus"
                     @click="handleDeactiveButton">Deactive</button>
-                <button class="btn btn-primary mt-3" v-else @click="handleActiveButton">Active</button>
-                <button class="btn btn-primary mt-3" @click="handlePetRegisterButton">Add a pet</button>
-                <button class="btn btn-primary mt-3" @click="handlePetDetailButton">Show pets</button>
-                <button class="btn btn-primary mt-3" @click="handleAddSubscriptionButton">Add a subscription</button>
-                <button class="btn btn-primary mt-3" @click="handleUploadButton">Upload</button>
+                <button class="btn custom-button mt-3" v-else @click="handleActiveButton">Active</button>
+                <button class="btn custom-button mt-3" @click="handlePetRegisterButton">Add a pet</button>
+                <button class="btn custom-button mt-3" @click="handlePetDetailButton">Show pets</button>
+                <button class="btn custom-button mt-3" @click="handleAddSubscriptionButton">Add a subscription</button>
+                <button class="btn custom-button mt-3" @click="handleUploadButton">Upload</button>
             </div>
         </div>
         <div class="mb-3 col-md-6">
-            <input class="form-control" type="file" name="file" ref="fileInput" @change="uploadFile($event)">
+            <input class="form-control custom-input" type="file" name="file" ref="fileInput" @change="uploadFile($event)">
         </div>
         <div v-for="sub in subscription" :key="sub.id" class="mb-3 col-md-6">
             <div class="card">
                 <div class="card-body">
-                    <p class="card-text">Nome dell'abbonamento: {{ sub.name }}</p>
-                    <p class="card-text">Slug dell'abbonamento: {{ sub.slug }}</p>
-                    <p class="card-text">Durata dell'abbonamento (mesi): {{ sub.duration }}</p>
-                    <p class="card-text">Data di inizio: {{ sub.startingDate }}</p>
-                    <p class="card-text">Data fine: {{ sub.endingDate }}</p>
+                    <p class="card-text"><strong>Nome dell'abbonamento</strong>: {{ sub.name }}</p>
+                    <p class="card-text"><strong>Slug dell'abbonamento</strong>: {{ sub.slug }}</p>
+                    <p class="card-text"><strong>Durata dell'abbonamento</strong> (mesi): {{ sub.duration }}</p>
+                    <p class="card-text"><strong>Data di inizio</strong>: {{ sub.startingDate }}</p>
+                    <p class="card-text"><strong>Data fine</strong>: {{ sub.endingDate }}</p>
                     <button @click="handleRemoveSubscription(sub)" class="btn btn-danger">Remove</button>
                 </div>
             </div>

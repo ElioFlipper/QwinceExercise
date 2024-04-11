@@ -1,13 +1,77 @@
-@mixin make-container($padding-x: $container-padding-x, $margin-x: $container-margin-top) {
+@mixin make-container($padding-x: $container-padding-x, $margin-x: $container-margin-top, $background-color: transparent) {
     width: 100%;
     padding-right: $padding-x;
     padding-left: $padding-x;
     margin-top: $margin-x;
     margin-right: auto;
     margin-left: auto;
+    background-color: $background-color; // Aggiunta del colore di sfondo
 }
 
 // Usage
 .custom-container {
     @include make-container(20px, 20px);
+}
+
+$input-padding-x: 10px;
+$input-padding-y: 10px;
+$input-border-width: 1px;
+$input-border-color: #000000;
+$input-border-radius: 5px;
+$input-font-size: 16px;
+
+@mixin input-styles($padding-x: $input-padding-x,
+    $padding-y: $input-padding-y,
+    $border-width: $input-border-width,
+    $border-color: $input-border-color,
+    $border-radius: $input-border-radius,
+    $font-size: $input-font-size,
+    $input-focus-box-shadow: none) {
+    padding: $padding-y $padding-x;
+    border-width: $border-width;
+    border-color: $border-color;
+    border-radius: $border-radius;
+    font-size: $font-size;
+
+    &:focus {
+        border-color: #3dae4e;
+        outline: 0;
+        box-shadow: 0 0 0 0.25rem rgba(13, 253, 77, 0.25);
+    }
+}
+
+.custom-input {
+    @include input-styles(10px, 10px, 1px, rgb(133, 133, 133), 10px, 16px, #3dae4e);
+}
+
+@mixin button-styles($padding-x: $button-padding-x,
+    $padding-y: $button-padding-y,
+    $border-width: $button-border-width,
+    $border-color: $button-border-color,
+    $border-radius: $button-border-radius,
+    $font-size: $button-font-size,
+    $background-color: $button-background-color,
+    $text-color: $button-text-color) {
+    padding: $padding-y $padding-x;
+    border-width: $border-width;
+    border-color: $border-color;
+    border-radius: $border-radius;
+    font-size: $font-size;
+    background-color: $background-color;
+    color: $text-color;
+
+    &:focus {
+        outline: 0;
+    }
+
+    &:hover {
+        transform: scale(108%);
+        background-color:#2c7a38;
+        transition: .5s;
+        color:white
+    }
+}
+
+.custom-button {
+    @include button-styles(10px, 6px, 1px, #3dae4e, 6px, 16px, #3dae4e, #fff);
 }

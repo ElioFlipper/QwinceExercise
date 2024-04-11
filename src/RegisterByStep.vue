@@ -87,15 +87,15 @@ export default {
             <div class="d-flex justify-content-center mt-3">
                 <form @submit.prevent="nextStep" class="col-md-4">
                     <div class="mb-3">
-                        <input type="text" class="form-control" v-model="user.username" placeholder="Username">
+                        <input type="text" class="form-control custom-input" v-model="user.username" placeholder="Username">
                     </div>
                     <div class="mb-3">
-                        <input type="text" class="form-control" v-model="user.name" placeholder="Name">
+                        <input type="text" class="form-control custom-input" v-model="user.name" placeholder="Name">
                     </div>
                     <div class="mb-3">
-                        <input type="text" class="form-control" v-model="user.surname" placeholder="Surname">
+                        <input type="text" class="form-control custom-input" v-model="user.surname" placeholder="Surname">
                     </div>
-                    <button type="submit" class="btn btn-primary">Avanti</button>
+                    <button type="submit" class="btn custom-button">Avanti</button>
                 </form>
             </div>
             <div class="registered">
@@ -108,17 +108,17 @@ export default {
             <div class="d-flex justify-content-center mt-3">
                 <form @submit.prevent="nextStep" class="col-md-4">
                     <div class="mb-3">
-                        <input type="email" class="form-control" v-model="user.email" placeholder="Email">
+                        <input type="email" class="form-control custom-input" v-model="user.email" placeholder="Email">
                     </div>
                     <div class="mb-3">
-                        <input type="password" class="form-control" v-model="user.password" placeholder="Password">
+                        <input type="password" class="form-control custom-input" v-model="user.password" placeholder="Password">
                     </div>
                     <div class="mb-3">
-                        <input type="text" class="form-control" v-model="user.city" placeholder="City">
+                        <input type="text" class="form-control custom-input" v-model="user.city" placeholder="City">
                     </div>
                     <div class="mb-3 d-flex justify-content-around">
                         <button class="btn btn-danger" @click.prevent="prevStep">Indietro</button>
-                        <button class="btn btn-primary" type="submit">Avanti</button>
+                        <button class="btn custom-button" type="submit">Avanti</button>
                     </div>
                 </form>
             </div>
@@ -129,7 +129,7 @@ export default {
             <div class="d-flex justify-content-center mt-3">
                 <form @submit.prevent="submitForm" class="col-md-4">
                     <div class="mb-3">
-                        <input type="file" name="file" class="form-control" ref="fileInput"
+                        <input type="file" name="file" class="form-control custom-input" ref="fileInput"
                             @change="uploadFile($event)">
                     </div>
                     <div class="alert alert-danger" role="alert" v-if="registerFailed">
@@ -137,7 +137,7 @@ export default {
                     </div>
                     <div class="mb-3 d-flex justify-content-around">
                         <button class="btn btn-danger" @click.prevent="prevStep">Indietro</button>
-                        <button class="btn btn-success" type="submit">Registrati</button>
+                        <button class=" btn custom-button" type="submit">Registrati</button>
                     </div>
                 </form>
             </div>
@@ -147,7 +147,7 @@ export default {
 
 <style>
 .login {
-    color: red
+    color: #3dae4e
 }
 
 .custom-container h4 {

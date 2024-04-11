@@ -41,35 +41,35 @@ export default {
 </script>
 
 <template>
-    <div class="custom-container">
-        <form @submit.prevent="handleSaveButton">
-            <div class="mb-3 col-md-6">
+    <div class="custom-container d-flex justify-content-center">
+        <form @submit.prevent="handleSaveButton" class="col-md-4">
+            <div class="mb-3">
                 <label for="username">Username:</label>
-                <input id="username" type="text" class="form-control" v-model="singleUser.username"
+                <input id="username" type="text" class="form-control custom-input" v-model="singleUser.username"
                     placeholder="Username">
             </div>
-            <div class="mb-3 col-md-6">
+            <div class="mb-3">
                 <label for="name">Name:</label>
-                <input id="name" type="text" class="form-control" v-model="singleUser.name" placeholder="Name">
+                <input id="name" type="text" class="form-control custom-input" v-model="singleUser.name" placeholder="Name">
             </div>
-            <div class="mb-3 col-md-6">
+            <div class="mb-3">
                 <label for="surname">Surname:</label>
-                <input id="surname" type="text" class="form-control" v-model="singleUser.surname" placeholder="Surname">
+                <input id="surname" type="text" class="form-control custom-input" v-model="singleUser.surname" placeholder="Surname">
             </div>
-            <div class="mb-3 col-md-6">
+            <div class="mb-3">
                 <label for="email">Email:</label>
-                <input id="email" type="text" class="form-control" v-model="singleUser.email" placeholder="Email">
+                <input id="email" type="text" class="form-control custom-input" v-model="singleUser.email" placeholder="Email">
             </div>
-            <div class="mb-3 col-md-6">
+            <div class="mb-3">
                 <label for="city">City:</label>
-                <input id="city" type="text" class="form-control" v-model="singleUser.city" placeholder="City">
+                <input id="city" type="text" class="form-control custom-input" v-model="singleUser.city" placeholder="City">
             </div>
             <div class="form-check form-switch">
                 <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" v-model="singleUser.activationStatus">
                 <label class="form-check-label" for="flexSwitchCheckDefault">Activation status</label>
             </div>
-            <div class="mb-3 col-md-6">
-                <button class="btn btn-primary" type="submit">Save</button>
+            <div class="mb-3">
+                <button class="btn custom-button" type="submit">Save</button>
             </div>
         </form>
     </div>
@@ -88,5 +88,8 @@ export default {
     flex-direction: column;
     align-items: center;
     width: 100vw;
+}
+.form-check-input{
+    /* background-color: #3dae4e !important; */
 }
 </style>

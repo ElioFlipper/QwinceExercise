@@ -57,17 +57,17 @@ export default {
         <div class="d-flex justify-content-center mt-3">
             <form @submit.prevent="login" class="col-md-4">
                 <div class="mb-3">
-                    <input type="text" name="email" v-model="user.email" class="form-control"
+                    <input type="text" name="email" v-model="user.email" class="form-control custom-input"
                         placeholder="name@example.com">
                 </div>
                 <div class="mb-3">
-                    <input type="password" name="password" v-model="user.password" class="form-control"
+                    <input type="password" name="password" v-model="user.password" class="form-control custom-input"
                         placeholder="Password">
                 </div>
                 <div class="alert alert-danger" role="alert" v-if="loginFailed">
                     Email o password errate, riprova!
                 </div>
-                <button type="submit" class="btn btn-primary">Login</button>
+                <button type="submit" class="btn custom-button">Login</button>
             </form>
         </div>
         <div class="registered">
@@ -79,7 +79,7 @@ export default {
 
 <style>
 .signIn {
-    color: red;
+    color: #3dae4e;
     cursor: pointer;
 }
 

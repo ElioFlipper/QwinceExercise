@@ -119,24 +119,24 @@ export default {
         <div class="d-flex justify-content-center mt-3" >
             <form @submit.prevent="handleSearchButton" class="col-md-4">
                 <div class="mb-3">
-                    <input type="text" placeholder="Username" class="form-control" v-model="username">
+                    <input type="text" placeholder="Username" class="form-control custom-input" v-model="username">
                 </div>
                 <div class="mb-3">
-                    <input type="text" placeholder="Name or surname" class="form-control" v-model="name">
+                    <input type="text" placeholder="Name or surname" class="form-control custom-input" v-model="name">
                 </div>
                 <div class="mb-3">
-                    <input type="text" placeholder="Email" class="form-control" v-model="email">
+                    <input type="text" placeholder="Email" class="form-control custom-input" v-model="email">
                 </div>
                 <div class="mb-3">
-                    <input type="text" placeholder="City" class="form-control" v-model="city">
+                    <input type="text" placeholder="City" class="form-control custom-input" v-model="city">
                 </div>
                 <div class="mb-3">
-                    <select class="form-select " aria-label="Default select example" v-model="activationStatus">
+                    <select class="form-select custom-input " aria-label="Default select example" v-model="activationStatus">
                         <option :value="true">Active</option>
                         <option :value="false">Deactive</option>
                     </select>
                 </div>
-                <button class="btn btn-primary" type="submit">Search</button>
+                <button class="btn custom-button" type="submit">Search</button>
             </form>
         </div>
         <table class="table table-striped table-hover">
@@ -154,12 +154,12 @@ export default {
                     <td>{{ user.email }}</td>
                     <td>{{ user.city }}</td>
                     <td>
-                        <button @click="openProfile(user.id)" class="btn btn-secondary">Profile</button>
+                        <button @click="openProfile(user.id)" class="btn btn-dark">Profile</button>
                     </td>
                 </tr>
             </tbody>
         </table>
-        <button class="btn btn-primary" @click="handleRegisterButton">Register a new user</button>
+        <button class="btn custom-button" @click="handleRegisterButton">Register a new user</button>
     </div>
 </template>
 
