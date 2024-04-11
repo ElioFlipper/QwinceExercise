@@ -87,7 +87,7 @@ export default {
                         </option>
                     </select>
                 </div>
-                <button @click="handleAddSubscriptionButton" class="btn btn-primary">Add subscription</button>
+                <button @click="handleAddSubscriptionButton" class="btn custom-button">Aggiungi sottoscrizione</button>
                 <h3>Abbonamenti esistenti:</h3>
                 <div v-for="subscription in singleSub">
                     <li>{{ subscription.name }}</li>

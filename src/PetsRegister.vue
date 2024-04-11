@@ -38,12 +38,13 @@ export default {
     <div class="custom-container d-flex justify-content-center">
         <form @submit.prevent="savePet" class="col-md-4">
             <div >
-                <label for="petName">Pet Name:</label>
-                <input id="petName" type="text" class="form-control custom-input" v-model="pet.name" placeholder="Pet Name">
+                <label for="petName">Nome:</label>
+                <input id="petName" type="text" class="form-control custom-input" v-model="pet.name" placeholder="Nome dell'animale">
             </div>
             <div >
-                <label for="petSpecies">Pet Species:</label>
+                <label for="petSpecies">Specie animale:</label>
                 <select id="petSpecies" class="form-select custom-input" v-model="pet.species">
+                    <option value="" disabled selected>Seleziona la specie</option>
                     <option value="cane">Cane</option>
                     <option value="gatto">Gatto</option>
                     <option value="canarino">Canarino</option>

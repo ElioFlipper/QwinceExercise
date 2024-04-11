@@ -56,10 +56,10 @@ export default {
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
-                        <th scope="col">Pet Name</th>
-                        <th scope="col">Pet Species</th>
-                        <th scope="col">Pet Owner</th>
-                        <th scope="col">Action</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Specie</th>
+                        <th scope="col">Proprietario</th>
+                        <th scope="col">Profilo</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -68,8 +68,7 @@ export default {
                         <td>{{ pet.species }}</td>
                         <td>{{ getOwnersName(pet.user_id) }}</td>
                         <td>
-                            <button class="btn btn-dark" @click="handleOwnerButton(pet.user_id)">Owner
-                                Profile</button>
+                            <button class="btn btn-dark" @click="handleOwnerButton(pet.user_id)">Profilo</button>
                         </td>
                     </tr>
                 </tbody>

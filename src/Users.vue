@@ -122,21 +122,22 @@ export default {
                     <input type="text" placeholder="Username" class="form-control custom-input" v-model="username">
                 </div>
                 <div class="mb-3">
-                    <input type="text" placeholder="Name or surname" class="form-control custom-input" v-model="name">
+                    <input type="text" placeholder="Nome o cognome" class="form-control custom-input" v-model="name">
                 </div>
                 <div class="mb-3">
                     <input type="text" placeholder="Email" class="form-control custom-input" v-model="email">
                 </div>
                 <div class="mb-3">
-                    <input type="text" placeholder="City" class="form-control custom-input" v-model="city">
+                    <input type="text" placeholder="Città" class="form-control custom-input" v-model="city">
                 </div>
                 <div class="mb-3">
                     <select class="form-select custom-input " aria-label="Default select example" v-model="activationStatus">
-                        <option :value="true">Active</option>
-                        <option :value="false">Deactive</option>
+                        <option value="" disabled selected>Attivo o disattivo</option>
+                        <option :value="true">Attivo</option>
+                        <option :value="false">Disattivo</option>
                     </select>
                 </div>
-                <button class="btn custom-button" type="submit">Search</button>
+                <button class="btn custom-button" type="submit">Filtra</button>
             </form>
         </div>
         <table class="table table-striped table-hover">
@@ -154,12 +155,12 @@ export default {
                     <td>{{ user.email }}</td>
                     <td>{{ user.city }}</td>
                     <td>
-                        <button @click="openProfile(user.id)" class="btn btn-dark">Profile</button>
+                        <button @click="openProfile(user.id)" class="btn btn-dark">Profilo</button>
                     </td>
                 </tr>
             </tbody>
         </table>
-        <button class="btn custom-button" @click="handleRegisterButton">Register a new user</button>
+        <button class="btn custom-button" @click="handleRegisterButton">Registra un nuovo utente</button>
     </div>
 </template>
 

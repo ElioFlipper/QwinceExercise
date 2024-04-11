@@ -138,14 +138,14 @@ export default {
                 <div class="col-md-6">
                     <div class="card-body">
                         <p class="card-text"><strong>Username:</strong> {{ singleUser.username }}</p>
-                        <p class="card-text"><strong>Name:</strong> {{ singleUser.name }}</p>
-                        <p class="card-text"><strong>Surname:</strong> {{ singleUser.surname }}</p>
+                        <p class="card-text"><strong>Nome:</strong> {{ singleUser.name }}</p>
+                        <p class="card-text"><strong>Cognome:</strong> {{ singleUser.surname }}</p>
                         <p class="card-text"><strong>Email:</strong> {{ singleUser.email }}</p>
-                        <p class="card-text"><strong>City:</strong> {{ singleUser.city }}</p>
-                        <p class="card-text"><strong>Date of Submission:</strong> {{ singleUser.date_of_submission
+                        <p class="card-text"><strong>Città:</strong> {{ singleUser.city }}</p>
+                        <p class="card-text"><strong>Data di iscrizione:</strong> {{ singleUser.date_of_submission
                             }}
                         </p>
-                        <p class="card-text"><strong>Activation Status:</strong> {{ singleUser.activationStatus }}
+                        <p class="card-text"><strong>Stato di attivazione:</strong> {{ singleUser.activationStatus }}
                         </p>
                     </div>
                 </div>
@@ -153,14 +153,11 @@ export default {
         </div>
         <div class="mb-3 col-md-6">
             <div class="d-flex justify-content-between">
-                <button class="btn custom-button mt-3" @click="handleModifyButton">Modify</button>
-                <button class="btn custom-button mt-3" @click="handleRemoveButton">Remove</button>
-                <button class="btn custom-button mt-3" v-if="singleUser.activationStatus"
-                    @click="handleDeactiveButton">Deactive</button>
-                <button class="btn custom-button mt-3" v-else @click="handleActiveButton">Active</button>
-                <button class="btn custom-button mt-3" @click="handlePetRegisterButton">Add a pet</button>
-                <button class="btn custom-button mt-3" @click="handlePetDetailButton">Show pets</button>
-                <button class="btn custom-button mt-3" @click="handleAddSubscriptionButton">Add a subscription</button>
+                <button class="btn custom-button mt-3" @click="handleModifyButton">Modifica</button>
+                <button class="btn custom-button mt-3" @click="handleRemoveButton">Rimuovi</button>
+                <button class="btn custom-button mt-3" @click="handlePetRegisterButton">Aggiungi animale</button>
+                <button class="btn custom-button mt-3" @click="handlePetDetailButton">Mostra animali</button>
+                <button class="btn custom-button mt-3" @click="handleAddSubscriptionButton">Aggiungi sottoscrizioni</button>
                 <button class="btn custom-button mt-3" @click="handleUploadButton">Upload</button>
             </div>
         </div>

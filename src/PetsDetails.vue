@@ -35,8 +35,8 @@ export default {
             <div class="col-md-4" v-for="pet in pets" :key="pet.id">
                 <div class="card mb-3">
                     <div class="card-body">
-                        <p class="card-text"><strong>Pet Name:</strong> {{ pet.name }}</p>
-                        <p class="card-text"><strong>Pet Species:</strong> {{ pet.species }}</p>
+                        <p class="card-text"><strong>Nome:</strong> {{ pet.name }}</p>
+                        <p class="card-text"><strong>Specie:</strong> {{ pet.species }}</p>
                     </div>
                 </div>
             </div>

@@ -49,11 +49,11 @@ export default {
                     placeholder="Username">
             </div>
             <div class="mb-3">
-                <label for="name">Name:</label>
+                <label for="name">Nome:</label>
                 <input id="name" type="text" class="form-control custom-input" v-model="singleUser.name" placeholder="Name">
             </div>
             <div class="mb-3">
-                <label for="surname">Surname:</label>
+                <label for="surname">Cognome:</label>
                 <input id="surname" type="text" class="form-control custom-input" v-model="singleUser.surname" placeholder="Surname">
             </div>
             <div class="mb-3">
@@ -61,15 +61,15 @@ export default {
                 <input id="email" type="text" class="form-control custom-input" v-model="singleUser.email" placeholder="Email">
             </div>
             <div class="mb-3">
-                <label for="city">City:</label>
+                <label for="city">Città:</label>
                 <input id="city" type="text" class="form-control custom-input" v-model="singleUser.city" placeholder="City">
             </div>
             <div class="form-check form-switch">
                 <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" v-model="singleUser.activationStatus">
-                <label class="form-check-label" for="flexSwitchCheckDefault">Activation status</label>
+                <label class="form-check-label" for="flexSwitchCheckDefault">Stato di attivazione</label>
             </div>
             <div class="mb-3">
-                <button class="btn custom-button" type="submit">Save</button>
+                <button class="btn custom-button" type="submit">Salva</button>
             </div>
         </form>
     </div>
@@ -88,8 +88,5 @@ export default {
     flex-direction: column;
     align-items: center;
     width: 100vw;
-}
-.form-check-input{
-    /* background-color: #3dae4e !important; */
 }
 </style>

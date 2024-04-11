@@ -28,6 +28,7 @@ export default {
                 })
                 .then(data => {
                     localStorage.setItem('token', data.token);
+                    localStorage.setItem('userId', data.user_id);
                     if (data.is_admin) {
                         this.$router.push({ name: 'users' });
                     } else {
@@ -71,7 +72,7 @@ export default {
             </form>
         </div>
         <div class="registered">
-            <h4>Are you not registered? <span class="signIn" @click="handlesignIn">Sign in</span></h4>
+            <h4>Non sei registrato? <span class="signIn" @click="handlesignIn">Registrati!</span></h4>
         </div>
     </div>
 

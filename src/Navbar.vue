@@ -16,34 +16,41 @@ export default {
         handleLogout() {
             localStorage.removeItem("token");
             window.location.reload();
+        },
+        handleProfileClick() {
+            const id = localStorage.getItem("userId");
+            this.$router.push({ name: 'userDetail', params: { id: id } });
         }
     }
 }
-</script>
 
+</script>
 <template>
-    <div class="navbarContainer">
-        <p @click="handleUsersClick">Users</p>
-        <p @click="handlePetClick">Pet</p>
-        <p @click="handleSubscriptionClick">Subscriptions</p>
-        <p @click="handleLogin">Login</p>
-        <p @click="handleLogout">Logout</p>
-    </div>
+       <ul class="nav justify-content-center" style="padding-top: 2rem; align-items: center; background-color: #75c581; padding-bottom: 1rem;">
+        <li class="nav-item">
+            <p class="nav-item" style="cursor:pointer" @click="handleProfileClick"><i class="bi bi-person-fill"></i></p>
+        </li>
+        <li class="nav-item">
+            <p class="nav-item" style="cursor:pointer" @click="handleUsersClick">Utenti</p>
+        </li>
+        <li class="nav-item">
+            <p class="nav-item" style="cursor:pointer" @click="handlePetClick">Animali</p>
+        </li>
+        <li class="nav-item">
+            <p class="nav-item" style="cursor:pointer" @click="handleSubscriptionClick">Sottoscrizioni</p>
+        </li>
+        <li class="nav-item">
+            <p class="nav-item" style="cursor:pointer" @click="handleLogin">Login</p>
+        </li>
+        <li class="nav-item">
+            <p class="nav-item" style="cursor:pointer" @click="handleLogout">Logout</p>
+        </li>
+    </ul>
 </template>
 
 <style>
-.navbarContainer {
-    display: flex;
-    background-color: whitesmoke;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: large;
+.nav-item {
+    margin-right: 10px;
     font-weight: bold;
-    justify-content: center;
-    gap: 4rem;
-    padding: .5rem;
-}
-
-.navbarContainer p {
-    cursor: pointer;
 }
 </style>

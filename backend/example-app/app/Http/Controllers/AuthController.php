@@ -66,12 +66,11 @@ class AuthController extends Controller
             $user_id = Auth::id();
             $user = auth()->user();
             $is_admin = $user->is_admin;
-            Log::info($is_admin);
-            Log::info($user_id);
+            $user_id = $user->id;
             return response()->json([
                 'token' => $token,
                 'user_id' => $user_id,
-                'is_admin' => $is_admin
+                'is_admin' => $is_admin                
             ], 200);
 
         } else {

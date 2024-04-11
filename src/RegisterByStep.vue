@@ -99,7 +99,7 @@ export default {
                 </form>
             </div>
             <div class="registered">
-                <h4>Are you already signed? <span class="login" @click="handleLogin">Login!</span></h4>
+                <h4>Sei già registrato? <span class="login" @click="handleLogin">Login!</span></h4>
             </div>
         </div>
 
