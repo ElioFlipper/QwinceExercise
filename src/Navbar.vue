@@ -53,4 +53,10 @@ export default {
     margin-right: 10px;
     font-weight: bold;
 }
+
+.nav-item:hover{
+    color:white;
+    transform: scale(105%);
+    transition: .3s
+}
 </style>

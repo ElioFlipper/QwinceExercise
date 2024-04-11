@@ -6,6 +6,7 @@ export default {
     data() {
         return {
             currentStep: 1,
+            progressWidth: '33%',
             user: {
                 username: '',
                 name: '',
@@ -20,11 +21,18 @@ export default {
         };
     },
     methods: {
+
         nextStep() {
             this.currentStep++;
+            this.updateProgress();
         },
         prevStep() {
             this.currentStep--;
+            this.updateProgress();
+        },
+
+        updateProgress() {
+            this.progressWidth = `${this.currentStep * 33}%`
         },
         uploadFile() {
             this.file = this.$refs.file.files[0]
@@ -83,17 +91,22 @@ export default {
 <template>
     <div class="custom-container">
         <div v-if="currentStep === 1">
-            <h2 class="logIn">Signin</h2>
+            <div class="progress mt-3">
+                <div class="progress-bar" role="progressbar" :style="{ width: progressWidth }" aria-valuenow="33"
+                    aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
             <div class="d-flex justify-content-center mt-3">
                 <form @submit.prevent="nextStep" class="col-md-4">
                     <div class="mb-3">
-                        <input type="text" class="form-control custom-input" v-model="user.username" placeholder="Username">
+                        <input type="text" class="form-control custom-input" v-model="user.username"
+                            placeholder="Username">
                     </div>
                     <div class="mb-3">
                         <input type="text" class="form-control custom-input" v-model="user.name" placeholder="Name">
                     </div>
                     <div class="mb-3">
-                        <input type="text" class="form-control custom-input" v-model="user.surname" placeholder="Surname">
+                        <input type="text" class="form-control custom-input" v-model="user.surname"
+                            placeholder="Surname">
                     </div>
                     <button type="submit" class="btn custom-button">Avanti</button>
                 </form>
@@ -105,13 +118,18 @@ export default {
 
 
         <div v-if="currentStep === 2">
+            <div class="progress mt-3">
+                <div class="progress-bar" role="progressbar" :style="{ width: progressWidth }" aria-valuenow="33"
+                    aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
             <div class="d-flex justify-content-center mt-3">
                 <form @submit.prevent="nextStep" class="col-md-4">
                     <div class="mb-3">
                         <input type="email" class="form-control custom-input" v-model="user.email" placeholder="Email">
                     </div>
                     <div class="mb-3">
-                        <input type="password" class="form-control custom-input" v-model="user.password" placeholder="Password">
+                        <input type="password" class="form-control custom-input" v-model="user.password"
+                            placeholder="Password">
                     </div>
                     <div class="mb-3">
                         <input type="text" class="form-control custom-input" v-model="user.city" placeholder="City">
@@ -126,6 +144,10 @@ export default {
 
 
         <div v-if="currentStep === 3">
+            <div class="progress mt-3">
+                <div class="progress-bar" role="progressbar" :style="{ width: progressWidth }" aria-valuenow="33"
+                    aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
             <div class="d-flex justify-content-center mt-3">
                 <form @submit.prevent="submitForm" class="col-md-4">
                     <div class="mb-3">
