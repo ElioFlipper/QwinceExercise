@@ -17,7 +17,8 @@ export default {
                 password: '',
                 is_admin: false,
             },
-            registerFailed: false
+            registerFailed: false,
+            isLoading: false
         };
     },
     methods: {
@@ -38,6 +39,7 @@ export default {
             this.file = this.$refs.file.files[0]
         },
         submitForm() {
+            this.isLoading = true;
             const userData = {
                 username: this.user.username,
                 name: this.user.name,
@@ -64,12 +66,15 @@ export default {
                         }
                     })
                         .then(updateResponse => {
-                            this.$router.push({ name: 'login' });
+                            this.isLoading = false
                         })
                         .catch(updateError => {
                             console.error(updateError);
-
+                            this.isLoading = false
                         });
+                })
+                .then(data => {
+                    this.$router.push({ name: 'login' });
                 })
                 .catch(error => {
                     console.error('There was a problem with your fetch operation:', error);
@@ -92,8 +97,8 @@ export default {
     <div class="custom-container">
         <div v-if="currentStep === 1">
             <div class="progress mt-3">
-                <div class="progress-bar" role="progressbar" :style="{ width: progressWidth }" aria-valuenow="33"
-                    aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar bg-success" role="progressbar" :style="{ width: progressWidth }"
+                    aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
             <div class="d-flex justify-content-center mt-3">
                 <form @submit.prevent="nextStep" class="col-md-4">
@@ -119,8 +124,8 @@ export default {
 
         <div v-if="currentStep === 2">
             <div class="progress mt-3">
-                <div class="progress-bar" role="progressbar" :style="{ width: progressWidth }" aria-valuenow="33"
-                    aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar bg-success" role="progressbar" :style="{ width: progressWidth }"
+                    aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
             <div class="d-flex justify-content-center mt-3">
                 <form @submit.prevent="nextStep" class="col-md-4">
@@ -145,14 +150,24 @@ export default {
 
         <div v-if="currentStep === 3">
             <div class="progress mt-3">
-                <div class="progress-bar" role="progressbar" :style="{ width: progressWidth }" aria-valuenow="33"
-                    aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar bg-success" role="progressbar" :style="{ width: progressWidth }"
+                    aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
             <div class="d-flex justify-content-center mt-3">
                 <form @submit.prevent="submitForm" class="col-md-4">
                     <div class="mb-3">
                         <input type="file" name="file" class="form-control custom-input" ref="fileInput"
                             @change="uploadFile($event)">
+                    </div>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input bg-success" type="checkbox" role="switch"
+                            id="flexSwitchCheckDefault" v-model="user.is_admin">
+                        <label class="form-check-label " for="flexSwitchCheckDefault">Sei un admin?</label>
+                    </div>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input bg-success" type="checkbox" role="switch"
+                            id="flexSwitchCheckDefault" v-model="user.activationStatus">
+                        <label class="form-check-label " for="flexSwitchCheckDefault">Stato di attivazione</label>
                     </div>
                     <div class="alert alert-danger" role="alert" v-if="registerFailed">
                         Email già in uso, riprova!
@@ -162,6 +177,11 @@ export default {
                         <button class=" btn custom-button" type="submit">Registrati</button>
                     </div>
                 </form>
+            </div>
+            <div v-if="isLoading" class="text-center mt-3">
+                <div class="spinner-border text-success" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
             </div>
         </div>
     </div>

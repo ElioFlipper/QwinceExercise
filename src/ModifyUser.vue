@@ -65,8 +65,8 @@ export default {
                 <input id="city" type="text" class="form-control custom-input" v-model="singleUser.city" placeholder="City">
             </div>
             <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" v-model="singleUser.activationStatus">
-                <label class="form-check-label" for="flexSwitchCheckDefault">Stato di attivazione</label>
+                <input class="form-check-input bg-success" type="checkbox" role="switch" id="flexSwitchCheckDefault" v-model="singleUser.activationStatus">
+                <label class="form-check-label " for="flexSwitchCheckDefault">Stato di attivazione</label>
             </div>
             <div class="mb-3">
                 <button class="btn custom-button" type="submit">Salva</button>

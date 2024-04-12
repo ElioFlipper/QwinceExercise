@@ -8,12 +8,14 @@ export default {
                 email: '',
                 password: ''
             },
-            loginFailed: false
+            loginFailed: false,
+            isLoading: false
         }
     },
 
     methods: {
         login() {
+            this.isLoading = true;
             const userData = {
                 email: this.user.email,
                 password: this.user.password
@@ -34,11 +36,14 @@ export default {
                     } else {
                         console.log(data.user_id);
                         this.$router.push({ name: 'userDetail', params: { id: data.user_id } });
+                        this.isLoading = false
                     }
+
                 })
                 .catch(error => {
                     console.error('There was a problem with your fetch operation:', error);
                     this.loginFailed = true;
+                    this.isLoading = false
                     setTimeout(() => {
                         this.loginFailed = false;
                     }, 3000);
@@ -73,6 +78,11 @@ export default {
         </div>
         <div class="registered">
             <h4>Non sei registrato? <span class="signIn" @click="handlesignIn">Registrati!</span></h4>
+        </div>
+        <div v-if="isLoading" class="text-center mt-3">
+            <div class="spinner-border text-success" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
         </div>
     </div>
 
